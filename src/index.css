@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Lexend:wght@100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Crimson Pro", serif;
+  --font-sans: "Lexend", sans-serif;
+  --prose: 70ch;
+  --color-primary: #5d3025;
+  --color-contrasting: #004416;
+}
+
+#app {
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  margin: 0 5rem;
+  flex: 1;
+}
+
+h1 {
+  font-family: var(--font-serif);
+  color: var(--color-contrasting);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin-top: 1rem;
+  font-family: var(--font-serif);
+  color: var(--color-contrasting);
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  border: 1px solid var(--color-contrasting);
+  height: 0;
+  margin-top: 0.25rem;
+  flex: 1;
+}
+
+.inset-shadow {
+  box-shadow: inset 0 0 0 0.125em var(--tw-shadow-color);
+}

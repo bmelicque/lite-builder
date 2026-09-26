@@ -1,0 +1,6 @@
+import type { Passive } from "../actions";
+
+export const dieHard: Passive = {
+    name: "Dur à cuir",
+    text: "Il en faut plus pour vous tuer que la plupart des gens. Vous mourez de l'état mourant à mourant 5 plutôt qu'à mourant 4.",
+};
