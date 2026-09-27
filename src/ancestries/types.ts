@@ -17,6 +17,18 @@ export type Heritage = {
     text: string;
     grants: Modifier[];
 };
+export function passiveHeritage(
+    id: string,
+    name: string,
+    text: string,
+): Heritage {
+    return {
+        id,
+        name,
+        text,
+        grants: [{ kind: "passive", name, text }],
+    };
+}
 
 export type Ancestry = {
     id: string;

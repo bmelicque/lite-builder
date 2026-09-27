@@ -48,12 +48,14 @@ export type Weapon = {
     group:
         | "axe"
         | "brawling"
+        | "club"
         | "firearm"
         | "flail"
         | "hammer"
         | "knife"
         | "pick"
         | "polearm"
+        | "sling"
         | "spear"
         | "sword";
     bulk: Bulk;
@@ -282,6 +284,42 @@ const falchion: Weapon = {
         "Cette arme est une version plus lourde, à deux mains, du cimeterre à lame courbe. Il est lesté vers l'extrémité de la lame, ce qui en fait une puissante arme tranchante.",
 };
 
+const fightingStick: Weapon = {
+    id: "fightingStick",
+    name: "Canne de combat",
+    rarity: Rarity.Uncommon,
+    damageDie: 6,
+    damageType: DamageType.Bludgeoning,
+    traits: ["prise d'élan", "non-létal"],
+    additionalActions: [shove],
+    hands: 1,
+    price: 5 * SP,
+    proficiency: "martialWeapons",
+    group: "club",
+    bulk: 1,
+    description:
+        "Cette pièce de bois, dur mais souple, de la taille d'une épée ressemble plus à une perche qu'à une arme, mais peut être mortelle entre de bonnes mains. Bien qu'elle ne soit généralement pas utilisée pour le combat, certains halfelins sont parvenus à la rendre aussi efficace qu'une lame dans un combat. Nombre de halfelins chantent pour maintenir un certain tempo et garder le rythme durant le combat.",
+};
+
+const filchersFork: Weapon = {
+    id: "filchersFork",
+    name: "Fourchette du chapardeur",
+    rarity: Rarity.Uncommon,
+    damageDie: 4,
+    damageType: DamageType.Piercing,
+    deadly: 6,
+    traits: ["traître", "jet 6 m"],
+    agile: true,
+    finesse: true,
+    hands: 1,
+    price: 1 * GP,
+    proficiency: "martialWeapons",
+    group: "spear",
+    bulk: "L",
+    description:
+        "Cette arme de halfelin ressemble à une longue fourchette à deux branches et s'utilise à la fois comme une arme et un outil de cuisine.",
+};
+
 const flingflenser: Weapon = {
     id: "flingflenser",
     name: "Dépeceur",
@@ -299,6 +337,21 @@ const flingflenser: Weapon = {
     bulk: 1,
     description:
         "Un dépeceur est une arme de conception gobeline se terminant par un tube ovoïde avec une trappe et une poignée à l'extrémité étroite. Un faisceau de lames circulaires maintenues ensemble et attachées à un paquet de poudre noire par une fine lanière de cuir sert de munitions et est chargé par la trappe avant d'être tiré avec une platine à silex ou un autre mécanisme d'allumage externe. La conception robuste du dépeceur le place également parmi les armes gobelines les plus fiables.",
+};
+
+const fryingPan: Weapon = {
+    id: "fryingPan",
+    name: "Poêle à frire",
+    damageDie: 4,
+    damageType: DamageType.Bludgeoning,
+    fatal: 8,
+    hands: 1,
+    price: 1 * SP,
+    proficiency: "simpleWeapons",
+    group: "club",
+    bulk: "L",
+    description:
+        "La poêle à frire en fonte est un outil essentiel pour les halfelins aventuriers, les orpailleurs et les taverniers isolés.",
 };
 
 const glaive: Weapon = {
@@ -363,6 +416,24 @@ const greataxe: Weapon = {
     bulk: 2,
     description:
         'Cette grande hache d\'armes est trop lourde pour être maniée à une seule main. Beaucoup de grandes haches comprennent deux lames et sont souvent "barbues", avec un crochet à leur base pour augmenter la force de leur pouvoir tranchant.',
+};
+
+const halflingSlingStaff: Weapon = {
+    id: "halflingSlingStaff",
+    name: "Fustiballe de halfelin",
+    rarity: Rarity.Uncommon,
+    damageDie: 10,
+    damageType: DamageType.Bludgeoning,
+    traits: ["propulsif"],
+    hands: 2,
+    range: 16,
+    reload: 1,
+    price: 5 * GP,
+    proficiency: "martialWeapons",
+    group: "sling",
+    bulk: 1,
+    description:
+        "Ce bâton se termine par une fourche en forme de Y supportant une fronde. La longueur du bâton permet un excellent effet de levier lorsqu'on l'utilise à deux mains pour lancer des pierres ou des billes avec la fronde.",
 };
 
 const horseChopper: Weapon = {
@@ -497,6 +568,41 @@ const shortswort: Weapon = {
         "Ces lames se présentent dans toute une variété de formes et de styles, mais elles mesurent généralement 60 cm de long.",
 };
 
+const sling: Weapon = {
+    id: "sling",
+    name: "Fronde",
+    damageDie: 6,
+    damageType: DamageType.Bludgeoning,
+    traits: ["propulsif"],
+    hands: 1,
+    range: 10,
+    reload: 1,
+    price: 0,
+    proficiency: "simpleWeapons",
+    group: "sling",
+    bulk: "L",
+    description:
+        "Guère plus qu'une coupelle en cuir fixée à une paire de lanières, la fronde peut être utilisée pour lancer à distance des pierres lisses ou des billes de fronde.",
+};
+
+const spraysling: Weapon = {
+    id: "spraysling",
+    name: "Fronde à dispersion",
+    rarity: Rarity.Uncommon,
+    damageDie: 6,
+    damageType: DamageType.Bludgeoning,
+    traits: ["propulsif", "dispersion 1,5 m"],
+    hands: 1,
+    range: 4,
+    reload: 1,
+    price: 1 * GP,
+    proficiency: "martialWeapons",
+    group: "sling",
+    bulk: "L",
+    description:
+        "Une fronde à aspersion est similaire à une fronde ordinaire mais avec une coupelle plus large équipée d'une fine lame fixée sur les bords de la coupe. Lorsqu'elle est utilisée pour effectuer une attaque avec un paquet de granulés à aspersion spécialement préparés, le rasoir tranche le paquet et l'arme lance une volée de granulés cinglants.",
+};
+
 const warhammer: Weapon = {
     id: "warhammer",
     name: "Marteau de guerre",
@@ -526,11 +632,15 @@ export const weapons = {
     elvenBranchedSpear,
     elvenCurveBlade,
     falchion,
+    fightingStick,
+    filchersFork,
     flingflenser,
+    fryingPan,
     glaive,
     gnomeFlickmace,
     gnomeHookedHammer,
     greataxe,
+    halflingSlingStaff,
     horseChopper,
     kukri,
     longHammer,
@@ -539,6 +649,8 @@ export const weapons = {
     pick,
     rapier,
     shortswort,
+    sling,
+    spraysling,
     warhammer,
 } as const;
 

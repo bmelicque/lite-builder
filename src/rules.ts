@@ -12,6 +12,7 @@ import {
     type Passive,
 } from "./actions";
 import { callOnAncientBlood } from "./ancestries/dwarf";
+import { jinx } from "./ancestries/halfling";
 import {
     bardicLoreRule,
     lingeringComposition,
@@ -101,6 +102,7 @@ export const rules: Record<string, Rule> = {
     fleeing,
     frightened,
     highJump: { ...highJump, kind: "action" },
+    jinx: { ...jinx, kind: "action" },
     intimidatingGlare: passiveToGeneral(featToPassive(intimidatingGlare)),
     lingeringComposition,
     longJump: { ...longJump, kind: "action" },
