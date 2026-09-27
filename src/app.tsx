@@ -121,7 +121,7 @@ function AppRouter() {
 
 function Footer() {
     return (
-        <footer className="w-screen bg-contrasting text-white pt-8 pb-12 flex flex-col gap-4 items-center">
+        <footer className="mt-8 w-screen bg-contrasting text-white pt-8 pb-12 flex flex-col gap-4 items-center">
             <p>
                 Cette application est un logiciel libre distribué sous licence
                 MIT.

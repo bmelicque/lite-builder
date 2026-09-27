@@ -1,6 +1,7 @@
 import type { Action, Passive } from "./actions";
 import type { Attribute } from "./attributes";
 import type { Character } from "./character";
+import type { Weapon } from "./items/weapons";
 import { ProficiencyRank, type Proficiency } from "./proficiencies";
 import type { Recommendation } from "./recommendations";
 import type { Skill } from "./skills";
@@ -39,6 +40,7 @@ export type GrantedPassive = { kind: "passive" } & Passive;
 export function isGrantedPassive(m: Modifier): m is GrantedPassive {
     return m.kind === "passive";
 }
+export type GrantedWeapon = { kind: "weapon" } & Weapon;
 
 export type KeyAttribute = {
     kind: "keyAttribute";
@@ -136,6 +138,7 @@ export type Modifier =
     | ExtraSkill
     | GrantedAction
     | GrantedPassive
+    | GrantedWeapon
     | KeyAttribute
     | KnownItems
     | HpModifier

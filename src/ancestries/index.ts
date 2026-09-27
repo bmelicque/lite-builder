@@ -1,9 +1,11 @@
 import { dwarf } from "./dwarf";
+import { elf } from "./elf";
 import { gnome } from "./gnome";
+import { goblin } from "./goblin";
 import { human } from "./human";
 import { leshy } from "./leshy";
 import { orc } from "./orc";
 
 export { type Ancestry } from "./types";
 
-export const ancestries = { dwarf, gnome, human, leshy, orc };
+export const ancestries = { dwarf, elf, gnome, goblin, human, leshy, orc };

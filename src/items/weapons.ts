@@ -47,12 +47,14 @@ export type Weapon = {
         | "advancedWeapons";
     group:
         | "axe"
+        | "brawling"
         | "firearm"
         | "flail"
         | "hammer"
         | "knife"
         | "pick"
         | "polearm"
+        | "spear"
         | "sword";
     bulk: Bulk;
     description: string;
@@ -158,6 +160,43 @@ const clanPistol: Weapon = {
         "La tradition selon laquelle les nains affichent leur appartenance à un clan à l'aide de dagues de clan spécifiques remonte à des millénaires, mais de nombreux clans ont leur propre version de la tradition, les jeunes armuriers prometteurs revendiquant leur âge adulte en fabriquant une arme à feu personnelle spécifique à l'aide des traditions de forge uniques du clan. Perdre ou être forcé de rendre le pistolet de son clan est une honte terrible pour les nains qui le portent.",
 };
 
+const dawnsilverTree: Weapon = {
+    id: "dawnsilverTree",
+    name: "Arbre d'aubargent",
+    rarity: Rarity.Uncommon,
+    damageDie: 6,
+    damageType: DamageType.Piercing,
+    fatal: 10,
+    traits: ["commotion", "parade"],
+    hands: 2,
+    range: 30,
+    reload: 1,
+    price: 7 * GP,
+    proficiency: "martialWeapons",
+    group: "firearm",
+    bulk: 1,
+    description:
+        "Ni aubargent ni arbre, cette longue arme tire son nom des légendes elfes. Arme élégante, l'arbre d'aubargent ressemble tout de même un peu à un arbre. Sa crosse en éventail et son long et large canon renforcé par des anneaux métalliques permettent à celui qui le manie de parer les attaques au corps-à-corps tout en se repliant à une distance de tir suffisamment sûre.",
+};
+
+const dogSlicer: Weapon = {
+    id: "dogslicer",
+    name: "Tranchechien",
+    rarity: Rarity.Uncommon,
+    damageDie: 6,
+    damageType: DamageType.Slashing,
+    traits: ["traître"],
+    finesse: true,
+    agile: true,
+    hands: 1,
+    price: 1 * SP,
+    proficiency: "martialWeapons",
+    group: "sword",
+    bulk: "L",
+    description:
+        "Cette lame de fortune courte, incurvée et grossière, est souvent percée de trous pour en réduire le poids. C'est une arme prisée des gobelins.",
+};
+
 const dwarvenScattergun: Weapon = {
     id: "dwarvenScattergun",
     name: "Éparpilleur nain",
@@ -193,6 +232,41 @@ const dwarvenWarAxe: Weapon = {
         "Cette arme prisée des nains possède une grande tête décorée montée sur un manche épais. Cette puissante hache peut être utilisée à une ou à deux mains.",
 };
 
+const elvenBranchedSpear: Weapon = {
+    id: "elvenBranchedSpear",
+    name: "Lance ramifiée elfique",
+    rarity: Rarity.Uncommon,
+    damageDie: 6,
+    damageType: DamageType.Piercing,
+    deadly: 8,
+    traits: ["allonge"],
+    finesse: true,
+    hands: 2,
+    price: 3 * GP,
+    proficiency: "martialWeapons",
+    group: "spear",
+    bulk: 1,
+    description:
+        "Plusieurs branches courtes dépassent du manche de cette délicate lance, chacune étant inclinée vers l'avant et dotée d'une lame en forme de feuille.",
+};
+
+const elvenCurveBlade: Weapon = {
+    id: "elvenCurveBlade",
+    name: "Lame courbe elfique",
+    rarity: Rarity.Uncommon,
+    damageDie: 8,
+    damageType: DamageType.Slashing,
+    traits: ["percutant"],
+    finesse: true,
+    hands: 2,
+    price: 4 * GP,
+    proficiency: "martialWeapons",
+    group: "sword",
+    bulk: 2,
+    description:
+        "Version essentiellement plus longue du cimeterre, cette arme elfique traditionnelle possède une lame plus fine que celle de son cousin.",
+};
+
 const falchion: Weapon = {
     id: "falchion",
     name: "Cimeterre à deux mains",
@@ -206,6 +280,25 @@ const falchion: Weapon = {
     bulk: 2,
     description:
         "Cette arme est une version plus lourde, à deux mains, du cimeterre à lame courbe. Il est lesté vers l'extrémité de la lame, ce qui en fait une puissante arme tranchante.",
+};
+
+const flingflenser: Weapon = {
+    id: "flingflenser",
+    name: "Dépeceur",
+    rarity: Rarity.Uncommon,
+    damageDie: 6,
+    damageType: DamageType.Slashing,
+    fatal: 10,
+    traits: ["traître", "dispersion 1,5 m"],
+    hands: 2,
+    range: 6,
+    reload: 1,
+    price: 5 * GP,
+    proficiency: "advancedWeapons",
+    group: "firearm",
+    bulk: 1,
+    description:
+        "Un dépeceur est une arme de conception gobeline se terminant par un tube ovoïde avec une trappe et une poignée à l'extrémité étroite. Un faisceau de lames circulaires maintenues ensemble et attachées à un paquet de poudre noire par une fine lanière de cuir sert de munitions et est chargé par la trappe avant d'être tiré avec une platine à silex ou un autre mécanisme d'allumage externe. La conception robuste du dépeceur le place également parmi les armes gobelines les plus fiables.",
 };
 
 const glaive: Weapon = {
@@ -270,6 +363,23 @@ const greataxe: Weapon = {
     bulk: 2,
     description:
         'Cette grande hache d\'armes est trop lourde pour être maniée à une seule main. Beaucoup de grandes haches comprennent deux lames et sont souvent "barbues", avec un crochet à leur base pour augmenter la force de leur pouvoir tranchant.',
+};
+
+const horseChopper: Weapon = {
+    id: "horsechopper",
+    name: "Coupecheval",
+    rarity: Rarity.Uncommon,
+    damageDie: 8,
+    damageType: [DamageType.Piercing, DamageType.Slashing],
+    traits: ["allonge"],
+    additionalActions: [trip],
+    hands: 2,
+    price: 9 * SP,
+    proficiency: "martialWeapons",
+    group: "polearm",
+    bulk: 2,
+    description:
+        "Créée par les gobelins pour combattre les chevaux, cette arme est pour l'essentiel un long manche se terminant par une lame avec un gros crochet.",
 };
 
 const kukri: Weapon = {
@@ -409,13 +519,19 @@ export const weapons = {
     butcheringAxe,
     clanDagger,
     clanPistol,
+    dawnsilverTree,
+    dogSlicer,
     dwarvenScattergun,
     dwarvenWarAxe,
+    elvenBranchedSpear,
+    elvenCurveBlade,
     falchion,
+    flingflenser,
     glaive,
     gnomeFlickmace,
     gnomeHookedHammer,
     greataxe,
+    horseChopper,
     kukri,
     longHammer,
     orcKnuckleDagger,
