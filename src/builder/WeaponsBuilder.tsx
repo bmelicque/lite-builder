@@ -1,5 +1,9 @@
 import { useState } from "preact/hooks";
-import { gatherRecommendations, type Character } from "../character";
+import {
+    gatherRecommendations,
+    rateWeapon,
+    type Character,
+} from "../character";
 import {
     attackModifiers,
     isDexterityWeapon,
@@ -9,7 +13,7 @@ import {
 } from "../items/weapons";
 import RichText from "../RichText";
 import { price, Rarity } from "../items/utils";
-import { Attribute, type Attributes } from "../attributes";
+import { Attribute, type Attributes } from "../rules/attributes.ts";
 import { sort, unwrap } from "../utils";
 import { matchesRule, type Recommendation } from "../recommendations";
 import { usePartialCharacter } from "../Character.tsx";

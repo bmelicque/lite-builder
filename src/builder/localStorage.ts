@@ -1,6 +1,6 @@
 import { ancestries } from "../ancestries";
-import { computeAttributes } from "../attributes";
 import {
+    computeAttributes,
     newCharacter,
     type Character,
     type CharacterStatus,
@@ -8,7 +8,7 @@ import {
 import { classes } from "../classes";
 import { selectArmor } from "../items/armors";
 import { weapons, type Weapon } from "../items/weapons";
-import { skills } from "../skills";
+import { skills } from "../rules/skills";
 
 export function saveCharacter(character: Partial<Character>) {
     localStorage.setItem(character.id!, JSON.stringify(toData(character)));
@@ -129,6 +129,8 @@ function loadCharacterStatus(data: unknown): CharacterStatus {
     return {
         damage: loadInt(parsed.damage),
         temporaryHP: loadInt(parsed.temporaryHP),
+        // FIXME:
+        usedSlots: {},
     };
 }
 function loadString(data: unknown): string {

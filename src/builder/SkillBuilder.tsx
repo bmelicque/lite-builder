@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { skills, type Skill } from "../skills";
+import { skills, type Skill } from "../rules/skills.ts";
 import { handlePreselected } from "./utils";
 import { usePartialCharacter } from "../Character.tsx";
 import SubmitButton from "../components/SubmitButton";

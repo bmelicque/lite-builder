@@ -1,8 +1,8 @@
 import type { Action } from "../actions";
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import { weapons } from "../items/weapons";
 import type { GrantedPassive } from "../modifiers";
-import { acrobatics, stealth } from "../skills";
+import { acrobatics, stealth } from "../rules/skills";
 import { passiveHeritage, Size, type Ancestry } from "./types";
 
 const keenEyes: GrantedPassive = {

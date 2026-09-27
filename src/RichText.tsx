@@ -1,4 +1,3 @@
-import { loadCharacter } from "./builder/localStorage";
 import ActionView from "./components/ActionView";
 import Popover from "./components/Popover";
 import { rules, type Rule } from "./rules";

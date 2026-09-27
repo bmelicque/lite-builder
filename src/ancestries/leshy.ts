@@ -1,5 +1,5 @@
-import { Attribute } from "../attributes";
-import { nature, stealth } from "../skills";
+import { Attribute } from "../rules/attributes";
+import { nature, stealth } from "../rules/skills";
 import { Size, type Ancestry, type Heritage } from "./types";
 
 const leafText =

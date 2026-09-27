@@ -1,7 +1,7 @@
-import type { Attribute } from "../attributes";
+import type { Attribute } from "../rules/attributes";
 import type { Weapon } from "../items/weapons";
 import type { Modifier } from "../modifiers";
-import type { Skill } from "../skills";
+import type { Skill } from "../rules/skills";
 import type { Enum } from "../types";
 
 export const Size = {

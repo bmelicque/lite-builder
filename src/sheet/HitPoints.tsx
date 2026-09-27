@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes.ts";
 import {
     gatherModifiers,
     newCharacterStatus,
@@ -18,7 +18,7 @@ export default function () {
         dispatch({ kind: "takeDamage", damage });
     const healDamage = (value: number) => dispatch({ kind: "heal", value });
     const setTemporaryHP = (quantity: number) =>
-        dispatch({ kind: "gainTemporaryHP", quantity });
+        dispatch({ kind: "setTemporaryHP", quantity });
     return (
         <div className="flex flex-col gap-2">
             <div className="flex-grow border-2 h-12 py-px rounded-xl inset-shadow shadow-primary font-bold text-2xl grid place-content-center">

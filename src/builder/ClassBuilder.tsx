@@ -1,4 +1,4 @@
-import type { Attribute } from "../attributes";
+import type { Attribute } from "../rules/attributes.ts";
 import type { Character } from "../character";
 import { usePartialCharacter } from "../Character.tsx";
 import { type Class, classes } from "../classes";

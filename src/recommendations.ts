@@ -1,3 +1,8 @@
+type NotRecommendation = {
+    kind: "not";
+    value: RecommendationRule;
+};
+
 type OrRecommendation = {
     kind: "or";
     options: RecommendationRule[];
@@ -23,6 +28,7 @@ type ContainsRecommendation = {
 type RecommendationRule =
     | ContainsRecommendation
     | HasRecommendation
+    | NotRecommendation
     | OrRecommendation
     | ValueRecommendation;
 
@@ -82,6 +88,8 @@ export function matchesRule(
         }
         case "has":
             return rule.fieldName in o;
+        case "not":
+            return !matchesRule(rule.value, o);
         case "or":
             for (const r of rule.options) if (matchesRule(r, o)) return true;
             return false;

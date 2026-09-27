@@ -1,7 +1,7 @@
 import type { Action } from "../actions";
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import { weapons } from "../items/weapons";
-import { crafting, religion } from "../skills";
+import { crafting, religion } from "../rules/skills";
 import { Size, type Ancestry, type Heritage } from "./types";
 
 export const callOnAncientBlood: Action = {

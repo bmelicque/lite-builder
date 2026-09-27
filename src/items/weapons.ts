@@ -1,5 +1,5 @@
 import { disarm, shove, trip, type Action } from "../actions";
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import { gatherModifiers, type Character } from "../character";
 import { isProficiency } from "../modifiers";
 import { proficiencyValue } from "../proficiencies";
@@ -38,6 +38,7 @@ export type Weapon = {
     hands: number;
     twoHanded?: number;
     range?: number;
+    thrown?: number;
     reload?: number;
     price: number;
     proficiency:
@@ -205,7 +206,7 @@ const dwarvenScattergun: Weapon = {
     rarity: Rarity.Uncommon,
     damageDie: 8,
     damageType: DamageType.Piercing,
-    traits: ["commotion", "recul", "dispersion_3_m"],
+    traits: ["commotion", "recul", "dispersion 3 m"],
     hands: 2,
     range: 10,
     reload: 1,

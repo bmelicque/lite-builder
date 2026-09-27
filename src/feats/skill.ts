@@ -1,6 +1,6 @@
 import type { Action, Passive } from "../actions";
 import { ProficiencyRank } from "../proficiencies";
-import { athletics, diplomacy, thievery } from "../skills";
+import { athletics, diplomacy, thievery } from "../rules/skills";
 
 export const bonMot: Action = {
     id: "bonMot",

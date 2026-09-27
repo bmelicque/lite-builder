@@ -1,4 +1,4 @@
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import { bonMot, dirtyTrick, fascinatingPerformance } from "../feats/skill";
 import { featToPassive } from "../feats/types";
 import {
@@ -9,6 +9,7 @@ import {
     type GrantedPassive,
 } from "../modifiers";
 import { Flag, type Class } from "./types";
+import type { Recommendation } from "../recommendations";
 
 const confidentFinisher: GrantedAction = {
     kind: "action",
@@ -75,6 +76,14 @@ const youreNext: GrantedAction = {
         "Après avoir abattu un adversaire, vous promettez à un autre de venir le chercher ensuite. Faites un test d'Intimidation avec un bonus de circonstances de +2 pour [Démoraliser](demoralize) une unique créature que vous pouvez voir et qui peut vous voir. Si vous êtes légendaire en Intimidation, vous pouvez utiliser ce pouvoir par une action gratuite ayant le même déclencheur.",
 };
 
+const swashbucklerWeapon: Recommendation = {
+    for: "weapon",
+    value: {
+        kind: "not",
+        value: { kind: "has", fieldName: "range" },
+    },
+};
+
 export const swashbuckler: Class = {
     id: "swashbuckler",
     img: "./classes/swashbuckler.png",
@@ -104,6 +113,7 @@ export const swashbuckler: Class = {
         confidentFinisher,
         panache,
         stylishCombatant,
+        { kind: "recommendation", ...swashbucklerWeapon },
     ],
     firstChoice: {
         title: "Style de bretteur",

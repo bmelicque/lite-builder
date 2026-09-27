@@ -1,5 +1,5 @@
 import type { Action } from "../actions";
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes.ts";
 import { useCharacter } from "../Character.tsx";
 import { gatherModifiers, type Character } from "../character";
 import ActionView from "../components/ActionView";

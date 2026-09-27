@@ -1,5 +1,6 @@
 import { createContext } from "preact";
 import {
+    computeAttributes,
     newCharacter,
     newCharacterStatus,
     type Character,
@@ -20,9 +21,8 @@ import type { Ancestry } from "./ancestries";
 import type { Heritage } from "./ancestries/types";
 import type { Class } from "./classes";
 import type { ClassChoiceOption } from "./classes/types";
-import type { Skill } from "./skills";
+import type { Skill } from "./rules/skills";
 import type { Weapon } from "./items/weapons";
-import { computeAttributes } from "./attributes";
 import { selectArmor } from "./items/armors";
 import { omit } from "./utils";
 import { getSlotCount } from "./sheet/Slots";

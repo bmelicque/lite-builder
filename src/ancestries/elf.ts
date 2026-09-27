@@ -1,6 +1,6 @@
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import { weapons } from "../items/weapons";
-import { arcana, nature } from "../skills";
+import { arcana, nature } from "../rules/skills";
 import { detectMagic } from "../spells/cantrips";
 import { spellToModifier } from "../spells/types";
 import { Size, type Ancestry, type Heritage } from "./types";

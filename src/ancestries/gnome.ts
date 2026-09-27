@@ -1,6 +1,6 @@
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import { weapons } from "../items/weapons";
-import { crafting, performance } from "../skills";
+import { crafting, performance } from "../rules/skills";
 import { Size, type Ancestry, type Heritage } from "./types";
 
 const chameleonText =

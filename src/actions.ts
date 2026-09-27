@@ -1,4 +1,4 @@
-import { athletics, intimidation, type Skill } from "./skills";
+import { athletics, intimidation, type Skill } from "./rules/skills";
 
 export type ActionCount =
     | "reaction"

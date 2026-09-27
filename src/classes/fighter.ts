@@ -1,6 +1,6 @@
 import { athleticsAce } from "../aceSkills";
 import type { Action } from "../actions";
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import {
     bucklerActions,
     bucklerHp,

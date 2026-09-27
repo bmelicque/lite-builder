@@ -1,6 +1,6 @@
 import type { Character } from "../character";
 import { isProficiency } from "../modifiers";
-import { skills, type Skill } from "../skills";
+import { skills, type Skill } from "../rules/skills";
 
 type Preselected = {
     skills: Skill[];

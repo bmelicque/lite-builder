@@ -1,8 +1,8 @@
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import { handlePreselected } from "../builder/utils";
 import type { Character } from "../character";
 import { getProficiency } from "../proficiencies";
-import { acrobatics, athletics, stealth, thievery } from "../skills";
+import { acrobatics, athletics, stealth, thievery } from "../rules/skills";
 import { unwrap } from "../utils";
 
 type ArmorProficiency =

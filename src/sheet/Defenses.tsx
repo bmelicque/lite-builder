@@ -1,4 +1,4 @@
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import { gatherModifiers, type Character } from "../character";
 import { computeArmorAC } from "../items/armors";
 import { isResistance } from "../modifiers";

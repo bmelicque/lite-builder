@@ -1,8 +1,8 @@
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import { combatClimber } from "../feats/skill";
 import { featToPassive } from "../feats/types";
 import { DamageType, weapons } from "../items/weapons";
-import { nature, stealth } from "../skills";
+import { nature, stealth } from "../rules/skills";
 import { Size, type Ancestry, type Heritage } from "./types";
 
 const charhide: Heritage = {

@@ -2,7 +2,7 @@ import { dieHard } from "../feats/general";
 import { intimidatingGlare } from "../feats/skill";
 import { weapons } from "../items/weapons";
 import { trained } from "../modifiers";
-import { athletics, survival } from "../skills";
+import { athletics, survival } from "../rules/skills";
 import { Size, type Ancestry, type Heritage } from "./types";
 
 const battleReady: Heritage = {

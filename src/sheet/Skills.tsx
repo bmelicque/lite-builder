@@ -1,4 +1,4 @@
-import { Attribute } from "../attributes";
+import { Attribute } from "../rules/attributes";
 import type { Character } from "../character";
 import { getProficiency } from "../proficiencies";
 import {
@@ -8,7 +8,7 @@ import {
     stealth,
     thievery,
     type Skill,
-} from "../skills";
+} from "../rules/skills";
 import Proficiency from "./Proficiency";
 
 type Props = { character: Character };

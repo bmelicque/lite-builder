@@ -1,5 +1,5 @@
 import type { ActionCount } from "../actions";
-import type { Attribute } from "../attributes";
+import type { Attribute } from "../rules/attributes";
 import type { Modifier } from "../modifiers";
 import type { Enum } from "../types";
 

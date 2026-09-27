@@ -1,10 +1,10 @@
 import type { Action, Passive } from "./actions";
-import type { Attribute } from "./attributes";
+import type { Attribute } from "./rules/attributes";
 import type { Character } from "./character";
 import type { Weapon } from "./items/weapons";
 import { ProficiencyRank, type Proficiency } from "./proficiencies";
 import type { Recommendation } from "./recommendations";
-import type { Skill } from "./skills";
+import type { Skill } from "./rules/skills";
 
 /**
  * Modifies an existing action
