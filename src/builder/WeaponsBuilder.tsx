@@ -1,9 +1,5 @@
 import { useState } from "preact/hooks";
-import {
-    gatherRecommendations,
-    rateWeapon,
-    type Character,
-} from "../character";
+import { gatherRecommendations, type Character } from "../character";
 import {
     attackModifiers,
     isDexterityWeapon,

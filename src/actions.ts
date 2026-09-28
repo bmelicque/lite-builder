@@ -25,8 +25,10 @@ export type Action = {
         | "reaction";
     actions?: ActionCount;
     skill?: Skill;
+    proficiency?: string;
     attack?: boolean;
     modifiers?: string;
+    range?: number;
     text: string;
 };
 

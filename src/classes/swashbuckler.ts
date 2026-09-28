@@ -217,9 +217,8 @@ export const swashbuckler: Class = {
 function addBravado(to: string): ActionModifier {
     return {
         kind: "actionModifier",
-        actionId: to,
-        modification: "push",
+        selector: { kind: "id", id: to },
+        modification: { kind: "push", value: "bravade" },
         onField: "traits",
-        value: "bravade",
     };
 }

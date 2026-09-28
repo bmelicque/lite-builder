@@ -6,16 +6,24 @@ import { ProficiencyRank, type Proficiency } from "./proficiencies";
 import type { Recommendation } from "./recommendations";
 import type { Skill } from "./rules/skills";
 
+type ActionSelector =
+    | { kind: "id"; id: string }
+    | { kind: "trait"; value: string };
+type Modification =
+    | { kind: "push"; value: any }
+    | { kind: "replace"; value: any };
 /**
  * Modifies an existing action
  */
 export type ActionModifier = {
     kind: "actionModifier";
-    actionId: string;
-    modification: "push";
+    selector: ActionSelector;
     onField: string;
-    value: any;
+    modification: Modification;
 };
+export function isActionModifier(m: Modifier): m is ActionModifier {
+    return m.kind === "actionModifier";
+}
 
 export type AttributeRecommandation = {
     kind: "attributeRecommendation";

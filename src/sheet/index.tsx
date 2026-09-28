@@ -3,7 +3,12 @@ import { Attribute } from "../rules/attributes.ts";
 import { useCharacter } from "../Character.tsx";
 import { gatherModifiers, type Character } from "../character";
 import ActionView from "../components/ActionView";
-import { isGrantedAction, isSense } from "../modifiers";
+import {
+    isActionModifier,
+    isGrantedAction,
+    isSense,
+    type ActionModifier,
+} from "../modifiers";
 import { getProficiency } from "../proficiencies";
 import { omit, sort } from "../utils";
 import Defenses from "./Defenses";
@@ -21,7 +26,10 @@ export default function Sheet() {
     const weaponActions = character.weapons.flatMap((w) =>
         weaponToActions(character, w),
     );
-    const actions = [...grantedActions, ...weaponActions];
+    const actionModifiers = gatherModifiers(character).filter(isActionModifier);
+    const actions = [...grantedActions, ...weaponActions].map((a) =>
+        applyModifiers(actionModifiers, a),
+    );
     return (
         <div className="max-w-[65ch] mx-auto mb-8 px-3 flex flex-col">
             <section className="grid grid-cols-2 gap-4">
@@ -65,6 +73,29 @@ export default function Sheet() {
             <Skills character={character} />
         </div>
     );
+}
+function applyModifiers(mods: ActionModifier[], action: Action): Action {
+    return mods
+        .filter((m) => appliesToAction(m, action))
+        .reduce((action, mod) => applyModifier(mod, action), action);
+}
+function appliesToAction(mod: ActionModifier, action: Action): boolean {
+    switch (mod.selector.kind) {
+        case "id":
+            return action.id === mod.selector.id;
+        case "trait":
+            return action.traits?.includes(mod.selector.value) ?? false;
+    }
+}
+function applyModifier(mod: ActionModifier, action: Action): Action {
+    switch (mod.modification.kind) {
+        case "push":
+            (action as any)[mod.onField].push(mod.modification.value);
+            return action;
+        case "replace":
+            (action as any)[mod.onField] = mod.modification.value;
+            return action;
+    }
 }
 
 export function CharacterInfo({ character }: { character: Character }) {

@@ -66,7 +66,7 @@ function RichToken({ token, stack }: TokenProps) {
         return <strong>{token.slice(2, -2)}</strong>;
     }
     if (token.startsWith("_") && token.endsWith("_")) {
-        return <div>COUCOU</div>;
+        return <span className="italic">{token.slice(1, -1)}</span>;
     }
     let match;
     if ((match = token.match(/\[(.*?)\]\((.*?)\)/))) {
@@ -81,6 +81,16 @@ function Evaluate({ expr }: { expr: string }) {
     return <span>{evaluate(expr)}</span>;
 }
 function evaluate(expr: string): number {
+    // FIXME:
+    const level = 1;
+    expr = expr.replace(/steps\(([^()]*)\)/g, (sub) =>
+        sub
+            .slice(6, -1)
+            .split(",")
+            .map((x) => parseInt(x))
+            .reduce((count, thresh) => (level >= thresh ? ++count : count), 1)
+            .toString(),
+    );
     expr = expr.replace(/floor\(([^()]*)\)/g, (sub) =>
         Math.floor(evaluate(sub.slice(6, -1))).toString(),
     );
@@ -98,13 +108,17 @@ function evaluate(expr: string): number {
             return operators?.[i - 1] === "/" ? res * c : res / c;
         }, evaluate(operands[0]));
     }
-    if (expr.includes("+")) {
-        const operands = expr.split("+");
-        return operands.reduce((res, cur) => res + evaluate(cur), 0);
+    if (expr.match(/[+-]/)) {
+        const operators = expr.match(/([+-])/g);
+        const operands = expr.split(/[+-]/);
+        return operands.slice(1).reduce((res, cur, i) => {
+            const c = evaluate(cur);
+            return operators?.[i - 1] === "+" ? res + c : res - c;
+        }, evaluate(operands[0]));
     }
     expr = expr.trim();
     // FIXME:
-    if (expr === "level") return 1;
+    if (expr === "level") return level;
     return parseInt(expr);
 }
 

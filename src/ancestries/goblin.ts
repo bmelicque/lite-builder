@@ -8,7 +8,7 @@ import { Size, type Ancestry, type Heritage } from "./types";
 const charhide: Heritage = {
     id: "charhide",
     name: "Gobelin peaud'charbon",
-    text: "Vos ancêtres ont toujours eu une connexion avec le feu et une peau plus épaisse que la norme, qui vous permet de mieux résister aux flammes. Vous obtenez une résistance au feu égale à la moitié de votre niveau (avec un minimum de 1). Vous vous remettez également plus vite des brûlures causées par le feu. Votre test nu pour guérir des dégâts de feu persistants se fait contre un DD 10 au lieu de 15 et est réduit à un DD 5 si une autre créature utilise une action particulièrement adaptée pour vous aider.",
+    text: "Vos ancêtres ont toujours eu une connexion avec le feu et une peau plus épaisse que la norme, qui vous permet de mieux résister aux flammes. Vous vous remettez également plus vite des brûlures causées par le feu.",
     grants: [
         {
             kind: "resistance",
@@ -18,7 +18,7 @@ const charhide: Heritage = {
         {
             kind: "passive",
             name: "Gobelin peaud'charbon",
-            text: "Vos ancêtres ont toujours eu une connexion avec le feu et une peau plus épaisse que la norme. Vous vous remettez plus vite des brûlures causées par le feu. Votre test nu pour guérir des dégâts de feu persistants se fait contre un DD 10 au lieu de 15 et est réduit à un Test nu, DD 5 si une autre créature utilise une action particulièrement adaptée pour vous aider.",
+            text: "Vous vous remettez plus vite des brûlures causées par le feu. Le DD du test pour guérir des dégâts de feu persistants est réduit de 5.",
         },
     ],
 };
