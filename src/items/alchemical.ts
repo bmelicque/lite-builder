@@ -87,9 +87,10 @@ export const glueBomb: Action = {
     category: "alchemy",
     actions: "two",
     text:
-        "Une bombe collante est un mécanisme explosif inoffensif contenant des substances collantes. Lorsque vous touchez une créature avec une bombe collante, cette créature subit une pénalité de statut de -3 mètres à ses Vitesses pendant 1 minute. Le DD pour [S'Échapper](escape) est de 17.\n" +
-        "Sur un coup critique, une créature en contact avec une surface solide y reste collée et [Immobilisée](immobilized) pendant 1 round et une créature qui vole grâce à des ailes voient ces dernières enchevêtrées et se pose au sol sans se blesser, incapable de Voler de nouveau pendant 1 round. La bombe collante est inefficace lorsqu'elle est utilisée sur une créature qui se trouve dans l'eau.\n" +
-        "La cible peut mettre un terme à l'effet en S'échappant ou en passant un total de 3 actions Interagir à éliminer soigneusement la substance collante. Ces actions Interagir ne sont pas obligatoirement consécutives et d'autres créatures peuvent les fournir.",
+        "**Portée** 6 mètres.\n" +
+        // EDITED
+        "Une bombe collante est un mécanisme explosif inoffensif contenant des substances collantes. Lorsque vous touchez une créature avec une bombe collante, cette créature subit une pénalité de statut de -3 mètres à ses Vitesses pendant 1 minute.\n" +
+        "La cible peut mettre un terme à l'effet en [S'Échappant](escape) (DD 17), ou bien en passant un total de 3 actions Interagir à éliminer soigneusement la substance collante.\n",
 };
 
 export const smokeBall: Action = {

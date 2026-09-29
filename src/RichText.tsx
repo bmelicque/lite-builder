@@ -113,7 +113,7 @@ function evaluate(expr: string): number {
         const operands = expr.split(/[+-]/);
         return operands.slice(1).reduce((res, cur, i) => {
             const c = evaluate(cur);
-            return operators?.[i - 1] === "+" ? res + c : res - c;
+            return operators?.[i] === "+" ? res + c : res - c;
         }, evaluate(operands[0]));
     }
     expr = expr.trim();

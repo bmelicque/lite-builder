@@ -36,6 +36,7 @@ export default function Sheet() {
     const actions = [...grantedActions, ...weaponActions].map((a) =>
         applyModifiers(actionModifiers, a),
     );
+    updateAlchemicalBombs(character, actions);
     return (
         <div className="max-w-[65ch] mx-auto mb-8 px-3 flex flex-col">
             <section className="grid grid-cols-2 gap-4">
@@ -260,4 +261,21 @@ function setSpellModifier(character: Character, action: Action) {
         action.modifiers = `DD ${10 + p + attribute}`;
     }
     return;
+}
+function updateAlchemicalBombs(character: Character, actions: Action[]) {
+    const proficiencyRank = Math.max(
+        getProficiency(character, "martialWeapons"),
+        getProficiency(character, "alchemicalBombs"),
+    );
+    const proficiency = proficiencyRank && 2 * proficiencyRank + 1;
+    const first = proficiency + getAttributes(character)[Attribute.Dexterity];
+    const modifier = formatModifiers(first, -5);
+    actions
+        .filter((a) => a.traits?.includes("bombe"))
+        .forEach((b) => updateAlchemicalBomb(b, modifier));
+}
+function updateAlchemicalBomb(bomb: Action, modifier: string) {
+    console.log(bomb.name);
+    bomb.category = "strike";
+    bomb.modifiers = modifier;
 }
