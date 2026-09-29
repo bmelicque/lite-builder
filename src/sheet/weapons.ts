@@ -1,11 +1,11 @@
 import type { Action } from "../actions";
 import { Attribute } from "../rules/attributes";
-import type { Character } from "../character";
 import {
-    printDamageType,
+    getAttributes,
     weaponProficiencyBonus,
-    type Weapon,
-} from "../items/weapons";
+    type Character,
+} from "../character";
+import { printDamageType, type Weapon } from "../items/weapons";
 
 export function weaponToActions(
     character: Character,
@@ -80,14 +80,14 @@ function getAttackAttributeValue(
     switch (kind) {
         case "melee":
         case "two-handed":
-            if (!finesse) return character.attributes[Attribute.Strength];
+            if (!finesse) return getAttributes(character)[Attribute.Strength];
             return Math.max(
-                character.attributes[Attribute.Strength],
-                character.attributes[Attribute.Dexterity],
+                getAttributes(character)[Attribute.Strength],
+                getAttributes(character)[Attribute.Dexterity],
             );
         case "thrown":
         case "ranged":
-            return character.attributes[Attribute.Dexterity];
+            return getAttributes(character)[Attribute.Dexterity];
     }
 }
 
@@ -96,7 +96,7 @@ function strBonus(character: Character, kind: StrikeKind): string {
         case "melee":
         case "two-handed":
         case "thrown":
-            const bonus = character.attributes[Attribute.Strength];
+            const bonus = getAttributes(character)[Attribute.Strength];
             if (bonus > 0) return `+${bonus}`;
             if (bonus < 0) return bonus.toString();
             return "";

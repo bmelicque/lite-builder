@@ -1,10 +1,12 @@
 import { ancestries, type Ancestry } from "../ancestries";
-import { usePartialCharacter } from "../Character.tsx";
+import { useCharacter } from "../Character.tsx";
+import SubmitButton from "../components/SubmitButton.tsx";
 import RichText from "../RichText";
 import { sort } from "../utils";
+import Grid from "./Grid.tsx";
 
 export default function AncestryBuilder() {
-    const [_, dispatch] = usePartialCharacter();
+    const [_, dispatch] = useCharacter();
     const a = Object.values(ancestries).sort(sort);
     return (
         <section>
@@ -18,7 +20,7 @@ export default function AncestryBuilder() {
                 clé de son identité&nbsp;; elle façonne sa vision du monde et
                 l'aide à y trouver sa place.
             </p>
-            <div className="flex flex-wrap gap-4 mt-8">
+            <Grid>
                 {a.map((a) => (
                     <AncestryCard
                         ancestry={a}
@@ -27,7 +29,7 @@ export default function AncestryBuilder() {
                         }
                     />
                 ))}
-            </div>
+            </Grid>
         </section>
     );
 }
@@ -38,10 +40,10 @@ type AncestryCardProps = {
 };
 function AncestryCard({ ancestry, onSelect }: AncestryCardProps) {
     return (
-        <article className="flex items-center max-w-[55ch] gap-2">
+        <article className="flex items-center gap-4">
             <img
                 src={ancestry.img}
-                className="w-[20ch] h-[20ch] aspect-square object-contain"
+                className="w-[15ch] h-[20ch] aspect-square object-contain"
             />
             <div className="flex flex-col gap-2 text-sm">
                 <header className="uppercase font-serif font-bold text-contrasting text-xl">
@@ -55,12 +57,7 @@ function AncestryCard({ ancestry, onSelect }: AncestryCardProps) {
                     <AncestryFlaw ancestry={ancestry} />
                 </div>
                 <AncestrySkills ancestry={ancestry} />
-                <button
-                    className="uppercase bg-contrasting self-center px-4 py-1 text-white rounded cursor-pointer"
-                    onClick={onSelect}
-                >
-                    Sélectionner
-                </button>
+                <SubmitButton onClick={onSelect}>Sélectionner</SubmitButton>
             </div>
         </article>
     );

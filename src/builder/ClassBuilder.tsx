@@ -1,10 +1,12 @@
 import type { Attribute } from "../rules/attributes.ts";
 import type { Character } from "../character";
-import { usePartialCharacter } from "../Character.tsx";
+import { useCharacter } from "../Character.tsx";
 import { type Class, classes } from "../classes";
+import Grid from "./Grid.tsx";
+import SubmitButton from "../components/SubmitButton.tsx";
 
 export default function ClassBuilder() {
-    const [character, dispatch] = usePartialCharacter();
+    const [character, dispatch] = useCharacter();
     const recommended = getRecommendedClasses(character);
     return (
         <section>
@@ -15,7 +17,7 @@ export default function ClassBuilder() {
                 capacité à se défaire de certains effets néfastes ou à les
                 éviter.
             </p>
-            <div className="flex flex-wrap gap-4 mt-8">
+            <Grid>
                 {recommended.map((c) => (
                     <ClassCard
                         class={c}
@@ -24,15 +26,16 @@ export default function ClassBuilder() {
                         }
                     />
                 ))}
-            </div>
+            </Grid>
         </section>
     );
 }
 
 function getRecommendedClasses(character: Partial<Character>): Class[] {
     const flaw = character.ancestry!.attributes.flaw;
-    if (!flaw) return classes;
-    return classes.filter((c) => !c.forbiddenFlaws?.includes(flaw));
+    const c = Object.values(classes);
+    if (!flaw) return c;
+    return c.filter((c) => !c.forbiddenFlaws?.includes(flaw));
 }
 
 type ClassCardProps = {
@@ -41,7 +44,7 @@ type ClassCardProps = {
 };
 function ClassCard({ class: class_, onSelect }: ClassCardProps) {
     return (
-        <article className="flex items-center max-w-[55ch] gap-2">
+        <article className="flex items-center gap-2">
             <img
                 src={class_.img}
                 className="w-[20ch] h-full aspect-square object-contain"
@@ -57,12 +60,7 @@ function ClassCard({ class: class_, onSelect }: ClassCardProps) {
                 </div>
                 <KeyAttributes attr={class_.keyAttributes} />
                 <div>{class_.summary}</div>
-                <button
-                    className="uppercase bg-contrasting self-center px-4 py-1 text-white rounded cursor-pointer"
-                    onClick={onSelect}
-                >
-                    Sélectionner
-                </button>
+                <SubmitButton onClick={onSelect}>Sélectionner</SubmitButton>
             </div>
         </article>
     );

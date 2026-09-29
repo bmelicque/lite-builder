@@ -1,7 +1,6 @@
 import { Attribute } from "../rules/attributes";
 import { handlePreselected } from "../builder/utils";
-import type { Character } from "../character";
-import { getProficiency } from "../proficiencies";
+import { getAttributes, getProficiency, type Character } from "../character";
 import { acrobatics, athletics, stealth, thievery } from "../rules/skills";
 import { unwrap } from "../utils";
 
@@ -110,7 +109,16 @@ const armors = [
     skirtedChainMail,
 ];
 
-export function selectArmor(character: Partial<Character>): Armor {
+const ARMOR = Symbol();
+export function getArmor(character: Character): Armor {
+    //@ts-ignore
+    if (character[ARMOR] != null) return character[ARMOR];
+    const armor = selectArmor(character);
+    //@ts-ignore
+    character[ARMOR] = armor;
+    return armor;
+}
+function selectArmor(character: Character): Armor {
     const withPenalties = armors
         .filter((a) => givesPenaltyToChosenSkill(character, a))
         .reduce<[Armor, number] | null>(makeArmorReducer(character), null);
@@ -127,28 +135,25 @@ export function selectArmor(character: Partial<Character>): Armor {
         : withoutPenalties[0];
 }
 
-export function computeArmorAC(
-    character: Partial<Character>,
-    armor: Armor,
-): number {
+export function computeArmorAC(character: Character, armor: Armor): number {
     const proficiency = getProficiency(character, armor.proficiency);
     const proficiencyBonus = proficiency && proficiency * 2 + 1;
     const dex = Math.min(
-        character.attributes![Attribute.Dexterity],
+        getAttributes(character)[Attribute.Dexterity],
         armor.dexCap,
     );
     return 10 + proficiencyBonus + dex + armor.ac;
 }
 
 function givesPenaltyToChosenSkill(
-    character: Partial<Character>,
+    character: Character,
     armor: Armor,
 ): boolean {
     if (!armor.checkPenalty) return false;
 
     const meetsStrengthReq =
         armor.strengthReq == null ||
-        armor.strengthReq <= character.attributes![Attribute.Strength];
+        armor.strengthReq <= getAttributes(character)[Attribute.Strength];
 
     const skills = handlePreselected(character).skills.concat(
         unwrap(character.skills),
@@ -167,7 +172,7 @@ function givesPenaltyToChosenSkill(
     return false;
 }
 
-function makeArmorReducer(character: Partial<Character>) {
+function makeArmorReducer(character: Character) {
     return (best: [Armor, number] | null, cur: Armor): [Armor, number] => {
         const ac = computeArmorAC(character, cur);
         if (!best) return [cur, ac];

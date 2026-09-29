@@ -1030,3 +1030,8 @@ zimmerframe@^1.1.4:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/zimmerframe/-/zimmerframe-1.1.5.tgz#8e34202e0419b424974a197aba746a8423a3fba8"
   integrity sha512-msJxIvYDYcoNL+PJsu+7qmpDWsYmAxTY+2TNYXXF0hzBzBk0BMecOqDOG/EckUoKCuKwObfbugIl8QpqHDXeFA==
+
+zod@^4.6.5:
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.6.5.tgz#e3af3edbdc260239c52f73caad05dbbffe6e82cd"
+  integrity sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==

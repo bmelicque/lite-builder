@@ -15,3 +15,17 @@ interface Named {
 export function sort(a: Named, b: Named) {
     return a.name.localeCompare(b.name);
 }
+
+export function retainMax<T>(array: T[], value: (e: T) => number): T[] {
+    const result: T[] = [];
+    let max = -Infinity;
+    for (const e of array) {
+        const v = value(e);
+        if (v > max) {
+            max = v;
+            result.length = 0;
+        }
+        if (v === max) result.push(e);
+    }
+    return result;
+}

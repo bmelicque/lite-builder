@@ -1,7 +1,8 @@
 import { useState } from "preact/hooks";
 import { Attribute } from "../rules/attributes.ts";
 import {
-    gatherModifiers,
+    getAttributes,
+    iterModifiers,
     newCharacterStatus,
     type Character,
 } from "../character";
@@ -48,10 +49,11 @@ export default function () {
 function getMaxHp(character: Character): number {
     const level = character.level;
 
-    const ancestry = character.ancestry.hp;
-    const class_ = character.class.hp * level;
-    const constitution = character.attributes[Attribute.Constitution] * level;
-    const extra = gatherModifiers(character)
+    const ancestry = character.ancestry!.hp;
+    const class_ = character.class!.hp * level;
+    const constitution =
+        getAttributes(character)[Attribute.Constitution] * level;
+    const extra = iterModifiers(character)
         .filter(isHpModifier)
         .map((m) => (m.perLevel ? m.value * level : m.value))
         .reduce((sum, value) => sum + value, 0);

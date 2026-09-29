@@ -55,19 +55,15 @@ const suddenCharge: Action = {
     category: "action",
     actions: "two",
     traits: ["sophistication"],
-    text: "Après un bref sprint, vous vous précipitez sur un adversaire en le frappant. Vous Vous Décplacez deux fois. Si vous terminez votre déplacement avec au moins un ennemi dans votre allonge au corps-à-corps, vous pouvez faire une Frappe au corps-à-corps. Vous pouvez utiliser la Charge soudaine pour Creuser, Escalader, Nager ou Voler au lieu de Vous Déplacer si vous possédez le type de déplacement correspondant.",
+    text: "Après un bref sprint, vous vous précipitez sur un adversaire en le frappant. Vous Vous Déplacez deux fois. Si vous terminez votre déplacement avec au moins un ennemi dans votre allonge au corps-à-corps, vous pouvez faire une Frappe au corps-à-corps. Vous pouvez utiliser la Charge soudaine pour Creuser, Escalader, Nager ou Voler au lieu de Vous Déplacer si vous possédez le type de déplacement correspondant.",
 };
 
 const strengthModifiers: Modifier[] = [
-    { kind: "keyAttribute", value: Attribute.Strength },
+    { kind: "attributeArray", array: [3, 1, 2, 0, 1, 0] },
     ...athleticsAce,
 ];
 const dexModifiers: Modifier[] = [
-    { kind: "keyAttribute", value: Attribute.Dexterity },
-    {
-        kind: "attributeRecommendation",
-        values: [Attribute.Strength],
-    },
+    { kind: "attributeArray", array: [1, 3, 2, 0, 1, 0] },
     {
         kind: "proficiency",
         in: "acrobatics",
@@ -107,7 +103,6 @@ export const fighter: Class = {
     hp: 10,
     skills: 3,
     grants: [
-        { kind: "secondaryAttribute", value: Attribute.Constitution },
         expert("perception"),
         expert("fortitude"),
         expert("reflexes"),

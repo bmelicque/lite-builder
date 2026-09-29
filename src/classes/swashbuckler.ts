@@ -5,6 +5,7 @@ import {
     expert,
     trained,
     type ActionModifier,
+    type AttributeArray,
     type GrantedAction,
     type GrantedPassive,
 } from "../modifiers";
@@ -84,6 +85,11 @@ const swashbucklerWeapon: Recommendation = {
     },
 };
 
+const charismaArray: AttributeArray = {
+    kind: "attributeArray",
+    array: [0, 3, 1, 0, 1, 2],
+};
+
 export const swashbuckler: Class = {
     id: "swashbuckler",
     img: "./classes/swashbuckler.png",
@@ -97,7 +103,6 @@ export const swashbuckler: Class = {
     hp: 10,
     skills: 4,
     grants: [
-        { kind: "keyAttribute", value: Attribute.Dexterity },
         expert("perception"),
         trained("fortitude"),
         expert("reflexes"),
@@ -128,7 +133,6 @@ export const swashbuckler: Class = {
                     { kind: "ancestryFlaw", isNot: Attribute.Charisma },
                 ],
                 grants: [
-                    { kind: "secondaryAttribute", value: Attribute.Charisma },
                     trained("performance"),
                     addBravado("perform"),
                     {
@@ -136,6 +140,7 @@ export const swashbuckler: Class = {
                         ...featToPassive(fascinatingPerformance),
                     },
                     focusedFascination,
+                    charismaArray,
                 ],
             },
             {
@@ -146,11 +151,11 @@ export const swashbuckler: Class = {
                     { kind: "ancestryFlaw", isNot: Attribute.Charisma },
                 ],
                 grants: [
-                    { kind: "secondaryAttribute", value: Attribute.Charisma },
                     trained("deception"),
                     addBravado("feint"),
                     addBravado("createADiversion"),
                     goadingFeint,
+                    charismaArray,
                 ],
             },
             {
@@ -161,11 +166,11 @@ export const swashbuckler: Class = {
                     { kind: "ancestryFlaw", isNot: Attribute.Charisma },
                 ],
                 grants: [
-                    { kind: "secondaryAttribute", value: Attribute.Charisma },
                     trained("diplomacy"),
                     { ...bonMot, kind: "action" },
                     addBravado("bonMot"),
                     oneForAll,
+                    { kind: "attributeArray", array: [0, 3, 1, 0, 1, 2] },
                 ],
             },
             {
@@ -176,10 +181,10 @@ export const swashbuckler: Class = {
                     { kind: "ancestryFlaw", isNot: Attribute.Charisma },
                 ],
                 grants: [
-                    { kind: "secondaryAttribute", value: Attribute.Charisma },
                     trained("intimidation"),
                     addBravado("demoralize"),
                     youreNext,
+                    { kind: "attributeArray", array: [0, 3, 1, 0, 1, 2] },
                 ],
             },
             {
@@ -191,6 +196,7 @@ export const swashbuckler: Class = {
                     { kind: "action", ...dirtyTrick },
                     addBravado("dirtyTrick"),
                     flyingBlade,
+                    { kind: "attributeArray", array: [1, 3, 2, 0, 1, 0] },
                 ],
             },
             {
@@ -201,13 +207,13 @@ export const swashbuckler: Class = {
                     { kind: "ancestryFlaw", isNot: Attribute.Strength },
                 ],
                 grants: [
-                    { kind: "secondaryAttribute", value: Attribute.Strength },
                     trained("athletics"),
                     addBravado("grab"),
                     addBravado("shove"),
                     addBravado("reposition"),
                     addBravado("trip"),
                     addBravado("disarm"),
+                    { kind: "attributeArray", array: [1, 3, 2, 0, 1, 0] },
                 ],
             },
         ],

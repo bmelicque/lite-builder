@@ -1,6 +1,5 @@
 import { createContext } from "preact";
 import {
-    computeAttributes,
     newCharacter,
     newCharacterStatus,
     type Character,
@@ -18,16 +17,15 @@ import {
     saveCharacter,
 } from "./builder/localStorage";
 import type { Ancestry } from "./ancestries";
-import type { Heritage } from "./ancestries/types";
 import type { Class } from "./classes";
 import type { ClassChoiceOption } from "./classes/types";
 import type { Skill } from "./rules/skills";
 import type { Weapon } from "./items/weapons";
-import { selectArmor } from "./items/armors";
 import { omit } from "./utils";
 import { getSlotCount } from "./sheet/Slots";
+import type { Heritage } from "./heritages/types";
 
-type CharacterContextValue = [Partial<Character>, Dispatch<CharacterAction>];
+type CharacterContextValue = [Character, Dispatch<CharacterAction>];
 const CharacterContext = createContext<CharacterContextValue | undefined>(
     undefined,
 );
@@ -60,18 +58,18 @@ type CharacterAction =
     | { kind: "regainSlot"; category: string };
 
 function characterReducer(
-    character: Partial<Character>,
+    character: Character,
     action: CharacterAction,
-): Partial<Character> {
+): Character {
     const state = characterReducerHelper(character, action);
     saveCharacter(state);
     return state;
 }
 
 function characterReducerHelper(
-    character: Partial<Character>,
+    character: Character,
     action: CharacterAction,
-): Partial<Character> {
+): Character {
     const status = character.status ?? newCharacterStatus();
 
     switch (action.kind) {
@@ -86,13 +84,11 @@ function characterReducerHelper(
         case "selectClass":
             return { ...character, class: action.class };
         case "selectFirstChoice":
-            return { ...character, firstClassChoice: action.option };
+            return { ...character, firstClassChoice: action.option.name };
         case "selectSecondChoice":
-            return { ...character, secondClassChoice: action.option };
+            return { ...character, secondClassChoice: action.option.name };
         case "selectSkills": {
             character = { ...character, skills: action.skills };
-            character.attributes = computeAttributes(character);
-            character.armor = selectArmor(character);
             return character;
         }
         case "selectWeapons":
@@ -177,9 +173,6 @@ export function CharacterProvider({ children }: { children: ReactNode }) {
     );
 }
 
-export function usePartialCharacter(): CharacterContextValue {
-    return useContext(CharacterContext)!;
-}
 export function useCharacter(): [Character, Dispatch<CharacterAction>] {
-    return useContext(CharacterContext) as any;
+    return useContext(CharacterContext)!;
 }

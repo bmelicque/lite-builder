@@ -1,5 +1,5 @@
 import { useCharacter } from "../Character.tsx";
-import { gatherModifiers, type Character } from "../character";
+import { iterModifiers, type Character } from "../character";
 import { isGrantedAction, isSlots } from "../modifiers";
 
 type Props = {
@@ -33,12 +33,13 @@ export default function Slots({ id }: Props) {
 }
 export function getSlotCount(character: Character, category: string): number {
     if (category === "focus") {
-        const spells = gatherModifiers(character)
+        const spells = iterModifiers(character)
             .filter(isGrantedAction)
-            .filter((a) => a.category === "focus").length;
+            .filter((a) => a.category === "focus")
+            .toArray().length;
         return Math.min(spells, 3);
     }
-    return gatherModifiers(character)
+    return iterModifiers(character)
         .filter(isSlots)
         .filter((s) => s.forCategory === category)
         .reduce((sum, cur) => sum + cur.quantity, 0);

@@ -1,10 +1,6 @@
 import { disarm, shove, trip, type Action } from "../actions";
-import { Attribute } from "../rules/attributes";
-import { gatherModifiers, type Character } from "../character";
-import { isProficiency } from "../modifiers";
-import { proficiencyValue } from "../proficiencies";
+import { Trait } from "../traits";
 import type { Enum } from "../types";
-import { unwrap } from "../utils";
 import { GP, Rarity, SP, type Bulk } from "./utils";
 
 export const DamageType = {
@@ -655,52 +651,38 @@ export const weapons = {
     warhammer,
 } as const;
 
-const familiarity = {
-    advancedWeapons: "martialWeapons",
-    martialWeapons: "simpleWeapons",
-    simpleWeapons: "simpleWeapons",
-    unarmedAttacks: "unarmedAttacks",
-};
-export function attackModifiers(
-    character: Partial<Character>,
-    weapon: Weapon,
-): string {
-    const proficiencyBonus = weaponProficiencyBonus(character, weapon);
-    const map = weapon.agile ? -4 : -5;
-    const first = proficiencyBonus + attribute(character, weapon);
-    const second = first + map;
-    const third = second + map;
-    return [first, second, third]
-        .map((m) => (m >= 0 ? `+${m}` : m.toString()))
-        .join("/");
-}
-export function weaponProficiencyBonus(
-    character: Partial<Character>,
-    weapon: Weapon,
-): number {
-    const category = character.ancestry?.familiarity.includes(weapon)
-        ? familiarity[weapon.proficiency]
-        : weapon.proficiency;
-    const proficiency = gatherModifiers(character)
-        .filter(isProficiency)
-        .filter((p) => p.in === category)
-        .reduce((max, cur) => Math.max(max, proficiencyValue[cur.rank]), 0);
-    return proficiency && 2 * proficiency + 1;
-}
-
-function attribute(character: Partial<Character>, weapon: Weapon): number {
-    const attributes = unwrap(character.attributes);
-    if (weapon.range) return attributes[Attribute.Dexterity];
-    if (!weapon.finesse) return attributes[Attribute.Strength];
-    return Math.max(
-        attributes[Attribute.Strength],
-        attributes[Attribute.Dexterity],
-    );
-}
-
 export function isStrengthWeapon(weapon: Weapon): boolean {
     return !weapon.range;
 }
 export function isDexterityWeapon(weapon: Weapon): boolean {
     return Boolean(weapon.finesse) || Boolean(weapon.range);
+}
+
+export function rateWeapon(weapon: Weapon): number {
+    let rating = (weapon.damageDie - 4) * 1.5;
+    if (Array.isArray(weapon.damageType))
+        rating += weapon.damageType.length - 1;
+    if (weapon.hands === 2) rating -= weapon.range ? 2 : 6;
+    if (weapon.agile) rating += weapon.damageDie === 4 ? 1 : 2;
+    if (weapon.deadly) rating += 2;
+    if (weapon.fatal) rating += 3;
+    if (weapon.twoHanded) rating += 1;
+    if (weapon.traits?.includes(Trait.Backstabber)) rating += 1;
+    if (weapon.traits?.includes(Trait.Backswing)) rating += 2;
+    if (weapon.traits?.includes(Trait.Forceful)) rating += 2;
+    if (weapon.traits?.includes(Trait.Kickback)) rating += 1;
+    if (weapon.traits?.includes(Trait.Parry)) rating += 2;
+    if (weapon.traits?.includes(Trait.Razing)) rating += 1;
+    if (weapon.traits?.includes(Trait.Reach)) rating += 3;
+    if (weapon.traits?.includes(Trait.Scatter5ft)) rating += 4;
+    if (weapon.traits?.includes(Trait.Scatter10ft)) rating += 5;
+    if (weapon.traits?.includes(Trait.Sweep)) rating += 1;
+    if (weapon.additionalActions?.includes(disarm)) rating += 1;
+    // TODO: if (weapon.additionalActions?.includes(grapple)) rating += 1;
+    if (weapon.additionalActions?.includes(shove)) rating += 1;
+    if (weapon.additionalActions?.includes(trip)) rating += 1;
+    if (weapon.thrown) rating += weapon.thrown <= 6 ? 1 : 2;
+    if (weapon.reload) rating -= 3;
+
+    return rating;
 }

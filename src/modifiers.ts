@@ -1,6 +1,4 @@
 import type { Action, Passive } from "./actions";
-import type { Attribute } from "./rules/attributes";
-import type { Character } from "./character";
 import type { Weapon } from "./items/weapons";
 import { ProficiencyRank, type Proficiency } from "./proficiencies";
 import type { Recommendation } from "./recommendations";
@@ -25,14 +23,12 @@ export function isActionModifier(m: Modifier): m is ActionModifier {
     return m.kind === "actionModifier";
 }
 
-export type AttributeRecommandation = {
-    kind: "attributeRecommendation";
-    values: Attribute[];
+export type AttributeArray = {
+    kind: "attributeArray";
+    array: number[];
 };
-export function isAttributeRecommendation(
-    m: Modifier,
-): m is AttributeRecommandation {
-    return m.kind === "attributeRecommendation";
+export function isAttributeArray(m: Modifier): m is AttributeArray {
+    return m.kind === "attributeArray";
 }
 
 export type ExtraSkill = Skill & { kind: "extraSkill" };
@@ -49,14 +45,6 @@ export function isGrantedPassive(m: Modifier): m is GrantedPassive {
     return m.kind === "passive";
 }
 export type GrantedWeapon = { kind: "weapon" } & Weapon;
-
-export type KeyAttribute = {
-    kind: "keyAttribute";
-    value: Attribute;
-};
-export function isKeyAttribute(m: Modifier): m is KeyAttribute {
-    return m.kind === "keyAttribute";
-}
 
 export type KnownItems = {
     kind: "knownItems";
@@ -102,18 +90,10 @@ export function isRecommendation(m: Modifier): m is RecommendationModifier {
 export type Resistance = {
     kind: "resistance";
     to: string;
-    value: (c: Character) => number;
+    value: (c: any) => number;
 };
 export function isResistance(m: Modifier): m is Resistance {
     return m.kind === "resistance";
-}
-
-export type SecondaryAttribute = {
-    kind: "secondaryAttribute";
-    value: Attribute;
-};
-export function isSecondaryAttribute(m: Modifier): m is SecondaryAttribute {
-    return m.kind === "secondaryAttribute";
 }
 
 export type Sense = {
@@ -142,19 +122,17 @@ export type SpeedModifier = {
 
 export type Modifier =
     | ActionModifier
-    | AttributeRecommandation
+    | AttributeArray
     | ExtraSkill
     | GrantedAction
     | GrantedPassive
     | GrantedWeapon
-    | KeyAttribute
     | KnownItems
     | HpModifier
     | HpBank
     | ProficiencyModifier
     | RecommendationModifier
     | Resistance
-    | SecondaryAttribute
     | Sense
     | Slots
     | SpeedModifier;

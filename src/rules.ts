@@ -11,8 +11,8 @@ import {
     type Action,
     type Passive,
 } from "./actions";
-import { callOnAncientBlood } from "./ancestries/dwarf";
-import { jinx } from "./ancestries/halfling";
+import { callOnAncientBlood } from "./heritages/dwarf";
+import { jinx } from "./heritages/halfling";
 import {
     bardicLoreRule,
     lingeringComposition,

@@ -1,5 +1,3 @@
-import { gatherModifiers, type Character } from "./character";
-import { isProficiency } from "./modifiers";
 import type { Enum } from "./types";
 
 export const ProficiencyRank = {
@@ -23,15 +21,3 @@ export const proficiencyValue = {
     [ProficiencyRank.Master]: 3,
     [ProficiencyRank.Legendary]: 4,
 };
-
-export function getProficiency(
-    character: Partial<Character>,
-    of: string,
-): number {
-    const isSelectedSkill = !!character.skills?.find((s) => s.id === of);
-    const values = gatherModifiers(character)
-        .filter(isProficiency)
-        .filter((p) => p.in === of)
-        .map((p) => proficiencyValue[p.rank]);
-    return values.length > 0 ? Math.max(...values) : isSelectedSkill ? 1 : 0;
-}

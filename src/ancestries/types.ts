@@ -3,6 +3,7 @@ import type { Weapon } from "../items/weapons";
 import type { Modifier } from "../modifiers";
 import type { Skill } from "../rules/skills";
 import type { Enum } from "../types";
+import type { Heritage } from "../heritages/types";
 
 export const Size = {
     Small: "Petit",
@@ -10,25 +11,6 @@ export const Size = {
     Large: "Grand",
 } as const;
 type Size = Enum<typeof Size>;
-
-export type Heritage = {
-    id: string;
-    name: string;
-    text: string;
-    grants: Modifier[];
-};
-export function passiveHeritage(
-    id: string,
-    name: string,
-    text: string,
-): Heritage {
-    return {
-        id,
-        name,
-        text,
-        grants: [{ kind: "passive", name, text }],
-    };
-}
 
 export type Ancestry = {
     id: string;

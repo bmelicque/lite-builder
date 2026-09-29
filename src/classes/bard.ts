@@ -82,7 +82,6 @@ export const bard: Class = {
     hp: 8,
     skills: 4,
     grants: [
-        { kind: "keyAttribute", value: Attribute.Charisma },
         expert("perception"),
         trained("fortitude"),
         trained("reflexes"),
@@ -103,6 +102,7 @@ export const bard: Class = {
         { kind: "action", ...counterPerformance },
         // TODO: counter performance
         { ...courageousAnthem, kind: "action" },
+        { kind: "attributeArray", array: [0, 1, 2, 1, 0, 3] },
     ],
     firstChoice: {
         title: "Muse",
@@ -124,14 +124,7 @@ export const bard: Class = {
                     "Votre muse est un mystère qui vous pousse à percer les secrets bien cachés de la vie et du multivers. Ces muses peuvent être des personnes que vous n'arrivez pas à cerner, des textes profondément chargés de symbolisme ou des paradoxes émotionnels qui soulignent le travail de toute une vie. L'art inspiré par une muse énigmatique peut être cryptique, inquiétant ou chargé de spéculations et de conspirations. En tant que barde ayant la muse énigmatique, vous soutenez vos alliés en leur apportant des connaissances, de l'inspiration et un soutien occulte.\n" +
                     "**Don de muse** [Connaissance bardique](bardicLore)\n" +
                     "**Sort de muse** [Coup assuré](sureStrike)",
-                grants: [
-                    bardicLore,
-                    {
-                        kind: "attributeRecommendation",
-                        values: [Attribute.Intelligence],
-                    },
-                    spellToModifier(sureStrike),
-                ],
+                grants: [bardicLore, spellToModifier(sureStrike)],
             },
             {
                 name: "Virtuose",

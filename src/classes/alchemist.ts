@@ -10,9 +10,23 @@ import {
     glueBomb,
     smokeBall,
 } from "../items/alchemical";
-import { expert, trained, type Modifier } from "../modifiers";
+import {
+    expert,
+    trained,
+    type AttributeArray,
+    type Modifier,
+} from "../modifiers";
 import { Attribute } from "../rules/attributes";
 import { Flag, type Class, type ClassChoiceOption } from "./types";
+
+const standardArray: AttributeArray = {
+    kind: "attributeArray",
+    array: [0, 2, 1, 3, 1, 0],
+};
+const mutagenistArray: AttributeArray = {
+    kind: "attributeArray",
+    array: [2, 1, 1, 3, 0, 0],
+};
 
 const quickBomber: Modifier = {
     kind: "actionModifier",
@@ -31,9 +45,8 @@ const bomber: ClassChoiceOption = {
         { kind: "action", ...acidFlask },
         { kind: "action", ...bottledLightning },
         { kind: "passive", name: "Artificier", text: bomberText },
-        { kind: "secondaryAttribute", value: Attribute.Dexterity },
-        { kind: "secondaryAttribute", value: Attribute.Constitution },
         quickBomber,
+        standardArray,
     ],
 };
 
@@ -49,6 +62,7 @@ const chirurgeon: ClassChoiceOption = {
         { kind: "action", ...antidote },
         { kind: "action", ...antiplague },
         { kind: "passive", name: "Chirurgien", text: chirurgeonText },
+        standardArray,
     ],
 };
 
@@ -65,8 +79,7 @@ const mutagenist: ClassChoiceOption = {
             name: "Mutagéniste",
             text: "Lorsque vous utilisez un mutagène, vous gagnez {{intelligence + floor(level/2)}} Points de vie temporaires. Ces Points de vie temporaires durent pendant 1 minute ou jusqu'à l'expiration de la durée du mutagène selon ce qui se produit en premier. Vous ne pouvez pas obtenir des Points de vie temporaires en buvant de nouveau un mutagène pendant 1 minute.",
         },
-        { kind: "secondaryAttribute", value: Attribute.Dexterity },
-        { kind: "secondaryAttribute", value: Attribute.Constitution },
+        mutagenistArray,
     ],
 };
 
@@ -82,6 +95,7 @@ const toxicologist: ClassChoiceOption = {
             name: "Toxicologue",
             text: "Vous pouvez appliquer un poison de blessure par une unique action (au lieu de deux). Il peut s'agir d'un objet que vous tenez déjà, ou vous pouvez Interagir pour en dégainer ou en fabriquer un dans le cadre de cette action unique. De plus, vous mélangez avec souplesse des composés alchimiques acides et toxiques. Vos objets imprégnés dotés du trait poison peuvent affecter les créatures immunisées contre le poison. Une créature subit des dégâts d'acide au lieu de dégâts de poison de vos objets imprégnés de cette façon si la créature est immunisée contre le poison ou si cela serait plus préjudiciable à la créature.",
         },
+        standardArray,
     ],
 };
 
@@ -117,7 +131,6 @@ export const alchemist: Class = {
         trained("lightArmor"),
         trained("mediumArmor"),
         trained("alchemistClassDC"),
-        { kind: "keyAttribute", value: Attribute.Intelligence },
         { kind: "action", ...alchemistsFire },
         { kind: "action", ...frostVial },
         { kind: "action", ...cheetahsElixir },

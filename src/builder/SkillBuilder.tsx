@@ -1,11 +1,13 @@
 import { useState } from "preact/hooks";
 import { skills, type Skill } from "../rules/skills.ts";
 import { handlePreselected } from "./utils";
-import { usePartialCharacter } from "../Character.tsx";
+import { useCharacter } from "../Character.tsx";
 import SubmitButton from "../components/SubmitButton";
+import { getAttributes, getProficiency, type Character } from "../character.ts";
+import Grid from "./Grid.tsx";
 
 export default function SkillBuilder() {
-    const [character, dispatch] = usePartialCharacter();
+    const [character, dispatch] = useCharacter();
     const [selected, setSelected] = useState<Skill[]>([]);
     const { skills: preselected, extra } = handlePreselected(character);
     const remaining = character.class!.skills + extra - (selected.length ?? 0);
@@ -31,7 +33,7 @@ export default function SkillBuilder() {
             <p className="text-center uppercase">
                 {remaining ? `Encore ${remaining} à choisir` : <br />}
             </p>
-            <div className="mt-2 grid grid-cols-[repeat(auto-fit,minmax(min(55ch,100%),1fr))] gap-x-16 gap-y-8">
+            <Grid>
                 {skills.map((s) => (
                     <SkillCard
                         skill={s}
@@ -40,7 +42,7 @@ export default function SkillBuilder() {
                         onSelect={() => toggleSkill(s)}
                     />
                 ))}
-            </div>
+            </Grid>
             <SubmitButton
                 disabled={remaining !== 0}
                 onClick={() =>
@@ -60,25 +62,30 @@ type SkillCardProps = {
     onSelect: () => void;
 };
 function SkillCard(props: SkillCardProps) {
+    const [character] = useCharacter();
     const border =
         props.preselected || props.selected
             ? "border border-contrasting rounded"
             : "border border-transparent";
     const button = props.preselected ? "" : "cursor-pointer";
+
+    const modifier = getSkillModifier(character, props.skill);
     return (
         <div className={border}>
             <div
                 className={button}
                 onClick={() => props.preselected || props.onSelect()}
             >
-                <article className="flex flex-col max-w-[65ch] gap-2 text-sm cursor-pointer px-4 pt-1 pb-2">
+                <article className="flex flex-col gap-2 text-sm cursor-pointer px-4 pt-1 pb-2">
                     <header className="flex justify-between uppercase font-serif font-bold text-contrasting text-xl">
                         {props.skill.name}
 
-                        {props.selected && (
-                            <div className="rounded-full bg-contrasting w-6 h-6 text-white text-center text-sm grid items-center">
-                                ✓
+                        {props.selected ? (
+                            <div>
+                                {toString(modifier)} → {toString(modifier + 3)}
                             </div>
+                        ) : (
+                            <div>{toString(modifier)}</div>
                         )}
                     </header>
                     <div>{props.skill.summary}</div>
@@ -86,4 +93,15 @@ function SkillCard(props: SkillCardProps) {
             </div>
         </div>
     );
+}
+
+function getSkillModifier(character: Character, skill: Skill) {
+    const rank = getProficiency(character, skill.id);
+    const p = rank ? 2 * rank + 1 : rank;
+    const attributeValue = getAttributes(character)[skill.attribute];
+    return p + attributeValue;
+}
+
+function toString(int: number): string {
+    return int >= 0 ? `+${int}` : int.toString();
 }

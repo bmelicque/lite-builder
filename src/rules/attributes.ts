@@ -16,3 +16,13 @@ export function newAttributes(): Attributes {
         Object.values(Attribute).map((a) => [a, 0]),
     ) as any;
 }
+export function attributesFromArray(array: number[]): Attributes {
+    return {
+        [Attribute.Strength]: array[0],
+        [Attribute.Dexterity]: array[1],
+        [Attribute.Constitution]: array[2],
+        [Attribute.Intelligence]: array[3],
+        [Attribute.Wisdom]: array[4],
+        [Attribute.Charisma]: array[5],
+    };
+}

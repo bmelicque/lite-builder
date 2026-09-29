@@ -1,11 +1,13 @@
-import { gatherModifiers, type Character } from "../character";
+import { iterModifiers, type Character } from "../character";
 import { isGrantedPassive, type GrantedPassive } from "../modifiers";
 import RichText from "../RichText";
 
 type Props = { character: Character };
 
 export default function Passives({ character }: Props) {
-    const passives = gatherModifiers(character).filter(isGrantedPassive);
+    const passives = iterModifiers(character)
+        .filter(isGrantedPassive)
+        .toArray();
     if (passives.length === 0) return <></>;
     return (
         <section>

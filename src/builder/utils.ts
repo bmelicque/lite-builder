@@ -1,4 +1,4 @@
-import type { Character } from "../character";
+import { iterModifiers, type Character } from "../character";
 import { isProficiency } from "../modifiers";
 import { skills, type Skill } from "../rules/skills";
 
@@ -6,21 +6,11 @@ type Preselected = {
     skills: Skill[];
     extra: number;
 };
-export function handlePreselected(character: Partial<Character>): Preselected {
+export function handlePreselected(character: Character): Preselected {
     const preselected: Skill[] = [];
     let extra = 0;
-
-    if (Array.isArray(character.ancestry?.skills))
-        preselected.push(...character.ancestry.skills);
-    else if (character.ancestry?.skills === "Au choix") extra += 2;
-
-    const heritage = character.heritage?.grants ?? [];
-    const class_ = character.class?.grants ?? [];
-    const firstChoice = character.firstClassChoice?.grants ?? [];
-    const secondChoice = character.secondClassChoice?.grants ?? [];
-
-    [...heritage, ...class_, ...firstChoice, ...secondChoice]
-        ?.filter(isProficiency)
+    iterModifiers(character)
+        .filter(isProficiency)
         .forEach((m) => {
             const skill = skills.find((s) => s.id === m.in);
             if (!skill) return;

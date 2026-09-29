@@ -1,12 +1,16 @@
 import { Attribute } from "../rules/attributes";
-import { gatherModifiers, type Character } from "../character";
-import { computeArmorAC } from "../items/armors";
+import {
+    iterModifiers,
+    getProficiency,
+    type Character,
+    getAttributes,
+} from "../character";
+import { computeArmorAC, getArmor } from "../items/armors";
 import { isResistance } from "../modifiers";
-import { getProficiency } from "../proficiencies";
 
 type Props = { character: Character };
 export default function Defenses({ character }: Props) {
-    const ac = computeArmorAC(character, character.armor);
+    const ac = computeArmorAC(character, getArmor(character));
     const fortitude = computeDefense(
         character,
         "fortitude",
@@ -41,11 +45,13 @@ function computeDefense(
     attribute: Attribute,
 ): number {
     return (
-        2 * getProficiency(char, id) + char.level + char.attributes[attribute]
+        2 * getProficiency(char, id) +
+        char.level +
+        getAttributes(char)[attribute]
     );
 }
 function getResistances(character: Character): Record<string, number> {
-    return gatherModifiers(character)
+    return iterModifiers(character)
         .filter(isResistance)
         .reduce<Record<string, number>>((res, cur) => {
             res[cur.to] ??= 0;

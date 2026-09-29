@@ -1,7 +1,12 @@
 import type { Action } from "../actions";
 import { Attribute } from "../rules/attributes.ts";
 import { useCharacter } from "../Character.tsx";
-import { gatherModifiers, type Character } from "../character";
+import {
+    iterModifiers,
+    getProficiency,
+    type Character,
+    getAttributes,
+} from "../character";
 import ActionView from "../components/ActionView";
 import {
     isActionModifier,
@@ -9,7 +14,6 @@ import {
     isSense,
     type ActionModifier,
 } from "../modifiers";
-import { getProficiency } from "../proficiencies";
 import { omit, sort } from "../utils";
 import Defenses from "./Defenses";
 import HitPoints from "./HitPoints";
@@ -20,13 +24,15 @@ import { formatModifiers, weaponToActions } from "./weapons";
 
 export default function Sheet() {
     const [character] = useCharacter();
-    const grantedActions = gatherModifiers(character)
+    const grantedActions = iterModifiers(character)
         .filter(isGrantedAction)
         .map((a) => omit(a, "kind"));
-    const weaponActions = character.weapons.flatMap((w) =>
-        weaponToActions(character, w),
+    const weaponActions = character.weapons!.flatMap((w) =>
+        weaponToActions(character, w!),
     );
-    const actionModifiers = gatherModifiers(character).filter(isActionModifier);
+    const actionModifiers = iterModifiers(character)
+        .filter(isActionModifier)
+        .toArray();
     const actions = [...grantedActions, ...weaponActions].map((a) =>
         applyModifiers(actionModifiers, a),
     );
@@ -101,7 +107,7 @@ function applyModifier(mod: ActionModifier, action: Action): Action {
 export function CharacterInfo({ character }: { character: Character }) {
     return (
         <span>
-            {character.class.name} {character.ancestry.name} niveau{" "}
+            {character.class!.name} {character.ancestry!.name} niveau{" "}
             {character.level}
         </span>
     );
@@ -152,7 +158,7 @@ type PerceptionProps = {
 function Perception({ character }: PerceptionProps) {
     const proficiency =
         2 * getProficiency(character, "perception") + character.level;
-    const wisdom = character.attributes[Attribute.Wisdom];
+    const wisdom = getAttributes(character)[Attribute.Wisdom];
     const perception = proficiency + wisdom;
     const senses = getSenses(character);
     return (
@@ -175,12 +181,11 @@ function Perception({ character }: PerceptionProps) {
     );
 }
 function getSenses(character: Character): string[] {
-    const senses = gatherModifiers(character)
+    const senses = iterModifiers(character)
         .filter(isSense)
         .map((s) => s.name);
     const set = new Set(senses);
-    if (senses.includes("Vision dans le noir"))
-        set.delete("Vision en basse lumière");
+    if (set.has("Vision dans le noir")) set.delete("Vision en basse lumière");
     return Array.from(set);
 }
 
@@ -192,7 +197,7 @@ type ActionsProps = {
 function Actions(props: ActionsProps) {
     const [character] = useCharacter();
     const found = new Set<Action>();
-    const count = gatherModifiers(character)
+    const count = iterModifiers(character)
         .filter((m) => m.kind === "knownItems")
         .find((m) => m.forCategory === props.category)?.count;
     const actions = props.actions
@@ -238,9 +243,9 @@ function setSpellModifier(character: Character, action: Action) {
     // The way characters are built, their spellcasting attribute should be
     // their highest attribute
     const attribute = Math.max(
-        character.attributes[Attribute.Intelligence],
-        character.attributes[Attribute.Wisdom],
-        character.attributes[Attribute.Charisma],
+        getAttributes(character)[Attribute.Intelligence],
+        getAttributes(character)[Attribute.Wisdom],
+        getAttributes(character)[Attribute.Charisma],
     );
     if (action.attack) {
         const rank = getProficiency(character, "spellAttackModifier");

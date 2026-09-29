@@ -1,21 +1,28 @@
 import { useState } from "preact/hooks";
-import { gatherRecommendations, type Character } from "../character";
 import {
+    attackModifier,
     attackModifiers,
+    getAttributes,
+    iterModifiers,
+    type Character,
+} from "../character";
+import {
     isDexterityWeapon,
     isStrengthWeapon,
+    rateWeapon,
     weapons,
     type Weapon,
 } from "../items/weapons";
 import RichText from "../RichText";
 import { price, Rarity } from "../items/utils";
 import { Attribute, type Attributes } from "../rules/attributes.ts";
-import { sort, unwrap } from "../utils";
+import { retainMax, sort } from "../utils";
 import { matchesRule, type Recommendation } from "../recommendations";
-import { usePartialCharacter } from "../Character.tsx";
+import { useCharacter } from "../Character.tsx";
+import { isRecommendation } from "../modifiers.ts";
 
 export default function WeaponsBuilder() {
-    const [character, dispatch] = usePartialCharacter();
+    const [character, dispatch] = useCharacter();
     const [selected, setSelected] = useState<Weapon[]>([]);
 
     const toggleWeapon = (w: Weapon) => {
@@ -55,15 +62,21 @@ export default function WeaponsBuilder() {
     );
 }
 
-function recommendedWeapons(character: Partial<Character>): Weapon[] {
-    const attributes = unwrap(character.attributes);
-    const recommendations = gatherRecommendations(character).filter(
-        (r) => r.for === "weapon",
-    );
-    return Object.values(weapons)
+function recommendedWeapons(character: Character): Weapon[] {
+    const attributes = getAttributes(character);
+    const recommendations = iterModifiers(character)
+        .filter(isRecommendation)
+        .filter((r) => r.for === "weapon")
+        .toArray();
+    const recommended = Object.values(weapons)
         .filter(getWeaponFilter(attributes))
         .filter((w) => hasAccessTo(character, w))
         .filter((w) => isRecommended(recommendations, w));
+    const highestMods = retainMax(recommended, (w) =>
+        attackModifier(character, w),
+    );
+    // TODO: keep only familiar if multiple ones
+    return retainMax(highestMods, rateWeapon);
 }
 function getWeaponFilter(attributes: Attributes): (w: Weapon) => boolean {
     if (prefersStrength(attributes)) return isStrengthWeapon;
@@ -91,7 +104,7 @@ function isRecommended(
 }
 
 type WeaponCardProps = {
-    character: Partial<Character>;
+    character: Character;
     weapon: Weapon;
     selected: boolean;
     onToggle: () => void;

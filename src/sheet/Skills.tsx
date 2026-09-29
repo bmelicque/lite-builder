@@ -1,6 +1,5 @@
 import { Attribute } from "../rules/attributes";
-import type { Character } from "../character";
-import { getProficiency } from "../proficiencies";
+import { getAttributes, getProficiency, type Character } from "../character";
 import {
     acrobatics,
     athletics,
@@ -10,6 +9,7 @@ import {
     type Skill,
 } from "../rules/skills";
 import Proficiency from "./Proficiency";
+import { getArmor } from "../items/armors";
 
 type Props = { character: Character };
 export default function Skills({ character }: Props) {
@@ -29,10 +29,10 @@ export default function Skills({ character }: Props) {
         </section>
     );
 }
-function getSkillProps(character: Character, skill: Skill): SkillProps {
+export function getSkillProps(character: Character, skill: Skill): SkillProps {
     const rank = getProficiency(character, skill.id);
     const p = rank ? 2 * rank + 1 : rank;
-    const attributeValue = character.attributes[skill.attribute];
+    const attributeValue = getAttributes(character)[skill.attribute];
     const penalty = getSkillPenalty(character, skill);
     return {
         name: skill.name,
@@ -43,10 +43,11 @@ function getSkillProps(character: Character, skill: Skill): SkillProps {
 const WITH_POSSIBLE_PENALTIES = [acrobatics, athletics, stealth, thievery];
 function getSkillPenalty(character: Character, skill: Skill): number {
     if (!WITH_POSSIBLE_PENALTIES.includes(skill)) return 0;
-    const armor = character.armor;
+    const armor = getArmor(character);
     const checkPenalty = armor.checkPenalty ?? 0;
     const meetsReq =
-        character.attributes[Attribute.Strength] >= (armor.strengthReq ?? -5);
+        getAttributes(character)[Attribute.Strength] >=
+        (armor.strengthReq ?? -5);
     switch (skill) {
         case acrobatics:
         case athletics:
