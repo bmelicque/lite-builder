@@ -4,13 +4,23 @@ import {
     type Attributes,
 } from "./rules/attributes";
 import { classes } from "./classes";
-import { weapons, type Weapon } from "./items/weapons";
-import { isAttributeArray, isProficiency, type Modifier } from "./modifiers";
+import { rateWeapon, weapons, type Weapon } from "./items/weapons";
+import {
+    isAttributeArray,
+    isProficiency,
+    isWeaponSlot,
+    type Modifier,
+    type WeaponSlot,
+} from "./modifiers";
 import { skills } from "./rules/skills";
 import z from "zod";
 import { ancestries } from "./ancestries";
 import { proficiencyValue } from "./proficiencies";
 import { heritages } from "./heritages";
+import { armors } from "./items/armors";
+import { hasAccessTo } from "./builder/WeaponsBuilder";
+import { matchesRule } from "./recommendations";
+import { retainMax } from "./utils";
 
 const statusSchema = z
     .object({
@@ -64,6 +74,7 @@ export const characterSchema = z.object({
     firstClassChoice: z.string().optional(),
     secondClassChoice: z.string().optional(),
     skills: z.array(skillSchema).optional(),
+    armor: z.string().optional().transform(makeTransformer(armors, "armor")),
     weapons: z.array(weaponSchema).optional(),
     status: statusSchema,
 });
@@ -216,4 +227,29 @@ export function getProficiency(character: Character, of: string): number {
         .map((p) => proficiencyValue[p.rank])
         .toArray();
     return values.length > 0 ? Math.max(...values) : isSelectedSkill ? 1 : 0;
+}
+
+export function selectWeapons(character: Character): Weapon[] {
+    const slots = iterModifiers(character).filter(isWeaponSlot);
+    const accessible = Object.values(weapons).filter((w) =>
+        hasAccessTo(character, w),
+    );
+    return slots
+        .map((slot) => getBestWeaponForSlot(slot, character, accessible))
+        .toArray();
+}
+function getBestWeaponForSlot(
+    slot: WeaponSlot,
+    character: Character,
+    weapons: Weapon[],
+): Weapon {
+    let selection = weapons.filter((w) => matchesRule(slot.rule, w));
+    selection = retainMax(selection, rateWeapon);
+    selection.sort((a, b) => a.price - b.price);
+    if (selection.length === 1) return selection[0];
+    const familiar = selection.filter((w) =>
+        character.ancestry?.familiarity.includes(w),
+    );
+    if (familiar.length) selection = familiar;
+    return selection[0];
 }

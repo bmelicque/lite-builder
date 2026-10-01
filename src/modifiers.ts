@@ -1,7 +1,7 @@
 import type { Action, Passive } from "./actions";
 import type { Weapon } from "./items/weapons";
 import { ProficiencyRank, type Proficiency } from "./proficiencies";
-import type { Recommendation } from "./recommendations";
+import type { Recommendation, RecommendationRule } from "./recommendations";
 import type { Skill } from "./rules/skills";
 
 type ActionSelector =
@@ -30,6 +30,15 @@ export type AttributeArray = {
 export function isAttributeArray(m: Modifier): m is AttributeArray {
     return m.kind === "attributeArray";
 }
+
+export type CustomCategory = {
+    kind: "customCategory";
+    id: string;
+    name: string;
+    introText?: string;
+    actions: ActionSelector;
+    outroText?: string;
+};
 
 export type ExtraSkill = Skill & { kind: "extraSkill" };
 
@@ -120,6 +129,16 @@ export type SpeedModifier = {
     value: number;
 };
 
+// This grants a weapon for the character, that will be decided
+// programmatically at the end of character creation.
+export type WeaponSlot = {
+    kind: "weaponSlot";
+    rule: RecommendationRule;
+};
+export function isWeaponSlot(m: Modifier): m is WeaponSlot {
+    return m.kind === "weaponSlot";
+}
+
 export type Modifier =
     | ActionModifier
     | AttributeArray
@@ -135,4 +154,5 @@ export type Modifier =
     | Resistance
     | Sense
     | Slots
-    | SpeedModifier;
+    | SpeedModifier
+    | WeaponSlot;

@@ -89,7 +89,10 @@ function prefersStrength(attributes: Attributes): boolean {
 function prefersDexterity(attributes: Attributes): boolean {
     return attributes[Attribute.Strength] < attributes[Attribute.Dexterity];
 }
-function hasAccessTo(character: Partial<Character>, weapon: Weapon): boolean {
+export function hasAccessTo(
+    character: Partial<Character>,
+    weapon: Weapon,
+): boolean {
     if (!weapon.rarity || weapon.rarity === Rarity.Common) return true;
     return character.ancestry!.familiarity.includes(weapon);
 }

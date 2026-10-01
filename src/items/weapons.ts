@@ -178,7 +178,7 @@ const dawnsilverTree: Weapon = {
         "Ni aubargent ni arbre, cette longue arme tire son nom des légendes elfes. Arme élégante, l'arbre d'aubargent ressemble tout de même un peu à un arbre. Sa crosse en éventail et son long et large canon renforcé par des anneaux métalliques permettent à celui qui le manie de parer les attaques au corps-à-corps tout en se repliant à une distance de tir suffisamment sûre.",
 };
 
-const dogSlicer: Weapon = {
+const dogslicer: Weapon = {
     id: "dogslicer",
     name: "Tranchechien",
     rarity: Rarity.Uncommon,
@@ -623,7 +623,7 @@ export const weapons = {
     clanDagger,
     clanPistol,
     dawnsilverTree,
-    dogSlicer,
+    dogslicer,
     dwarvenScattergun,
     dwarvenWarAxe,
     elvenBranchedSpear,

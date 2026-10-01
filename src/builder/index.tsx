@@ -4,7 +4,6 @@ import { unwrap } from "../utils";
 import ClassBuilder from "./ClassBuilder";
 import ClassChoiceBuilder from "./ClassChoiceBuilder";
 import SkillBuilder from "./SkillBuilder";
-import WeaponsBuilder from "./WeaponsBuilder";
 import { Step } from "../app";
 import { useCharacter } from "../Character.tsx";
 
@@ -39,9 +38,6 @@ export default function Builder({ step }: Props) {
                     dispatch({ kind: "remove", key: "firstClassChoice" });
                 }
                 break;
-            case Step.Weapons:
-                dispatch({ kind: "remove", key: "skills" });
-                break;
         }
     };
 
@@ -62,7 +58,6 @@ export default function Builder({ step }: Props) {
                 <ClassChoiceBuilder prop="secondChoice" />
             )}
             {step === Step.Skills && <SkillBuilder />}
-            {step === Step.Weapons && <WeaponsBuilder />}
         </section>
     );
 }

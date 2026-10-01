@@ -99,7 +99,7 @@ const skirtedChainMail: Armor = {
     price: 800,
 };
 
-const armors = [
+export const armors = {
     clothes,
     leatherArmor,
     kiltedBreastplate,
@@ -107,7 +107,7 @@ const armors = [
     breastplate,
     chainMail,
     skirtedChainMail,
-];
+} as const;
 
 const ARMOR = Symbol();
 export function getArmor(character: Character): Armor {
@@ -118,12 +118,13 @@ export function getArmor(character: Character): Armor {
     character[ARMOR] = armor;
     return armor;
 }
-function selectArmor(character: Character): Armor {
-    const withPenalties = armors
+export function selectArmor(character: Character): Armor {
+    const list = Object.values(armors);
+    const withPenalties = list
         .filter((a) => givesPenaltyToChosenSkill(character, a))
         .reduce<[Armor, number] | null>(makeArmorReducer(character), null);
 
-    const withoutPenalties = armors
+    const withoutPenalties = list
         .filter((a) => !givesPenaltyToChosenSkill(character, a))
         .reduce<[Armor, number] | null>(makeArmorReducer(character), null);
 

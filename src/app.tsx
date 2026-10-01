@@ -13,12 +13,11 @@ export const Step = {
     ClassFirstChoice: 3,
     ClassSecondChoice: 4,
     Skills: 5,
-    Weapons: 6,
-    Complete: 7,
+    Complete: 6,
 } as const;
 export type Step = Enum<typeof Step>;
 
-function characterStep(c: Partial<Character>): Step {
+function characterStep(c: Character): Step {
     if (!c.ancestry) return Step.Ancestry;
     if (c.ancestry.heritages.length && !c.heritage) return Step.Heritage;
     if (!c.class) return Step.Class;
@@ -26,7 +25,6 @@ function characterStep(c: Partial<Character>): Step {
     if (c.class.secondChoice && !c.secondClassChoice)
         return Step.ClassSecondChoice;
     if (!c.skills) return Step.Skills;
-    if (!c.weapons) return Step.Weapons;
     return Step.Complete;
 }
 
@@ -93,7 +91,7 @@ function CharacterSelector() {
         </div>
     );
 }
-function isComplete(char: Partial<Character>): char is Character {
+function isComplete(char: Character): char is Character {
     return characterStep(char) === Step.Complete;
 }
 function CharacterCard({ character }: { character: Character }) {

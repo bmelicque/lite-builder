@@ -2,6 +2,7 @@ import { createContext } from "preact";
 import {
     newCharacter,
     newCharacterStatus,
+    selectWeapons,
     type Character,
     type CharacterStatus,
 } from "./character";
@@ -20,10 +21,10 @@ import type { Ancestry } from "./ancestries";
 import type { Class } from "./classes";
 import type { ClassChoiceOption } from "./classes/types";
 import type { Skill } from "./rules/skills";
-import type { Weapon } from "./items/weapons";
 import { omit } from "./utils";
 import { getSlotCount } from "./sheet/Slots";
 import type { Heritage } from "./heritages/types";
+import { selectArmor } from "./items/armors";
 
 type CharacterContextValue = [Character, Dispatch<CharacterAction>];
 const CharacterContext = createContext<CharacterContextValue | undefined>(
@@ -47,7 +48,6 @@ type CharacterAction =
     | { kind: "selectFirstChoice"; option: ClassChoiceOption }
     | { kind: "selectSecondChoice"; option: ClassChoiceOption }
     | { kind: "selectSkills"; skills: Skill[] }
-    | { kind: "selectWeapons"; weapons: Weapon[] }
     | { kind: "remove"; key: Removable }
     | { kind: "setName"; name: string }
     | { kind: "setBackground"; background: string }
@@ -89,10 +89,10 @@ function characterReducerHelper(
             return { ...character, secondClassChoice: action.option.name };
         case "selectSkills": {
             character = { ...character, skills: action.skills };
+            character.armor = selectArmor(character);
+            character.weapons = selectWeapons(character);
             return character;
         }
-        case "selectWeapons":
-            return { ...character, weapons: action.weapons };
         case "remove":
             return omit(character, action.key);
         case "setName":

@@ -8,9 +8,9 @@ import {
     type AttributeArray,
     type GrantedAction,
     type GrantedPassive,
+    type WeaponSlot,
 } from "../modifiers";
 import { Flag, type Class } from "./types";
-import type { Recommendation } from "../recommendations";
 
 const confidentFinisher: GrantedAction = {
     kind: "action",
@@ -77,11 +77,25 @@ const youreNext: GrantedAction = {
         "Après avoir abattu un adversaire, vous promettez à un autre de venir le chercher ensuite. Faites un test d'Intimidation avec un bonus de circonstances de +2 pour [Démoraliser](demoralize) une unique créature que vous pouvez voir et qui peut vous voir. Si vous êtes légendaire en Intimidation, vous pouvez utiliser ce pouvoir par une action gratuite ayant le même déclencheur.",
 };
 
-const swashbucklerWeapon: Recommendation = {
-    for: "weapon",
-    value: {
-        kind: "not",
-        value: { kind: "has", fieldName: "range" },
+// TODO: one-handed?
+const swashbucklerMeleeWeapon: WeaponSlot = {
+    kind: "weaponSlot",
+    rule: {
+        kind: "and",
+        rules: [
+            { kind: "has", fieldName: "finesse" },
+            { kind: "value", fieldName: "hands", value: 1 },
+        ],
+    },
+};
+const swashbucklerRangedWeapon: WeaponSlot = {
+    kind: "weaponSlot",
+    rule: {
+        kind: "and",
+        rules: [
+            { kind: "has", fieldName: "range" },
+            { kind: "value", fieldName: "hands", value: 1 },
+        ],
     },
 };
 
@@ -118,7 +132,9 @@ export const swashbuckler: Class = {
         confidentFinisher,
         panache,
         stylishCombatant,
-        { kind: "recommendation", ...swashbucklerWeapon },
+
+        swashbucklerMeleeWeapon,
+        swashbucklerRangedWeapon,
     ],
     firstChoice: {
         title: "Style de bretteur",

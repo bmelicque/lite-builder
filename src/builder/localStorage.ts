@@ -1,3 +1,4 @@
+import type { ZodError } from "zod";
 import { characterSchema, newCharacter, type Character } from "../character";
 
 export function saveCharacter(character: Character) {
@@ -52,6 +53,7 @@ export function loadACharacter(id: string): Character {
     try {
         return characterSchema.parse(data);
     } catch (e: any) {
+        console.log((e as ZodError).message);
         return characterSchema.parse({});
     }
 }

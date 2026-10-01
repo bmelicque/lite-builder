@@ -39,7 +39,7 @@ export const goblin: Ancestry = {
     ],
     familiarity: [
         // TODO: big boom gun
-        weapons.dogSlicer,
+        weapons.dogslicer,
         weapons.flingflenser,
         weapons.horseChopper,
         // TODO: spoon gun

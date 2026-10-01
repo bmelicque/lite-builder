@@ -3,6 +3,11 @@ type NotRecommendation = {
     value: RecommendationRule;
 };
 
+type AndRecommendation = {
+    kind: "and";
+    rules: RecommendationRule[];
+};
+
 type OrRecommendation = {
     kind: "or";
     options: RecommendationRule[];
@@ -25,7 +30,8 @@ type ContainsRecommendation = {
     value: string;
 };
 
-type RecommendationRule =
+export type RecommendationRule =
+    | AndRecommendation
     | ContainsRecommendation
     | HasRecommendation
     | NotRecommendation
@@ -79,6 +85,9 @@ export function matchesRule(
     o: Record<string, unknown>,
 ): boolean {
     switch (rule.kind) {
+        case "and":
+            for (const r of rule.rules) if (!matchesRule(r, o)) return false;
+            return true;
         case "contains": {
             const name = rule.fieldName;
             if (!(name in o)) return false;
