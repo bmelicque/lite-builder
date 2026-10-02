@@ -1,8 +1,8 @@
 import Builder from "./builder";
-import type { Character } from "./character";
+import type { Character } from "./character/character";
 import type { Enum } from "./types";
 import Sheet, { CharacterInfo } from "./sheet";
-import { CharacterProvider, useCharacter } from "./Character.tsx";
+import { CharacterProvider, useCharacter } from "./useCharacter.tsx";
 import Popover from "./components/Popover.tsx";
 import { loadACharacter } from "./builder/localStorage.ts";
 

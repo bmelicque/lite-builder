@@ -1,6 +1,6 @@
 import type { Attribute } from "../rules/attributes.ts";
-import type { Character } from "../character";
-import { useCharacter } from "../Character.tsx";
+import type { Character } from "../character/character";
+import { useCharacter } from "../useCharacter.tsx";
 import { type Class, classes } from "../classes";
 import Grid from "./Grid.tsx";
 import SubmitButton from "../components/SubmitButton.tsx";

@@ -1,9 +1,13 @@
 import { useState } from "preact/hooks";
 import { skills, type Skill } from "../rules/skills.ts";
 import { handlePreselected } from "./utils";
-import { useCharacter } from "../Character.tsx";
+import { useCharacter } from "../useCharacter.tsx";
 import SubmitButton from "../components/SubmitButton";
-import { getAttributes, getProficiency, type Character } from "../character.ts";
+import {
+    getAttributes,
+    getProficiency,
+    type Character,
+} from "../character/character";
 import Grid from "./Grid.tsx";
 
 export default function SkillBuilder() {

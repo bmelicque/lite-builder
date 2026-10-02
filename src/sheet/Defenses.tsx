@@ -4,7 +4,7 @@ import {
     getProficiency,
     type Character,
     getAttributes,
-} from "../character";
+} from "../character/character";
 import { computeArmorAC, getArmor } from "../items/armors";
 import { isResistance } from "../modifiers";
 

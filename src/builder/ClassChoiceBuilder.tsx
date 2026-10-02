@@ -1,5 +1,5 @@
-import type { Character } from "../character";
-import { useCharacter } from "../Character.tsx";
+import type { Character } from "../character/character";
+import { useCharacter } from "../useCharacter.tsx";
 import type { ClassChoiceOption, OptionRequirement } from "../classes/types";
 import SubmitButton from "../components/SubmitButton.tsx";
 import RichText from "../RichText";

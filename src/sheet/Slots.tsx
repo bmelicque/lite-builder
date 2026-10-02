@@ -1,5 +1,5 @@
-import { useCharacter } from "../Character.tsx";
-import { iterModifiers, type Character } from "../character";
+import { useCharacter } from "../useCharacter.tsx";
+import { iterModifiers, type Character } from "../character/character";
 import { isGrantedAction, isSlots } from "../modifiers";
 
 type Props = {

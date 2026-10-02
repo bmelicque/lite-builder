@@ -2,25 +2,25 @@ import {
     Attribute,
     attributesFromArray,
     type Attributes,
-} from "./rules/attributes";
-import { classes } from "./classes";
-import { rateWeapon, weapons, type Weapon } from "./items/weapons";
+} from "../rules/attributes";
+import { classes } from "../classes";
+import { rateWeapon, weapons, type Weapon } from "../items/weapons";
 import {
     isAttributeArray,
     isProficiency,
     isWeaponSlot,
     type Modifier,
     type WeaponSlot,
-} from "./modifiers";
-import { skills } from "./rules/skills";
+} from "../modifiers";
+import { skills } from "../rules/skills";
 import z from "zod";
-import { ancestries } from "./ancestries";
-import { proficiencyValue } from "./proficiencies";
-import { heritages } from "./heritages";
-import { armors } from "./items/armors";
-import { hasAccessTo } from "./builder/WeaponsBuilder";
-import { matchesRule } from "./recommendations";
-import { retainMax } from "./utils";
+import { ancestries } from "../ancestries";
+import { proficiencyValue } from "../proficiencies";
+import { heritages } from "../heritages";
+import { armors } from "../items/armors";
+import { matchesRule } from "../recommendations";
+import { retainMax } from "../utils";
+import { Rarity } from "../items/utils";
 
 const statusSchema = z
     .object({
@@ -252,4 +252,11 @@ function getBestWeaponForSlot(
     );
     if (familiar.length) selection = familiar;
     return selection[0];
+}
+export function hasAccessTo(
+    character: Partial<Character>,
+    weapon: Weapon,
+): boolean {
+    if (!weapon.rarity || weapon.rarity === Rarity.Common) return true;
+    return character.ancestry!.familiarity.includes(weapon);
 }

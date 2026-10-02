@@ -1,5 +1,5 @@
 import { ancestries, type Ancestry } from "../ancestries";
-import { useCharacter } from "../Character.tsx";
+import { useCharacter } from "../useCharacter.tsx";
 import SubmitButton from "../components/SubmitButton.tsx";
 import RichText from "../RichText";
 import { sort } from "../utils";

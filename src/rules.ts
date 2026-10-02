@@ -1,5 +1,6 @@
 import {
     climb,
+    demoralize,
     disarm,
     highJump,
     longJump,
@@ -8,6 +9,7 @@ import {
     shove,
     swim,
     trip,
+    tumbleThrough,
     type Action,
     type Passive,
 } from "./actions";
@@ -96,6 +98,7 @@ export const rules: Record<string, Rule> = {
     courageousAnthem: { ...courageousAnthem, kind: "action" },
     climb: { ...climb, kind: "action" },
     death,
+    demoralize: { ...demoralize, kind: "action" },
     dieHard: passiveToGeneral(dieHard),
     disarm: { ...disarm, kind: "action" },
     fear: { ...fear, kind: "action" },
@@ -118,6 +121,7 @@ export const rules: Record<string, Rule> = {
     sureStrike: { ...sureStrike, kind: "action" },
     swim: { ...swim, kind: "action" },
     trip: { ...trip, kind: "action" },
+    tumbleThrough: { ...tumbleThrough, kind: "action" },
     versatilePerformance: passiveToGeneral(versatilePerformance),
     void: void_,
     weaponActions,

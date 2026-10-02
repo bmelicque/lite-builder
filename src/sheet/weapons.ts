@@ -4,7 +4,7 @@ import {
     getAttributes,
     weaponProficiencyBonus,
     type Character,
-} from "../character";
+} from "../character/character";
 import { printDamageType, type Weapon } from "../items/weapons";
 
 export function weaponToActions(

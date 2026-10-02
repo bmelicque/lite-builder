@@ -1,4 +1,4 @@
-import { iterModifiers, type Character } from "../character";
+import { iterModifiers, type Character } from "../character/character";
 import { isGrantedPassive, type GrantedPassive } from "../modifiers";
 import RichText from "../RichText";
 

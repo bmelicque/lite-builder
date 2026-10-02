@@ -1,4 +1,9 @@
-import { athletics, intimidation, type Skill } from "./rules/skills";
+import {
+    acrobatics,
+    athletics,
+    intimidation,
+    type Skill,
+} from "./rules/skills";
 
 export type ActionCount =
     | "reaction"
@@ -80,6 +85,20 @@ export const climb: Action = {
         "**Réussite critique** Vous vous déplacez en augmentant la distance maximale de 1,50 mètre.\n" +
         "**Réussite** Vous vous déplacez dans la direction souhaitée.\n" +
         "**Échec critique** Vous chutez. Si vous avez commencé votre escalade sur un sol stable, vous chutez et tombez [à terre](prone).",
+};
+
+export const demoralize: Action = {
+    id: "demoralize",
+    name: "Démoraliser",
+    traits: ["audible", "concentration", "peur"],
+    category: "action",
+    actions: "one",
+    skill: intimidation,
+    text:
+        "**Portée** 9 mètres ; **Défense** Volonté ; **Immunité** 10 minutes.\n" +
+        "D'un cri soudain, d'une raillerie bien sentie ou d'une réplique tranchante, vous pouvez ébranler la détermination d'un ennemi. Tentez un test d'Intimidation contre la Volonté de la cible. Si la cible ne comprend pas la langue que vous parlez, vous subissez un malus de circonstances de -4 au test.\n" +
+        "**Réussite critique** La cible devient [effrayée 2](frightened).\n" +
+        "**Réussite** La cible devient effrayée 1.",
 };
 
 export const highJump: Action = {
@@ -179,4 +198,17 @@ export const trip: Action = {
         "**Réussite critique** La cible chute, se retrouve [à terre](prone) et subit 1d6 dégâts contondants.\n" +
         "**Réussite** La cible chute et se retrouve à terre.\n" +
         "**Échec critique** Vous perdez l'équilibre, chutez et vous retrouvez [à terre](prone).",
+};
+
+export const tumbleThrough: Action = {
+    id: "tumbleThrough",
+    name: "Déplacement acrobatique",
+    traits: ["déplacement"],
+    category: "action",
+    actions: "one",
+    skill: acrobatics,
+    text:
+        "Vous [Vous déplacez](stride). Pendant ce déplacement, vous pouvez tenter de traverser l'espace occupé par un ennemi. Effectuez un test d'Acrobaties contre les Réflexes de l'ennemi.\n" +
+        "**Réussite** Vous traversez l'espace occupé par l'ennemi en le considérant comme un terrain difficile.\n" +
+        "**Échec** Votre mouvement se termine devant l'ennemi, et vous déclenchez d'éventuelles réactions déclenchées par les mouvements.",
 };

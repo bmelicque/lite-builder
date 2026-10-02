@@ -5,7 +5,7 @@ import {
     selectWeapons,
     type Character,
     type CharacterStatus,
-} from "./character";
+} from "./character/character";
 import {
     type Dispatch,
     type ReactNode,

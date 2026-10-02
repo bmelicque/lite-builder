@@ -4,24 +4,44 @@ import { featToPassive } from "../feats/types";
 import {
     expert,
     trained,
+    type ActionBuilder,
     type ActionModifier,
     type AttributeArray,
+    type CustomCategory,
     type GrantedAction,
     type GrantedPassive,
+    type Modifier,
     type WeaponSlot,
 } from "../modifiers";
 import { Flag, type Class } from "./types";
+import {
+    demoralize,
+    disarm,
+    reposition,
+    shove,
+    trip,
+    tumbleThrough,
+    type Action,
+} from "../actions";
+import { getWeaponCriticalDamage, getWeaponDamage } from "../character/weapons";
+import { printDamageType } from "../items/weapons";
 
-const confidentFinisher: GrantedAction = {
-    kind: "action",
-    name: "Aboutissement assuré",
-    category: "action",
-    actions: "one",
-    traits: ["aboutissement"],
-    text:
-        "Vous portez une attaque incroyablement élégante qui transperce les défenses de votre ennemi. Faites une Frappe avec l'effet suivant en cas d'échec :\n" +
-        "**Échec** Vous infligez la moitié de vos dégâts de votre Frappe précise à la cible. Le type de ces dégâts est le même que celui de l'arme utilisée pour la Frappe.",
+const confidentFinisher: ActionBuilder = {
+    kind: "actionBuilder",
+    from: "weapons",
+    builder: (char, w) => ({
+        kind: "action",
+        name: `Aboutissement assuré (${w.name})`,
+        category: "aboutissement" as any,
+        actions: "one",
+        text:
+            "Vous portez une attaque incroyablement élégante qui transperce les défenses de votre ennemi.\n" +
+            `**Réussite critique** Vous infligez ${getWeaponCriticalDamage(char, w, "melee")} et 4d6 dégâts de précision à la cible.\n` +
+            `**Réussite** Vous infligez ${getWeaponDamage(char, w, "melee")} et 2d6 dégâts de précision à la cible.\n` +
+            `**Échec** Vous infligez 1d6 dégâts ${printDamageType(w.damageType, true)} à la cible.`,
+    }),
 };
+
 const flyingBlade: GrantedPassive = {
     kind: "passive",
     name: "Lame volante",
@@ -104,6 +124,33 @@ const charismaArray: AttributeArray = {
     array: [0, 3, 1, 0, 1, 2],
 };
 
+const bravado: CustomCategory = {
+    kind: "customCategory",
+    id: "bravade",
+    name: "Bravades",
+    introText:
+        "_Vous vous souciez autant de la manière d'accomplir quelque chose que du fait de l'accomplir._\n" +
+        "Lorsque vous réussissez l'une des actions suivantes, vous entrez en état de Panache, ce qui vous confère un bonus de statut de 1,5 mètres à votre Vitesse.\n" +
+        "Vous bénéficiez d'un bonus de circonstances de +1 à ces actions.",
+    actions: {
+        kind: "trait",
+        value: "bravade",
+    },
+    outroText:
+        "Toute autre action impliquant un DD non trivial peut conférez du Panache, à la discrétion du MJ.",
+};
+const finishers: CustomCategory = {
+    kind: "customCategory",
+    id: "aboutissement",
+    name: "Aboutissements",
+    introText:
+        "Les aboutissements sont de puissantes frappes que vous ne pouvez utiliser que lorsque vous êtes en état de Panache. Utiliser un aboutissement vous fait perdre cet état.",
+    actions: {
+        kind: "trait",
+        value: "aboutissement",
+    },
+};
+
 export const swashbuckler: Class = {
     id: "swashbuckler",
     img: "./classes/swashbuckler.png",
@@ -132,6 +179,11 @@ export const swashbuckler: Class = {
         confidentFinisher,
         panache,
         stylishCombatant,
+
+        ...addBravadoAction(tumbleThrough),
+
+        bravado,
+        finishers,
 
         swashbucklerMeleeWeapon,
         swashbucklerRangedWeapon,
@@ -198,7 +250,7 @@ export const swashbuckler: Class = {
                 ],
                 grants: [
                     trained("intimidation"),
-                    addBravado("demoralize"),
+                    ...addBravadoAction(demoralize),
                     youreNext,
                     { kind: "attributeArray", array: [0, 3, 1, 0, 1, 2] },
                 ],
@@ -224,11 +276,11 @@ export const swashbuckler: Class = {
                 ],
                 grants: [
                     trained("athletics"),
-                    addBravado("grab"),
-                    addBravado("shove"),
-                    addBravado("reposition"),
-                    addBravado("trip"),
-                    addBravado("disarm"),
+                    // addBravadoAction(grab),
+                    ...addBravadoAction(shove),
+                    ...addBravadoAction(reposition),
+                    ...addBravadoAction(trip),
+                    ...addBravadoAction(disarm),
                     { kind: "attributeArray", array: [1, 3, 2, 0, 1, 0] },
                 ],
             },
@@ -236,6 +288,9 @@ export const swashbuckler: Class = {
     },
 };
 
+function addBravadoAction(action: Action): Modifier[] {
+    return [{ kind: "action", ...action }, addBravado(action.id ?? "")];
+}
 function addBravado(to: string): ActionModifier {
     return {
         kind: "actionModifier",

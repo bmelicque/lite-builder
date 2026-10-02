@@ -1,5 +1,9 @@
 import { Attribute } from "../rules/attributes";
-import { getAttributes, getProficiency, type Character } from "../character";
+import {
+    getAttributes,
+    getProficiency,
+    type Character,
+} from "../character/character";
 import {
     acrobatics,
     athletics,

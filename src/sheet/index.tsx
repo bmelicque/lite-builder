@@ -1,18 +1,22 @@
 import type { Action } from "../actions";
 import { Attribute } from "../rules/attributes.ts";
-import { useCharacter } from "../Character.tsx";
+import { useCharacter } from "../useCharacter.tsx";
 import {
     iterModifiers,
     getProficiency,
     type Character,
     getAttributes,
-} from "../character";
+} from "../character/character.ts";
 import ActionView from "../components/ActionView";
 import {
+    isActionBuilder,
     isActionModifier,
+    isCustomCategory,
     isGrantedAction,
     isSense,
+    type ActionBuilder,
     type ActionModifier,
+    type ActionSelector,
 } from "../modifiers";
 import { omit, sort } from "../utils";
 import Defenses from "./Defenses";
@@ -21,6 +25,7 @@ import Passives from "./Passives";
 import Skills from "./Skills";
 import Slots from "./Slots";
 import { formatModifiers, weaponToActions } from "./weapons";
+import RichText from "../RichText.tsx";
 
 export default function Sheet() {
     const [character] = useCharacter();
@@ -30,13 +35,23 @@ export default function Sheet() {
     const weaponActions = character.weapons!.flatMap((w) =>
         weaponToActions(character, w!),
     );
+    const builtActions = buildSpecificActions(character);
+
     const actionModifiers = iterModifiers(character)
         .filter(isActionModifier)
         .toArray();
-    const actions = [...grantedActions, ...weaponActions].map((a) =>
-        applyModifiers(actionModifiers, a),
+    const actions = [...grantedActions, ...weaponActions, ...builtActions].map(
+        (a) => applyModifiers(actionModifiers, a),
     );
     updateAlchemicalBombs(character, actions);
+    const customCategories = iterModifiers(character)
+        .filter(isCustomCategory)
+        .toArray();
+    for (const category of customCategories) {
+        actions
+            .filter((a) => appliesToAction(category.actions, a))
+            .forEach((a) => (a.category = category.id as any));
+    }
 
     return (
         <div className="max-w-[65ch] mx-auto mb-8 px-3 flex flex-col">
@@ -76,6 +91,14 @@ export default function Sheet() {
                 category="cantrip"
             />
             <Actions actions={actions} title="Actions" category="action" />
+            {customCategories.map((c) => (
+                <Actions
+                    actions={actions}
+                    title={c.name}
+                    category={c.id}
+                    intro={c.introText}
+                />
+            ))}
             <Actions actions={actions} title="Réactions" category="reaction" />
             <Passives character={character} />
             <Skills character={character} />
@@ -84,15 +107,15 @@ export default function Sheet() {
 }
 function applyModifiers(mods: ActionModifier[], action: Action): Action {
     return mods
-        .filter((m) => appliesToAction(m, action))
+        .filter((m) => appliesToAction(m.selector, action))
         .reduce((action, mod) => applyModifier(mod, action), action);
 }
-function appliesToAction(mod: ActionModifier, action: Action): boolean {
-    switch (mod.selector.kind) {
+function appliesToAction(selector: ActionSelector, action: Action): boolean {
+    switch (selector.kind) {
         case "id":
-            return action.id === mod.selector.id;
+            return action.id === selector.id;
         case "trait":
-            return action.traits?.includes(mod.selector.value) ?? false;
+            return action.traits?.includes(selector.value) ?? false;
     }
 }
 function applyModifier(mod: ActionModifier, action: Action): Action {
@@ -104,6 +127,25 @@ function applyModifier(mod: ActionModifier, action: Action): Action {
             (action as any)[mod.onField] = mod.modification.value;
             return action;
     }
+}
+
+function buildSpecificActions(character: Character): Action[] {
+    return iterModifiers(character)
+        .filter(isActionBuilder)
+        .flatMap((builder) => consumeBuilder(builder, character))
+        .toArray();
+}
+function consumeBuilder(
+    builder: ActionBuilder,
+    character: Character,
+): Action[] {
+    const from = builder.from;
+    if (!(from in character)) return [];
+    const fieldValue = character[from as keyof Character] as unknown;
+    if (fieldValue == null) return [];
+    return Array.isArray(fieldValue)
+        ? fieldValue.map((v) => builder.builder(character, v))
+        : [builder.builder(character, fieldValue)];
 }
 
 export function CharacterInfo({ character }: { character: Character }) {
@@ -195,6 +237,8 @@ type ActionsProps = {
     actions: Action[];
     category: string;
     title: string;
+    intro?: string;
+    outro?: string;
 };
 function Actions(props: ActionsProps) {
     const [character] = useCharacter();
@@ -208,25 +252,29 @@ function Actions(props: ActionsProps) {
         .slice(0, count)
         .sort(sort);
     if (!actions || !actions.length) return <></>;
+    actions.forEach(
+        (a) => (a.traits = a.traits?.filter((t) => t !== props.category)),
+    );
     if (isSpellCategory(props.category))
         actions.forEach((a) => setSpellModifier(character, a));
     return (
         <section>
             <h2>{props.title}</h2>
-            <Slots id={props.category} />
-            {props.category.startsWith("spell") && (
-                <p className="italic">
-                    Vous récupérez vos emplacements de sorts pendant vos
-                    préparatifs quotidiens.
-                </p>
-            )}
-            {props.category === "focus" && (
-                <p className="italic">
-                    Vous pouvez récupérez un point de focalisation en vous
-                    Reconcentrant 10 minutes.
-                </p>
-            )}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-6">
+                <RichText>{props.intro ?? ""}</RichText>
+                <Slots id={props.category} />
+                {props.category.startsWith("spell") && (
+                    <p className="italic">
+                        Vous récupérez vos emplacements de sorts pendant vos
+                        préparatifs quotidiens.
+                    </p>
+                )}
+                {props.category === "focus" && (
+                    <p className="italic">
+                        Vous pouvez récupérez un point de focalisation en vous
+                        Reconcentrant 10 minutes.
+                    </p>
+                )}
                 {actions.map((a) => (
                     <ActionView action={a} />
                 ))}

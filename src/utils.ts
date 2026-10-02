@@ -16,6 +16,14 @@ export function sort(a: Named, b: Named) {
     return a.name.localeCompare(b.name);
 }
 
+/** Mutates in place */
+export function retain<T>(array: T[], predicate: (element: T) => boolean) {
+    let i = array.length;
+    while (i-- > 0) {
+        if (!predicate(array[i])) array.splice(i, 1);
+    }
+}
+
 export function retainMax<T>(array: T[], value: (e: T) => number): T[] {
     const result: T[] = [];
     let max = -Infinity;

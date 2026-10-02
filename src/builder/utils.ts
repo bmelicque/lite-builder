@@ -1,4 +1,4 @@
-import { iterModifiers, type Character } from "../character";
+import { iterModifiers, type Character } from "../character/character";
 import { isProficiency } from "../modifiers";
 import { skills, type Skill } from "../rules/skills";
 

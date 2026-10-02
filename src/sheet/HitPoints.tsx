@@ -5,11 +5,11 @@ import {
     iterModifiers,
     newCharacterStatus,
     type Character,
-} from "../character";
+} from "../character/character";
 import Popover from "../components/Popover";
 import { isHpModifier } from "../modifiers";
 import SubmitButton from "../components/SubmitButton";
-import { useCharacter } from "../Character.tsx";
+import { useCharacter } from "../useCharacter.tsx";
 
 export default function () {
     const [character, dispatch] = useCharacter();

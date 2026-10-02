@@ -1,5 +1,9 @@
 import type { ZodError } from "zod";
-import { characterSchema, newCharacter, type Character } from "../character";
+import {
+    characterSchema,
+    newCharacter,
+    type Character,
+} from "../character/character";
 
 export function saveCharacter(character: Character) {
     localStorage.setItem(character.id!, JSON.stringify(toData(character)));

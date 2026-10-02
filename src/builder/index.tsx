@@ -5,7 +5,7 @@ import ClassBuilder from "./ClassBuilder";
 import ClassChoiceBuilder from "./ClassChoiceBuilder";
 import SkillBuilder from "./SkillBuilder";
 import { Step } from "../app";
-import { useCharacter } from "../Character.tsx";
+import { useCharacter } from "../useCharacter.tsx";
 
 type Props = {
     step: Step;

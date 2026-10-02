@@ -1,5 +1,5 @@
 import type { Action } from "../actions";
-import type { Character } from "../character";
+import type { Character } from "../character/character";
 import RichText from "../RichText";
 import ActionCount from "./ActionCount";
 import Trait from "./Trait";

@@ -4,7 +4,17 @@ import { ProficiencyRank, type Proficiency } from "./proficiencies";
 import type { Recommendation, RecommendationRule } from "./recommendations";
 import type { Skill } from "./rules/skills";
 
-type ActionSelector =
+export type ActionBuilder = {
+    kind: "actionBuilder";
+    /** key of Character */
+    from: string;
+    builder: (character: any, src: any) => Action;
+};
+export function isActionBuilder(m: Modifier): m is ActionBuilder {
+    return m.kind === "actionBuilder";
+}
+
+export type ActionSelector =
     | { kind: "id"; id: string }
     | { kind: "trait"; value: string };
 type Modification =
@@ -39,6 +49,9 @@ export type CustomCategory = {
     actions: ActionSelector;
     outroText?: string;
 };
+export function isCustomCategory(m: Modifier): m is CustomCategory {
+    return m.kind === "customCategory";
+}
 
 export type ExtraSkill = Skill & { kind: "extraSkill" };
 
@@ -140,8 +153,10 @@ export function isWeaponSlot(m: Modifier): m is WeaponSlot {
 }
 
 export type Modifier =
+    | ActionBuilder
     | ActionModifier
     | AttributeArray
+    | CustomCategory
     | ExtraSkill
     | GrantedAction
     | GrantedPassive

@@ -1,6 +1,10 @@
 import { Attribute } from "../rules/attributes";
 import { handlePreselected } from "../builder/utils";
-import { getAttributes, getProficiency, type Character } from "../character";
+import {
+    getAttributes,
+    getProficiency,
+    type Character,
+} from "../character/character";
 import { acrobatics, athletics, stealth, thievery } from "../rules/skills";
 import { unwrap } from "../utils";
 
