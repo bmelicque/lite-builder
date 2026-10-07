@@ -26,6 +26,7 @@ import Skills from "./Skills";
 import Slots from "./Slots";
 import RichText from "../RichText.tsx";
 import { formatModifiers, weaponToActions } from "../character/weapons.ts";
+import Speeds from "./Speeds.tsx";
 
 export default function Sheet() {
     const [character] = useCharacter();
@@ -67,7 +68,14 @@ export default function Sheet() {
                 <h2>Points de Vie</h2>
                 <HitPoints />
             </section>
-            <Perception character={character} />
+            <section className="grid grid-cols-3 place-items-stretch gap-4">
+                <Perception character={character} />
+                <section>
+                    <h2>Taille</h2>
+                    {character.ancestry?.size}
+                </section>
+                <Speeds />
+            </section>
             <section>
                 <h2>Défenses</h2>
                 <Defenses character={character} />
@@ -208,21 +216,22 @@ function Perception({ character }: PerceptionProps) {
     const perception = proficiency + wisdom;
     const senses = getSenses(character);
     return (
-        <section className="grid grid-cols-3 place-items-stretch gap-4">
-            <section>
-                <h2>Perception</h2>
-                <div class="flex justify-center items-center">
-                    <div className="border-2 w-[3.5ch] aspect-square py-px rounded-full inset-shadow shadow-primary font-bold text-xl grid place-content-center">
-                        +{perception}
-                    </div>
+        <section>
+            <h2>Perception</h2>
+            <div class="flex justify-center items-center">
+                <div className="border-2 w-[3.5ch] aspect-square py-px rounded-full inset-shadow shadow-primary font-bold text-xl grid place-content-center">
+                    +{perception}
                 </div>
-            </section>
-            <section className="col-span-2">
-                <h2>Sens spéciaux</h2>
-                {senses.length > 0
-                    ? senses.map((s) => <div>{s}</div>)
-                    : "Aucun"}
-            </section>
+            </div>
+
+            {senses.length > 0 && (
+                <>
+                    <p className="font-bold">Sens spéciaux&nbsp;:</p>
+                    {senses.map((s) => (
+                        <div>{s}</div>
+                    ))}
+                </>
+            )}
         </section>
     );
 }

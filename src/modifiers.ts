@@ -167,7 +167,11 @@ export type SpeedModifier = {
     kind: "speed";
     environment: Environment;
     value: number;
+    cumulative?: true;
 };
+export function isSpeedModifier(m: Modifier): m is SpeedModifier {
+    return m.kind === "speed";
+}
 
 // This grants a weapon for the character, that will be decided
 // programmatically at the end of character creation.
