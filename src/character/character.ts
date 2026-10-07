@@ -7,6 +7,7 @@ import { classes } from "../classes";
 import { rateWeapon, weapons, type Weapon } from "../items/weapons";
 import {
     isAttributeArray,
+    isGrantedWeapon,
     isProficiency,
     isWeaponSlot,
     type Modifier,
@@ -234,9 +235,12 @@ export function selectWeapons(character: Character): Weapon[] {
     const accessible = Object.values(weapons).filter((w) =>
         hasAccessTo(character, w),
     );
-    return slots
+    const dynamicWeapons = slots
         .map((slot) => getBestWeaponForSlot(slot, character, accessible))
         .toArray();
+
+    const staticWeapons = iterModifiers(character).filter(isGrantedWeapon);
+    return [...staticWeapons, ...dynamicWeapons];
 }
 function getBestWeaponForSlot(
     slot: WeaponSlot,

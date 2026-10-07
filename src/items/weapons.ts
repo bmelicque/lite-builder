@@ -7,6 +7,8 @@ export const DamageType = {
     Bludgeoning: "contondant$",
     Piercing: "perforant$",
     Slashing: "tranchant$",
+
+    Precision: "de précision",
 };
 export type DamageType = Enum<typeof DamageType>;
 export function printDamageType(
@@ -17,6 +19,9 @@ export function printDamageType(
         .flat()
         .map((t) => t.replace("$", plural ? "s" : ""))
         .join(" ou ");
+}
+export function versatile(damage: DamageType | DamageType[]): DamageType {
+    return Array.isArray(damage) ? damage.join(" ou ") : damage;
 }
 
 export type Weapon = {
@@ -336,6 +341,24 @@ const flingflenser: Weapon = {
         "Un dépeceur est une arme de conception gobeline se terminant par un tube ovoïde avec une trappe et une poignée à l'extrémité étroite. Un faisceau de lames circulaires maintenues ensemble et attachées à un paquet de poudre noire par une fine lanière de cuir sert de munitions et est chargé par la trappe avant d'être tiré avec une platine à silex ou un autre mécanisme d'allumage externe. La conception robuste du dépeceur le place également parmi les armes gobelines les plus fiables.",
 };
 
+const flintlockPistol: Weapon = {
+    id: "flintlockPistol",
+    name: "Pistolet à silex",
+    damageDie: 4,
+    damageType: DamageType.Piercing,
+    fatal: 8,
+    traits: ["commotion"],
+    hands: 1,
+    range: 8,
+    reload: 1,
+    price: 4 * GP,
+    proficiency: "simpleWeapons",
+    group: "firearm",
+    bulk: 1,
+    description:
+        "Bien que moins précis et moins puissant qu'un mousquet, le pistolet à silex est l'arme préférée des corsaires grâce à sa taille plus compacte et à son prix abordable.",
+};
+
 const fryingPan: Weapon = {
     id: "fryingPan",
     name: "Poêle à frire",
@@ -632,6 +655,7 @@ export const weapons = {
     fightingStick,
     filchersFork,
     flingflenser,
+    flintlockPistol,
     fryingPan,
     glaive,
     gnomeFlickmace,

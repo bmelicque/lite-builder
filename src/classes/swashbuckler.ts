@@ -4,14 +4,13 @@ import { featToPassive } from "../feats/types";
 import {
     expert,
     trained,
-    type ActionBuilder,
     type ActionModifier,
     type AttributeArray,
     type CustomCategory,
+    type ExtraStrikeDamage,
     type GrantedAction,
     type GrantedPassive,
     type Modifier,
-    type WeaponSlot,
 } from "../modifiers";
 import { Flag, type Class } from "./types";
 import {
@@ -23,23 +22,18 @@ import {
     tumbleThrough,
     type Action,
 } from "../actions";
-import { getWeaponCriticalDamage, getWeaponDamage } from "../character/weapons";
-import { printDamageType } from "../items/weapons";
+import { DamageType, weapons } from "../items/weapons";
 
-const confidentFinisher: ActionBuilder = {
-    kind: "actionBuilder",
-    from: "weapons",
-    builder: (char, w) => ({
-        kind: "action",
-        name: `Aboutissement assuré (${w.name})`,
-        category: "aboutissement" as any,
-        actions: "one",
-        text:
-            "Vous portez une attaque incroyablement élégante qui transperce les défenses de votre ennemi.\n" +
-            `**Réussite critique** Vous infligez ${getWeaponCriticalDamage(char, w, "melee")} et 4d6 dégâts de précision à la cible.\n` +
-            `**Réussite** Vous infligez ${getWeaponDamage(char, w, "melee")} et 2d6 dégâts de précision à la cible.\n` +
-            `**Échec** Vous infligez 1d6 dégâts ${printDamageType(w.damageType, true)} à la cible.`,
-    }),
+const confidentFinisher: GrantedAction = {
+    kind: "action",
+    name: "Aboutissement assuré",
+    category: "aboutissement" as any,
+    actions: "one",
+    text:
+        "Vous portez une attaque incroyablement élégante qui transperce les défenses de votre ennemi.\n" +
+        "**Réussite critique** Vous infligez 4d4 dégâts de précision supplémentaires.\n" +
+        "**Réussite** Vous infligez 2d4 dégâts de précision supplémentaires.\n" +
+        "**Échec** Vous infligez 1d6 dégâts à la cible.",
 };
 
 const flyingBlade: GrantedPassive = {
@@ -68,24 +62,20 @@ const oneForAll: GrantedAction = {
     traits: ["audible", "émotion", "linguistique"],
     text: "Avec précisément les bons mots d'encouragement, vous soutenez les efforts d'un allié. Désignez un allié dans les 9 mètres. Cette action compte comme une préparation suffisante pour [Aider](aid) cet allié. Lorsque vous utilisez la réaction Aider pour aider cet allié, vous pouvez lancer un test de Diplomatie au lieu du test habituel et l'action acquiert le trait bravade.",
 };
-const panache: GrantedPassive = {
-    kind: "passive",
-    name: "Panache",
-    text:
-        "Vous vous souciez autant de la manière d'accomplir quelque chose que du fait de l'accomplir. Quand vous réalisez une action avec une élégance particulière, vous pouvez tirer parti de ce moment de grâce pour réaliser des manœuvres spectaculaires et mortelles. Cet état de grâce s'appelle le panache.\n" +
-        "Vous obtenez du panache en accomplissant des actions qui possèdent le trait bravade. [Déplacement acrobatique](tumbleThrough) et des actions supplémentaires déterminées par votre style de bretteur obtiennent le trait bravade. Normalement, vous obtenez et utilisez votre panache uniquement lors des rencontres de combat.\n" +
-        "De puissantes actions d'[aboutissement](finisher) ne peuvent être utilisées que si vous disposez de panache, et elles vous font perdre ce panache.",
+
+const preciseStrike: ExtraStrikeDamage = {
+    kind: "extraStrikeDamage",
+    condition: {
+        kind: "or",
+        options: [
+            { kind: "has", fieldName: "agile" },
+            { kind: "has", fieldName: "finesse" },
+        ],
+    },
+    type: DamageType.Precision,
+    damage: 2,
 };
-const preciseStrike: GrantedPassive = {
-    kind: "passive",
-    name: "Frappe précise",
-    text: "Lorsque vous portez une Frappe au corps-à-corps, vous infligez {{1 + ceil(level/4)}} dégâts de précision supplémentaires. Si la Frappe fait partie d'un aboutissement, les dégâts supplémentaires passent à {{1 + ceil(level/4)}}d6 dégâts de précision à la place.",
-};
-const stylishCombatant: GrantedPassive = {
-    kind: "passive",
-    name: "Combattant gracieux",
-    text: "Vous obtenez un bonus de circonstances de +1 aux tests de compétences ayant le trait bravade au cours d'un combat. Tant que vous avez du panache, vous bénéficiez d'un bonus de statut de +1,50 mètre à vos Vitesses.",
-};
+
 const youreNext: GrantedAction = {
     kind: "action",
     name: "T'es le suivant",
@@ -95,28 +85,6 @@ const youreNext: GrantedAction = {
     text:
         "**Déclencheur** Vous réduisez un ennemi à 0 Point de vie.\n" +
         "Après avoir abattu un adversaire, vous promettez à un autre de venir le chercher ensuite. Faites un test d'Intimidation avec un bonus de circonstances de +2 pour [Démoraliser](demoralize) une unique créature que vous pouvez voir et qui peut vous voir. Si vous êtes légendaire en Intimidation, vous pouvez utiliser ce pouvoir par une action gratuite ayant le même déclencheur.",
-};
-
-// TODO: one-handed?
-const swashbucklerMeleeWeapon: WeaponSlot = {
-    kind: "weaponSlot",
-    rule: {
-        kind: "and",
-        rules: [
-            { kind: "has", fieldName: "finesse" },
-            { kind: "value", fieldName: "hands", value: 1 },
-        ],
-    },
-};
-const swashbucklerRangedWeapon: WeaponSlot = {
-    kind: "weaponSlot",
-    rule: {
-        kind: "and",
-        rules: [
-            { kind: "has", fieldName: "range" },
-            { kind: "value", fieldName: "hands", value: 1 },
-        ],
-    },
 };
 
 const charismaArray: AttributeArray = {
@@ -177,16 +145,14 @@ export const swashbuckler: Class = {
         trained("swashbucklerClassDC"),
         preciseStrike,
         confidentFinisher,
-        panache,
-        stylishCombatant,
 
         ...addBravadoAction(tumbleThrough),
 
         bravado,
         finishers,
 
-        swashbucklerMeleeWeapon,
-        swashbucklerRangedWeapon,
+        { kind: "weapon", ...weapons.rapier },
+        { kind: "weapon", ...weapons.flintlockPistol },
     ],
     firstChoice: {
         title: "Style de bretteur",

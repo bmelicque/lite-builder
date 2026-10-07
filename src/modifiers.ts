@@ -1,5 +1,6 @@
 import type { Action, Passive } from "./actions";
-import type { Weapon } from "./items/weapons";
+import type { Damage } from "./character/weapons";
+import type { DamageType, Weapon } from "./items/weapons";
 import { ProficiencyRank, type Proficiency } from "./proficiencies";
 import type { Recommendation, RecommendationRule } from "./recommendations";
 import type { Skill } from "./rules/skills";
@@ -55,6 +56,17 @@ export function isCustomCategory(m: Modifier): m is CustomCategory {
 
 export type ExtraSkill = Skill & { kind: "extraSkill" };
 
+export type ExtraStrikeDamage = {
+    kind: "extraStrikeDamage";
+    condition?: RecommendationRule;
+    /** Same as original damage if not present */
+    type?: DamageType;
+    damage: number | { diceSize: number; diceCount: number };
+};
+export function isExtraStrikeDamage(m: Modifier): m is ExtraStrikeDamage {
+    return m.kind === "extraStrikeDamage";
+}
+
 export type GrantedAction = { kind: "action" } & Action;
 export function isGrantedAction(m: Modifier): m is GrantedAction {
     return m.kind === "action";
@@ -67,6 +79,9 @@ export function isGrantedPassive(m: Modifier): m is GrantedPassive {
     return m.kind === "passive";
 }
 export type GrantedWeapon = { kind: "weapon" } & Weapon;
+export function isGrantedWeapon(m: Modifier): m is GrantedWeapon {
+    return m.kind === "weapon";
+}
 
 export type KnownItems = {
     kind: "knownItems";
@@ -135,6 +150,18 @@ export function isSlots(m: Modifier): m is Slots {
     return m.kind === "slots";
 }
 
+export type SpecialStrike = {
+    kind: "specialStrike";
+    name: (w: Weapon) => string;
+    weaponSelector?: RecommendationRule;
+    extraDamage?: Damage;
+    extraTraits?: string[];
+    textTransform?: (src: string, w: Weapon) => string;
+};
+export function isSpecialStrike(m: Modifier): m is SpecialStrike {
+    return m.kind === "specialStrike";
+}
+
 type Environment = "land" | "swim";
 export type SpeedModifier = {
     kind: "speed";
@@ -158,6 +185,7 @@ export type Modifier =
     | AttributeArray
     | CustomCategory
     | ExtraSkill
+    | ExtraStrikeDamage
     | GrantedAction
     | GrantedPassive
     | GrantedWeapon
@@ -169,5 +197,6 @@ export type Modifier =
     | Resistance
     | Sense
     | Slots
+    | SpecialStrike
     | SpeedModifier
     | WeaponSlot;

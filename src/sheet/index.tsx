@@ -24,8 +24,8 @@ import HitPoints from "./HitPoints";
 import Passives from "./Passives";
 import Skills from "./Skills";
 import Slots from "./Slots";
-import { formatModifiers, weaponToActions } from "./weapons";
 import RichText from "../RichText.tsx";
+import { formatModifiers, weaponToActions } from "../character/weapons.ts";
 
 export default function Sheet() {
     const [character] = useCharacter();
@@ -121,7 +121,9 @@ function appliesToAction(selector: ActionSelector, action: Action): boolean {
 function applyModifier(mod: ActionModifier, action: Action): Action {
     switch (mod.modification.kind) {
         case "push":
-            (action as any)[mod.onField].push(mod.modification.value);
+            const field = (action as any)[mod.onField];
+            if (!field.includes(mod.modification.value))
+                field.push(mod.modification.value);
             return action;
         case "replace":
             (action as any)[mod.onField] = mod.modification.value;
