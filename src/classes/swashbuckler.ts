@@ -30,7 +30,7 @@ const confidentFinisher: GrantedAction = {
     category: "aboutissement" as any,
     actions: "one",
     text:
-        "Vous portez une attaque incroyablement élégante qui transperce les défenses de votre ennemi.\n" +
+        "Vous portez une attaque incroyablement élégante qui transperce les défenses de votre ennemi. Effectuez une Frappe avec une arme de mêlée, en y ajoutant les effets suivants.\n" +
         "**Réussite critique** Vous infligez 4d4 dégâts de précision supplémentaires.\n" +
         "**Réussite** Vous infligez 2d4 dégâts de précision supplémentaires.\n" +
         "**Échec** Vous infligez 1d6 dégâts à la cible.",
