@@ -1,4 +1,5 @@
 import { iterModifiers } from "../character/character";
+import { formatDistance } from "../formatting";
 import { isSpeedModifier } from "../modifiers";
 import { useCharacter } from "../useCharacter";
 
@@ -42,12 +43,7 @@ function Speed(props: SpeedProps) {
     return (
         <p>
             <span className="font-bold">{props.name}&nbsp;:</span>{" "}
-            {formatSpeed(props.value)} mètres
+            {formatDistance(props.value)} mètres
         </p>
     );
-}
-
-function formatSpeed(cells: number): string {
-    const value = String(cells * 1.5);
-    return value.replace(".", ",");
 }

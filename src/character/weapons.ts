@@ -1,4 +1,5 @@
 import type { Action } from "../actions";
+import { formatDistance } from "../formatting";
 import {
     DamageType,
     printDamageType,
@@ -112,6 +113,8 @@ function strikeText(
     weapon: Weapon,
     kind: StrikeKind,
 ): string {
+    const range = getRange(weapon, kind);
+
     const strBonus = getStrengthBonus(character, weapon, kind);
     const extraDamage = getExtraDamage(character, weapon);
     const bonus = mergeDamage(strBonus, extraDamage);
@@ -125,6 +128,8 @@ function strikeText(
         getWeaponCriticalDamage(character, weapon, kind),
     );
     return (
+        (range ? `**Portée** ×${formatDistance(range)} mètres\n` : "") +
+        (weapon.reload ? `**Recharge** ${weapon.reload} action\n` : "") +
         `**Réussite critique** Infligez ${formatDamage(criticalDamage)} à la cible.\n` +
         `**Réussite** Infligez ${formatDamage(weaponDamage)} à la cible.`
     );
@@ -293,4 +298,16 @@ function formatDamageDice(d: DamageDice): string {
     const s = array.join("+");
     if (!d.flat) return s;
     return s ? s + formatBonus(d.flat) : d.flat.toString();
+}
+
+function getRange(weapon: Weapon, strike: StrikeKind): number | undefined {
+    switch (strike) {
+        case "melee":
+        case "two-handed":
+            return;
+        case "thrown":
+            return weapon.thrown;
+        case "ranged":
+            return weapon.range;
+    }
 }
