@@ -31,30 +31,7 @@ import { useParams } from "../useParams.tsx";
 
 export default function Sheet() {
     const [character] = useCharacter();
-    const [params] = useParams();
-    const grantedActions = iterModifiers(character)
-        .filter(isGrantedAction)
-        .map((a) => omit(a, "kind"));
-    const weaponActions = character.weapons!.flatMap((w) =>
-        weaponToActions(character, w!),
-    );
-    const builtActions = buildSpecificActions(character);
-
-    const actionModifiers = iterModifiers(character)
-        .filter(isActionModifier)
-        .toArray();
-    const actions = [...grantedActions, ...weaponActions, ...builtActions]
-        .map((a) => applyModifiers(actionModifiers, a))
-        .filter((a) => params.displayCombat || !a.combat);
-    updateAlchemicalBombs(character, actions);
-    const customCategories = iterModifiers(character)
-        .filter(isCustomCategory)
-        .toArray();
-    for (const category of customCategories) {
-        actions
-            .filter((a) => appliesToAction(category.actions, a))
-            .forEach((a) => (a.category = category.id as any));
-    }
+    const { actions, customCategories } = useActions(character);
 
     return (
         <div className="max-w-[65ch] mx-auto mb-8 px-3 flex flex-col">
@@ -82,7 +59,8 @@ export default function Sheet() {
                 <h2>Défenses</h2>
                 <Defenses character={character} />
             </section>
-            <Actions actions={actions} title="Attaques" category="strike" />
+            <Skills character={character} />
+            <Actions actions={actions} title="Frappes" category="strike" />
             <Actions actions={actions} title="Impulsions" category="impulse" />
             <Actions actions={actions} title="Alchimie" category="alchemy" />
             <Actions
@@ -111,9 +89,36 @@ export default function Sheet() {
             ))}
             <Actions actions={actions} title="Réactions" category="reaction" />
             <Passives character={character} />
-            <Skills character={character} />
         </div>
     );
+}
+function useActions(character: Character) {
+    const [params] = useParams();
+
+    const grantedActions = iterModifiers(character)
+        .filter(isGrantedAction)
+        .map((a) => omit(a, "kind"));
+    const weaponActions = character.weapons!.flatMap((w) =>
+        weaponToActions(character, w!),
+    );
+    const builtActions = buildSpecificActions(character);
+
+    const actionModifiers = iterModifiers(character)
+        .filter(isActionModifier)
+        .toArray();
+    const actions = [...grantedActions, ...weaponActions, ...builtActions]
+        .map((a) => applyModifiers(actionModifiers, a))
+        .filter((a) => params.displayCombat || !a.combat);
+    updateAlchemicalBombs(character, actions);
+    const customCategories = iterModifiers(character)
+        .filter(isCustomCategory)
+        .toArray();
+    for (const category of customCategories) {
+        actions
+            .filter((a) => appliesToAction(category.actions, a))
+            .forEach((a) => (a.category = category.id as any));
+    }
+    return { actions, customCategories };
 }
 function applyModifiers(mods: ActionModifier[], action: Action): Action {
     return mods
