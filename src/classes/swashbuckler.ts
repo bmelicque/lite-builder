@@ -26,6 +26,7 @@ import { DamageType, weapons } from "../items/weapons";
 
 const confidentFinisher: GrantedAction = {
     kind: "action",
+    combat: true,
     name: "Aboutissement assuré",
     category: "aboutissement" as any,
     actions: "one",
@@ -38,16 +39,19 @@ const confidentFinisher: GrantedAction = {
 
 const flyingBlade: GrantedPassive = {
     kind: "passive",
+    combat: true,
     name: "Lame volante",
     text: "Vous appliquez vos techniques démonstratives aux armes de jet aussi facilement qu'avec vos attaques au corps-à-corps. Vous appliquez vos dégâts de Frappe précise sur les Frappes à distance que vous réalisez avec une arme de jet dans leur premier facteur de portée. L'arme de jet doit posséder les traits agile ou finesse. Cela vous permet aussi de faire une Frappe de jet à distance pour Aboutissement assuré et tout autre aboutissement qui inclut une Frappe qui peut bénéficier de votre Frappe précise.",
 };
 const focusedFascination: GrantedPassive = {
     kind: "passive",
+    combat: true,
     name: "Fascination focalisée",
     text: "Lorsque vous utilisez [Représentation fascinante](fascinatingPerformance) lors d'une rencontre de combat, vous n'avez besoin que d'un succès à la place d'un succès critique pour [Fasciner](fascinated) votre cible. Cela ne fonctionne que si vous tentez de fasciner une seule cible.",
 };
 const goadingFeint: GrantedPassive = {
     kind: "passive",
+    combat: true,
     name: "Feinte provocante",
     text:
         "Vos ruse poussent vos adversaires à porter trop loin leurs attaques. Sur une [Feinte](feint), vous pouvez choisir d'utiliser les effets ci-dessous au lieu de tout autre effet que vous pourriez obtenir lorsque vous Feintez.\n" +
@@ -78,6 +82,7 @@ const preciseStrike: ExtraStrikeDamage = {
 
 const youreNext: GrantedAction = {
     kind: "action",
+    combat: true,
     name: "T'es le suivant",
     category: "reaction",
     actions: "reaction",

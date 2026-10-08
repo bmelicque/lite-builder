@@ -16,6 +16,7 @@ export type ActionCount =
 
 export type Action = {
     id?: string;
+    combat?: true;
     name: string;
     traits?: string[];
     category:
@@ -39,26 +40,16 @@ export type Action = {
 
 export type Passive = {
     id?: string;
+    combat?: true;
     name: string;
     traits?: string[];
     skill?: Skill;
     text: string;
 };
 
-export const intimidatingGlare: Action = {
-    name: "Regard Intimidant",
-    category: "action",
-    actions: "one",
-    skill: intimidation,
-    text:
-        "**Portée** 9 mètres ; **Délai** 10 minutes par cible.\n" +
-        "Tentez un jet d'Intimidation contre la Volonté de la cible.\n" +
-        "**Réussite Critique** La cible est [effrayée 2](frightened).\n" +
-        "**Réussite** La cible est effrayée 1.",
-};
-
 export const disarm: Action = {
     id: "disarm",
+    combat: true,
     name: "Désarmer",
     category: "action",
     actions: "one",
@@ -89,6 +80,7 @@ export const climb: Action = {
 
 export const demoralize: Action = {
     id: "demoralize",
+    combat: true,
     name: "Démoraliser",
     traits: ["audible", "concentration", "peur"],
     category: "action",
@@ -132,6 +124,7 @@ export const longJump: Action = {
 
 export const raiseAShield = {
     id: "raiseAShield",
+    combat: true,
     name: "Lever un bouclier",
     category: "action",
     actions: "one",
@@ -142,6 +135,7 @@ export const raiseAShield = {
 
 export const reposition: Action = {
     id: "reposition",
+    combat: true,
     name: "Repositionner",
     category: "action",
     actions: "one",
@@ -157,6 +151,7 @@ export const reposition: Action = {
 
 export const shove: Action = {
     id: "shove",
+    combat: true,
     name: "Pousser",
     category: "action",
     actions: "one",
@@ -187,6 +182,7 @@ export const swim: Action = {
 
 export const trip: Action = {
     id: "trip",
+    combat: true,
     name: "Croc-en-jambe",
     category: "action",
     actions: "one",
@@ -202,6 +198,7 @@ export const trip: Action = {
 
 export const tumbleThrough: Action = {
     id: "tumbleThrough",
+    combat: true,
     name: "Déplacement acrobatique",
     traits: ["déplacement"],
     category: "action",

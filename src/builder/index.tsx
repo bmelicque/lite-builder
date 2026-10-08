@@ -4,8 +4,8 @@ import { unwrap } from "../utils";
 import ClassBuilder from "./ClassBuilder";
 import ClassChoiceBuilder from "./ClassChoiceBuilder";
 import SkillBuilder from "./SkillBuilder";
-import { Step } from "../app";
 import { useCharacter } from "../useCharacter.tsx";
+import { Step } from "../steps.ts";
 
 type Props = {
     step: Step;

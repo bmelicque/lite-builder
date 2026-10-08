@@ -27,9 +27,11 @@ import Slots from "./Slots";
 import RichText from "../RichText.tsx";
 import { formatModifiers, weaponToActions } from "../character/weapons.ts";
 import Speeds from "./Speeds.tsx";
+import { useParams } from "../useParams.tsx";
 
 export default function Sheet() {
     const [character] = useCharacter();
+    const [params] = useParams();
     const grantedActions = iterModifiers(character)
         .filter(isGrantedAction)
         .map((a) => omit(a, "kind"));
@@ -41,9 +43,9 @@ export default function Sheet() {
     const actionModifiers = iterModifiers(character)
         .filter(isActionModifier)
         .toArray();
-    const actions = [...grantedActions, ...weaponActions, ...builtActions].map(
-        (a) => applyModifiers(actionModifiers, a),
-    );
+    const actions = [...grantedActions, ...weaponActions, ...builtActions]
+        .map((a) => applyModifiers(actionModifiers, a))
+        .filter((a) => params.displayCombat || !a.combat);
     updateAlchemicalBombs(character, actions);
     const customCategories = iterModifiers(character)
         .filter(isCustomCategory)

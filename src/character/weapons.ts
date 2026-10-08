@@ -92,6 +92,7 @@ function buildStrike(
 ): Action {
     const name = getStrikeName(weapon, kind);
     return {
+        combat: true,
         name,
         traits: structuredClone(weapon.traits),
         category: "strike",
