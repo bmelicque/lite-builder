@@ -31,24 +31,17 @@ const CharacterContext = createContext<CharacterContextValue | undefined>(
     undefined,
 );
 
-type Removable =
-    | "ancestry"
-    | "heritage"
-    | "class"
-    | "firstClassChoice"
-    | "secondClassChoice"
-    | "skills"
-    | "weapons";
+type Removable = "ancestry" | "heritage" | "class" | "skills" | "weapons";
 type CharacterAction =
     | { kind: "newCharacter" }
     | { kind: "selectCharacter"; id: string }
     | { kind: "selectAncestry"; ancestry: Ancestry }
     | { kind: "selectHeritage"; heritage: Heritage }
     | { kind: "selectClass"; class: Class }
-    | { kind: "selectFirstChoice"; option: ClassChoiceOption }
-    | { kind: "selectSecondChoice"; option: ClassChoiceOption }
+    | { kind: "selectChoice"; index: number; option: ClassChoiceOption }
     | { kind: "selectSkills"; skills: Skill[] }
     | { kind: "remove"; key: Removable }
+    | { kind: "removeChoice"; index: number }
     | { kind: "setName"; name: string }
     | { kind: "setBackground"; background: string }
     | { kind: "takeDamage"; damage: number }
@@ -83,10 +76,10 @@ function characterReducerHelper(
             return { ...character, heritage: action.heritage };
         case "selectClass":
             return { ...character, class: action.class };
-        case "selectFirstChoice":
-            return { ...character, firstClassChoice: action.option.name };
-        case "selectSecondChoice":
-            return { ...character, secondClassChoice: action.option.name };
+        case "selectChoice":
+            const choices = [...character.choices];
+            choices[action.index] = action.option.name;
+            return { ...character, choices };
         case "selectSkills": {
             character = { ...character, skills: action.skills };
             character.armor = selectArmor(character);
@@ -95,6 +88,11 @@ function characterReducerHelper(
         }
         case "remove":
             return omit(character, action.key);
+        case "removeChoice":
+            return {
+                ...character,
+                choices: character.choices.slice(0, action.index),
+            };
         case "setName":
             return { ...character, name: action.name };
         case "setBackground":

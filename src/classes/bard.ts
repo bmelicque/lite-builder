@@ -104,67 +104,72 @@ export const bard: Class = {
         { ...courageousAnthem, kind: "action" },
         { kind: "attributeArray", array: [0, 1, 2, 1, 0, 3] },
     ],
-    firstChoice: {
-        title: "Muse",
-        description:
-            "Choisissez une muse. Cette muse vous conduit à faire de grandes choses et pourrait être quelqu'un que vous connaissez, une créature surnaturelle, un lieu, une divinité, une philosophie ou un mystère fascinant. En fonction du type d'inspiration que vous recevez, votre muse vous accorde un don de barde et ajoute un sort à votre répertoire.",
-        options: [
-            {
-                name: "Combattant",
-                description:
-                    "Le champ de bataille est votre scène, le fracas de l'acier, votre musique. Votre muse a vu d'innombrables combats, qu'elle se révèle dans le combat ou qu'elle se résigne à sa nécessité. Un soldat ou un général peut vous inspirer, tout comme un champ de bataille ou une arme dont l'histoire est particulièrement riche. Si votre muse est une créature, il peut s'agir d'un soldat d'un autre monde. L'art inspiré par une muse combattante est triomphant et strident, décrivant souvent des batailles épiques.\n" +
-                    "En tant que barde avec une muse combattante, vous vous entraînez pour la bataille en plus de la représentation et vous préparez vos alliés aux dangers du combat. Vous pourriez même entrer dans le vif du sujet avec eux.\n" +
-                    "**Don de muse** [Représentation martiale](martialPerformance)\n" +
-                    "**Sort de muse** [Effroi](fear)",
-                grants: [martialPerformance, spellToModifier(fear)],
-            },
-            {
-                name: "Énigmatique",
-                description:
-                    "Votre muse est un mystère qui vous pousse à percer les secrets bien cachés de la vie et du multivers. Ces muses peuvent être des personnes que vous n'arrivez pas à cerner, des textes profondément chargés de symbolisme ou des paradoxes émotionnels qui soulignent le travail de toute une vie. L'art inspiré par une muse énigmatique peut être cryptique, inquiétant ou chargé de spéculations et de conspirations. En tant que barde ayant la muse énigmatique, vous soutenez vos alliés en leur apportant des connaissances, de l'inspiration et un soutien occulte.\n" +
-                    "**Don de muse** [Connaissance bardique](bardicLore)\n" +
-                    "**Sort de muse** [Coup assuré](sureStrike)",
-                grants: [bardicLore, spellToModifier(sureStrike)],
-            },
-            {
-                name: "Virtuose",
-                description:
-                    "Votre muse vous inspire constamment à atteindre des hauteurs supérieures de prouesse artistique. Pour de nombreux bardes, un enseignant ou un rival remplit ce rôle, bien que certains voient plus loin et tentent de surpasser les plus grands compositeurs du passé ou à tracer un chemin entièrement nouveau. L'art d'un barde inspiré par une muse virtuose est précis et inventif, une réussite en terme de formalisme.\n" +
-                    "En tant que barde avec une muse virtuose, vous êtes une source d'inspiration pour vos alliés et vous êtes confiant dans vos capacités musicales comme oratoires.\n" +
-                    "**Don de muse** [Composition persistante](lingeringComposition)\n" +
-                    "**Sort de muse** [Apaisement](soothe)",
-                grants: [lingeringComposition, spellToModifier(soothe)],
-            },
-            {
-                name: "Touche-à-tout",
-                description:
-                    "Votre muse est un touche-à-tout aussi actif que talentueux, qui passe d'une compétence à une autre et d'un but à un autre. Certains bardes sont constamment attirés par de nouvelles muses ou tirent leur inspiration d'un être idéalisé, qu'il s'agisse d'une personne réelle ou d'un être purement philosophique. Si votre muse est une unique créature, il peut s'agir d'une créature éclectique comme une fée ou une personne qui a beaucoup appris au cours de sa longue vie. L'art inspiré par une muse touche-à-tout est agité, chaque composition présentant de nouvelles techniques et un style en perpétuelle évolution.\n" +
-                    "En tant que barde dont la muse est touche-à-tout, vous vous intéressez à un large éventail de sujets, mais vous ne vous êtes que rarement dédié à l'un d'entre eux et vous ne vous décidez que rarement : vous voulez tout essayer.\n" +
-                    "**Don de muse** [Polyvalence artistique](versatilePerformance)\n" +
-                    "**Sort de muse** [Sbire fantasmagorique](phantasmalMinion)",
-                grants: [
-                    versatilePerformance,
-                    spellToModifier(phantasmalMinion),
-                ],
-            },
-            {
-                name: "Zoophonie",
-                description:
-                    "Votre muse est un maître du chant d'oiseau, des hurlements du loup, du barrissement des éléphants et des autre communications animales, vous poussant vers de nouveaux sommets et vous encourageant à vous lier avec la nature. Si votre muse est tune créature, il pourrait s'agir d'un animal éclairé ou d'un guide spirituel.\n" +
-                    "**Don de muse** [Communication zoophonique](zoophonicCommunication)\n" +
-                    "**Sort de muse** [Convocation d'animal](summonAnimal)",
-                grants: [zoophonicCommunication, spellToModifier(summonAnimal)],
-            },
-        ],
-    },
-    secondChoice: {
-        title: "Kit de sorts",
-        description:
-            "Choisissez un kit thématique qui reflète votre façon d'aborder la magie. Il remplit d'avance vos tours de magie et vos sorts de rang 1, dans la limite de ce que votre classe vous permet de connaître. Vous pourrez modifier cette sélection par la suite, selon les règles de votre classe.",
-        options: [
-            spellKitToClassChoice(occultBlaster, "bard"),
-            spellKitToClassChoice(occultIllusionist, "bard"),
-            spellKitToClassChoice(occultSupport, "bard"),
-        ],
-    },
+    choices: [
+        {
+            title: "Muse",
+            description:
+                "Choisissez une muse. Cette muse vous conduit à faire de grandes choses et pourrait être quelqu'un que vous connaissez, une créature surnaturelle, un lieu, une divinité, une philosophie ou un mystère fascinant. En fonction du type d'inspiration que vous recevez, votre muse vous accorde un don de barde et ajoute un sort à votre répertoire.",
+            options: [
+                {
+                    name: "Combattant",
+                    description:
+                        "Le champ de bataille est votre scène, le fracas de l'acier, votre musique. Votre muse a vu d'innombrables combats, qu'elle se révèle dans le combat ou qu'elle se résigne à sa nécessité. Un soldat ou un général peut vous inspirer, tout comme un champ de bataille ou une arme dont l'histoire est particulièrement riche. Si votre muse est une créature, il peut s'agir d'un soldat d'un autre monde. L'art inspiré par une muse combattante est triomphant et strident, décrivant souvent des batailles épiques.\n" +
+                        "En tant que barde avec une muse combattante, vous vous entraînez pour la bataille en plus de la représentation et vous préparez vos alliés aux dangers du combat. Vous pourriez même entrer dans le vif du sujet avec eux.\n" +
+                        "**Don de muse** [Représentation martiale](martialPerformance)\n" +
+                        "**Sort de muse** [Effroi](fear)",
+                    grants: [martialPerformance, spellToModifier(fear)],
+                },
+                {
+                    name: "Énigmatique",
+                    description:
+                        "Votre muse est un mystère qui vous pousse à percer les secrets bien cachés de la vie et du multivers. Ces muses peuvent être des personnes que vous n'arrivez pas à cerner, des textes profondément chargés de symbolisme ou des paradoxes émotionnels qui soulignent le travail de toute une vie. L'art inspiré par une muse énigmatique peut être cryptique, inquiétant ou chargé de spéculations et de conspirations. En tant que barde ayant la muse énigmatique, vous soutenez vos alliés en leur apportant des connaissances, de l'inspiration et un soutien occulte.\n" +
+                        "**Don de muse** [Connaissance bardique](bardicLore)\n" +
+                        "**Sort de muse** [Coup assuré](sureStrike)",
+                    grants: [bardicLore, spellToModifier(sureStrike)],
+                },
+                {
+                    name: "Virtuose",
+                    description:
+                        "Votre muse vous inspire constamment à atteindre des hauteurs supérieures de prouesse artistique. Pour de nombreux bardes, un enseignant ou un rival remplit ce rôle, bien que certains voient plus loin et tentent de surpasser les plus grands compositeurs du passé ou à tracer un chemin entièrement nouveau. L'art d'un barde inspiré par une muse virtuose est précis et inventif, une réussite en terme de formalisme.\n" +
+                        "En tant que barde avec une muse virtuose, vous êtes une source d'inspiration pour vos alliés et vous êtes confiant dans vos capacités musicales comme oratoires.\n" +
+                        "**Don de muse** [Composition persistante](lingeringComposition)\n" +
+                        "**Sort de muse** [Apaisement](soothe)",
+                    grants: [lingeringComposition, spellToModifier(soothe)],
+                },
+                {
+                    name: "Touche-à-tout",
+                    description:
+                        "Votre muse est un touche-à-tout aussi actif que talentueux, qui passe d'une compétence à une autre et d'un but à un autre. Certains bardes sont constamment attirés par de nouvelles muses ou tirent leur inspiration d'un être idéalisé, qu'il s'agisse d'une personne réelle ou d'un être purement philosophique. Si votre muse est une unique créature, il peut s'agir d'une créature éclectique comme une fée ou une personne qui a beaucoup appris au cours de sa longue vie. L'art inspiré par une muse touche-à-tout est agité, chaque composition présentant de nouvelles techniques et un style en perpétuelle évolution.\n" +
+                        "En tant que barde dont la muse est touche-à-tout, vous vous intéressez à un large éventail de sujets, mais vous ne vous êtes que rarement dédié à l'un d'entre eux et vous ne vous décidez que rarement : vous voulez tout essayer.\n" +
+                        "**Don de muse** [Polyvalence artistique](versatilePerformance)\n" +
+                        "**Sort de muse** [Sbire fantasmagorique](phantasmalMinion)",
+                    grants: [
+                        versatilePerformance,
+                        spellToModifier(phantasmalMinion),
+                    ],
+                },
+                {
+                    name: "Zoophonie",
+                    description:
+                        "Votre muse est un maître du chant d'oiseau, des hurlements du loup, du barrissement des éléphants et des autre communications animales, vous poussant vers de nouveaux sommets et vous encourageant à vous lier avec la nature. Si votre muse est tune créature, il pourrait s'agir d'un animal éclairé ou d'un guide spirituel.\n" +
+                        "**Don de muse** [Communication zoophonique](zoophonicCommunication)\n" +
+                        "**Sort de muse** [Convocation d'animal](summonAnimal)",
+                    grants: [
+                        zoophonicCommunication,
+                        spellToModifier(summonAnimal),
+                    ],
+                },
+            ],
+        },
+        {
+            title: "Kit de sorts",
+            description:
+                "Choisissez un kit thématique qui reflète votre façon d'aborder la magie. Il remplit d'avance vos tours de magie et vos sorts de rang 1, dans la limite de ce que votre classe vous permet de connaître. Vous pourrez modifier cette sélection par la suite, selon les règles de votre classe.",
+            options: [
+                spellKitToClassChoice(occultBlaster, "bard"),
+                spellKitToClassChoice(occultIllusionist, "bard"),
+                spellKitToClassChoice(occultSupport, "bard"),
+            ],
+        },
+    ],
 };

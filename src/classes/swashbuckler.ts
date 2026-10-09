@@ -159,104 +159,106 @@ export const swashbuckler: Class = {
         { kind: "weapon", ...weapons.rapier },
         { kind: "weapon", ...weapons.flintlockPistol },
     ],
-    firstChoice: {
-        title: "Style de bretteur",
-        description:
-            "Votre propre style distinctif vous permet de gérer avec élégance chaque situation. Choisissez un style de bretteur. Ce style détermine les actions supplémentaires que vous pouvez utiliser pour gagner du panache et vous rend qualifié dans la compétence liée à cette action.",
-        options: [
-            {
-                name: "Danseur de combat",
-                description:
-                    "Pour vous, un combat est une sorte de représentation artistique et vous captez l'attention de vos ennemis par des mouvements hypnotisants. Vous êtes qualifié en Représentation et obtenez le don de compétence Représentation fascinante. Quand vous Vous produisez, l'action obtient le trait bravade.",
-                requirement: [
-                    { kind: "ancestryFlaw", isNot: Attribute.Charisma },
-                ],
-                grants: [
-                    trained("performance"),
-                    addBravado("perform"),
-                    {
-                        kind: "passive",
-                        ...featToPassive(fascinatingPerformance),
-                    },
-                    focusedFascination,
-                    charismaArray,
-                ],
-            },
-            {
-                name: "Escrimeur",
-                description:
-                    "Vous vous déplacez précautionneusement, en feintant et en créant de fausses ouvertures pour conduire vos adversaires à faire des attaques inopportunes. Vous êtes qualifié en Duperie. Lorsque vous Feintez ou Créez une diversion, l'action obtient le trait bravade.",
-                requirement: [
-                    { kind: "ancestryFlaw", isNot: Attribute.Charisma },
-                ],
-                grants: [
-                    trained("deception"),
-                    addBravado("feint"),
-                    addBravado("createADiversion"),
-                    goadingFeint,
-                    charismaArray,
-                ],
-            },
-            {
-                name: "Esprit",
-                description:
-                    "Vous êtes amical, intelligent et plein d'humour et vous savez toujours quoi dire. Vos traits d'esprit laissent vos ennemis à la merci du talent et de la rapidité de vos attaques. Vous êtes qualifié en Diplomatie et obtenez le don de compétence [Bon Mot](bonMot). Lorsque vous utilisez Bon mot, l'action obtient le trait bravade.",
-                requirement: [
-                    { kind: "ancestryFlaw", isNot: Attribute.Charisma },
-                ],
-                grants: [
-                    trained("diplomacy"),
-                    { ...bonMot, kind: "action" },
-                    addBravado("bonMot"),
-                    oneForAll,
-                    { kind: "attributeArray", array: [0, 3, 1, 0, 1, 2] },
-                ],
-            },
-            {
-                name: "Fanfaron",
-                description:
-                    "Vous vous vantez, vous moquez et aiguillonnez psychologiquement vos ennemis. Vous êtes qualifié en Intimidation. Lorsque vous Démoralisez, l'action obtient le trait bravade.",
-                requirement: [
-                    { kind: "ancestryFlaw", isNot: Attribute.Charisma },
-                ],
-                grants: [
-                    trained("intimidation"),
-                    ...addBravadoAction(demoralize),
-                    youreNext,
-                    { kind: "attributeArray", array: [0, 3, 1, 0, 1, 2] },
-                ],
-            },
-            {
-                name: "Fripouille",
-                description:
-                    "Vous n'avez pas peur d'utiliser des tactiques fourbes pour prendre l'avantage sur vos adversaires. Vous êtes qualifié en Larcin et obtenez le don général Sale coup. Lorsque vous utilisez Sale coup, l'action obtient le trait bravade.",
-                grants: [
-                    trained("thievery"),
-                    { kind: "action", ...dirtyTrick },
-                    addBravado("dirtyTrick"),
-                    flyingBlade,
-                    { kind: "attributeArray", array: [1, 3, 2, 0, 1, 0] },
-                ],
-            },
-            {
-                name: "Gymnaste",
-                description:
-                    "Vous vous repositionnez, manœuvrez et déroutez vos ennemis par des prouesses physiques audacieuses. Vous êtes qualifié en Athlétisme. Lorsque vous Saisissez, Poussez, Repositionnez ou faites un Croc-en-jambe à un adversaire, l'action obtient le trait bravade.",
-                requirement: [
-                    { kind: "ancestryFlaw", isNot: Attribute.Strength },
-                ],
-                grants: [
-                    trained("athletics"),
-                    // addBravadoAction(grab),
-                    ...addBravadoAction(shove),
-                    ...addBravadoAction(reposition),
-                    ...addBravadoAction(trip),
-                    ...addBravadoAction(disarm),
-                    { kind: "attributeArray", array: [1, 3, 2, 0, 1, 0] },
-                ],
-            },
-        ],
-    },
+    choices: [
+        {
+            title: "Style de bretteur",
+            description:
+                "Votre propre style distinctif vous permet de gérer avec élégance chaque situation. Choisissez un style de bretteur. Ce style détermine les actions supplémentaires que vous pouvez utiliser pour gagner du panache et vous rend qualifié dans la compétence liée à cette action.",
+            options: [
+                {
+                    name: "Danseur de combat",
+                    description:
+                        "Pour vous, un combat est une sorte de représentation artistique et vous captez l'attention de vos ennemis par des mouvements hypnotisants. Vous êtes qualifié en Représentation et obtenez le don de compétence Représentation fascinante. Quand vous Vous produisez, l'action obtient le trait bravade.",
+                    requirement: [
+                        { kind: "ancestryFlaw", isNot: Attribute.Charisma },
+                    ],
+                    grants: [
+                        trained("performance"),
+                        addBravado("perform"),
+                        {
+                            kind: "passive",
+                            ...featToPassive(fascinatingPerformance),
+                        },
+                        focusedFascination,
+                        charismaArray,
+                    ],
+                },
+                {
+                    name: "Escrimeur",
+                    description:
+                        "Vous vous déplacez précautionneusement, en feintant et en créant de fausses ouvertures pour conduire vos adversaires à faire des attaques inopportunes. Vous êtes qualifié en Duperie. Lorsque vous Feintez ou Créez une diversion, l'action obtient le trait bravade.",
+                    requirement: [
+                        { kind: "ancestryFlaw", isNot: Attribute.Charisma },
+                    ],
+                    grants: [
+                        trained("deception"),
+                        addBravado("feint"),
+                        addBravado("createADiversion"),
+                        goadingFeint,
+                        charismaArray,
+                    ],
+                },
+                {
+                    name: "Esprit",
+                    description:
+                        "Vous êtes amical, intelligent et plein d'humour et vous savez toujours quoi dire. Vos traits d'esprit laissent vos ennemis à la merci du talent et de la rapidité de vos attaques. Vous êtes qualifié en Diplomatie et obtenez le don de compétence [Bon Mot](bonMot). Lorsque vous utilisez Bon mot, l'action obtient le trait bravade.",
+                    requirement: [
+                        { kind: "ancestryFlaw", isNot: Attribute.Charisma },
+                    ],
+                    grants: [
+                        trained("diplomacy"),
+                        { ...bonMot, kind: "action" },
+                        addBravado("bonMot"),
+                        oneForAll,
+                        { kind: "attributeArray", array: [0, 3, 1, 0, 1, 2] },
+                    ],
+                },
+                {
+                    name: "Fanfaron",
+                    description:
+                        "Vous vous vantez, vous moquez et aiguillonnez psychologiquement vos ennemis. Vous êtes qualifié en Intimidation. Lorsque vous Démoralisez, l'action obtient le trait bravade.",
+                    requirement: [
+                        { kind: "ancestryFlaw", isNot: Attribute.Charisma },
+                    ],
+                    grants: [
+                        trained("intimidation"),
+                        ...addBravadoAction(demoralize),
+                        youreNext,
+                        { kind: "attributeArray", array: [0, 3, 1, 0, 1, 2] },
+                    ],
+                },
+                {
+                    name: "Fripouille",
+                    description:
+                        "Vous n'avez pas peur d'utiliser des tactiques fourbes pour prendre l'avantage sur vos adversaires. Vous êtes qualifié en Larcin et obtenez le don général Sale coup. Lorsque vous utilisez Sale coup, l'action obtient le trait bravade.",
+                    grants: [
+                        trained("thievery"),
+                        { kind: "action", ...dirtyTrick },
+                        addBravado("dirtyTrick"),
+                        flyingBlade,
+                        { kind: "attributeArray", array: [1, 3, 2, 0, 1, 0] },
+                    ],
+                },
+                {
+                    name: "Gymnaste",
+                    description:
+                        "Vous vous repositionnez, manœuvrez et déroutez vos ennemis par des prouesses physiques audacieuses. Vous êtes qualifié en Athlétisme. Lorsque vous Saisissez, Poussez, Repositionnez ou faites un Croc-en-jambe à un adversaire, l'action obtient le trait bravade.",
+                    requirement: [
+                        { kind: "ancestryFlaw", isNot: Attribute.Strength },
+                    ],
+                    grants: [
+                        trained("athletics"),
+                        // addBravadoAction(grab),
+                        ...addBravadoAction(shove),
+                        ...addBravadoAction(reposition),
+                        ...addBravadoAction(trip),
+                        ...addBravadoAction(disarm),
+                        { kind: "attributeArray", array: [1, 3, 2, 0, 1, 0] },
+                    ],
+                },
+            ],
+        },
+    ],
 };
 
 function addBravadoAction(action: Action): Modifier[] {

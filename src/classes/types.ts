@@ -48,7 +48,6 @@ export type Class = {
     forbiddenFlaws?: Attribute[];
     hp: number;
     skills: number;
-    firstChoice: ClassChoice;
-    secondChoice?: ClassChoice;
+    choices: ClassChoice[];
     grants?: Modifier[];
 };

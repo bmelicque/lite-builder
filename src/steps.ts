@@ -16,8 +16,8 @@ export function characterStep(c: Character): Step {
     if (!c.ancestry) return Step.Ancestry;
     if (c.ancestry.heritages.length && !c.heritage) return Step.Heritage;
     if (!c.class) return Step.Class;
-    if (!c.firstClassChoice) return Step.ClassFirstChoice;
-    if (c.class.secondChoice && !c.secondClassChoice)
+    if (c.class.choices.length && !c.choices[0]) return Step.ClassFirstChoice;
+    if (c.class.choices.length >= 2 && !c.choices[1])
         return Step.ClassSecondChoice;
     if (!c.skills) return Step.Skills;
     return Step.Complete;

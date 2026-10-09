@@ -118,54 +118,56 @@ export const fighter: Class = {
         trained("fighterClassDC"),
         { kind: "action", ...reactiveStrike },
     ],
-    firstChoice: {
-        title: "Style de combat",
-        description: "Quel genre de Guerrier êtes vous ?",
-        options: [
-            {
-                name: "Ambidextre",
-                description:
-                    "Vous combattez avec votre arme favorite dans une main, et un autre outil – dague, bouclier ou autre – dans votre seconde main.",
-                grants: [
-                    ...strengthModifiers,
-                    { ...doubleSlice, kind: "action" },
-                    { ...oneHandedWeapon, kind: "recommendation" },
-                    ...steelShieldActions.map(actionToModifier),
-                    steelShieldHp,
-                ],
-            },
-            {
-                name: "Attaquant mixte",
-                description:
-                    "Vous utilisez un style mixte, priviliégiant d'abord le combat à distance et utilisant des armes légères une fois au contact.",
-                grants: [
-                    ...dexModifiers,
-                    { ...pointBlankStance, kind: "action" },
-                    { ...oneHandedWeapon, kind: "recommendation" },
-                    ...bucklerActions.map(actionToModifier),
-                    bucklerHp,
-                ],
-            },
-            {
-                name: "Gardien",
-                description:
-                    "Vous utilisez une arme avec une grande allonge pour piéger les ennemis et contrôler le champ de bataille, punissant ceux se croyant trop en sécurité.",
-                grants: [
-                    ...strengthModifiers,
-                    { ...suddenCharge, kind: "action" },
-                    reachWeaponRecommendation,
-                ],
-            },
-            {
-                name: "Une main et demie",
-                description:
-                    "Vous utilisez une arme pouvant être utilisée à une ou deux mains, et gardez votre autre main dédiées à diverses techniques de lutte, pour un style mêlant aggressivité et polyvalence.",
-                grants: [
-                    ...strengthModifiers,
-                    { ...snaggingStrike, kind: "action" },
-                    oneOrTwoHandsWeaponRecommendation,
-                ],
-            },
-        ],
-    },
+    choices: [
+        {
+            title: "Style de combat",
+            description: "Quel genre de Guerrier êtes vous ?",
+            options: [
+                {
+                    name: "Ambidextre",
+                    description:
+                        "Vous combattez avec votre arme favorite dans une main, et un autre outil – dague, bouclier ou autre – dans votre seconde main.",
+                    grants: [
+                        ...strengthModifiers,
+                        { ...doubleSlice, kind: "action" },
+                        { ...oneHandedWeapon, kind: "recommendation" },
+                        ...steelShieldActions.map(actionToModifier),
+                        steelShieldHp,
+                    ],
+                },
+                {
+                    name: "Attaquant mixte",
+                    description:
+                        "Vous utilisez un style mixte, priviliégiant d'abord le combat à distance et utilisant des armes légères une fois au contact.",
+                    grants: [
+                        ...dexModifiers,
+                        { ...pointBlankStance, kind: "action" },
+                        { ...oneHandedWeapon, kind: "recommendation" },
+                        ...bucklerActions.map(actionToModifier),
+                        bucklerHp,
+                    ],
+                },
+                {
+                    name: "Gardien",
+                    description:
+                        "Vous utilisez une arme avec une grande allonge pour piéger les ennemis et contrôler le champ de bataille, punissant ceux se croyant trop en sécurité.",
+                    grants: [
+                        ...strengthModifiers,
+                        { ...suddenCharge, kind: "action" },
+                        reachWeaponRecommendation,
+                    ],
+                },
+                {
+                    name: "Une main et demie",
+                    description:
+                        "Vous utilisez une arme pouvant être utilisée à une ou deux mains, et gardez votre autre main dédiées à diverses techniques de lutte, pour un style mêlant aggressivité et polyvalence.",
+                    grants: [
+                        ...strengthModifiers,
+                        { ...snaggingStrike, kind: "action" },
+                        oneOrTwoHandsWeaponRecommendation,
+                    ],
+                },
+            ],
+        },
+    ],
 };

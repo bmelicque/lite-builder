@@ -72,8 +72,7 @@ export const characterSchema = z.object({
         .optional()
         .transform(makeTransformer(heritages, "heritage")),
     class: z.string().optional().transform(makeTransformer(classes, "class")),
-    firstClassChoice: z.string().optional(),
-    secondClassChoice: z.string().optional(),
+    choices: z.array(z.string()).default([]),
     skills: z.array(skillSchema).optional(),
     armor: z.string().optional().transform(makeTransformer(armors, "armor")),
     weapons: z.array(weaponSchema).optional(),
@@ -115,18 +114,20 @@ export function* iterModifiers(character: Character): Generator<Modifier> {
     grants = character.heritage?.grants;
     if (grants) for (const g of grants) yield g;
 
-    grants = character.class?.grants;
+    const class_ = character.class;
+    if (!class_) return;
+
+    grants = class_.grants;
     if (grants) for (const g of grants) yield g;
 
-    grants = character.class?.firstChoice.options.find(
-        (o) => o.name === character.firstClassChoice,
-    )?.grants;
-    if (grants) for (const g of grants) yield g;
-
-    grants = character.class?.secondChoice?.options.find(
-        (o) => o.name === character.secondClassChoice,
-    )?.grants;
-    if (grants) for (const g of grants) yield g;
+    for (let i = 0; i < class_.choices.length; i++) {
+        const choice = class_.choices[i];
+        const option = choice.options.find(
+            (o) => o.name === character.choices[i],
+        );
+        if (!option) continue;
+        for (const g of option.grants) yield g;
+    }
 }
 
 const ATTRIBUTES = Symbol();

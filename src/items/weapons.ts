@@ -341,6 +341,24 @@ const flingflenser: Weapon = {
         "Un dépeceur est une arme de conception gobeline se terminant par un tube ovoïde avec une trappe et une poignée à l'extrémité étroite. Un faisceau de lames circulaires maintenues ensemble et attachées à un paquet de poudre noire par une fine lanière de cuir sert de munitions et est chargé par la trappe avant d'être tiré avec une platine à silex ou un autre mécanisme d'allumage externe. La conception robuste du dépeceur le place également parmi les armes gobelines les plus fiables.",
 };
 
+const flintlockMusket: Weapon = {
+    id: "flintlockMusket",
+    name: "Mousquet",
+    damageDie: 6,
+    damageType: DamageType.Piercing,
+    fatal: 10,
+    traits: ["commotion"],
+    hands: 2,
+    range: 14,
+    reload: 1,
+    price: 5 * GP,
+    proficiency: "simpleWeapons",
+    group: "firearm",
+    bulk: 1,
+    description:
+        "La plus couramment disponible des armes à feu, le mousquet comprend un mécanisme de mise à feu externe et une armature relativement compacte. Bien que dépourvu de la portée et de la puissance de tir de l'arquebuse, le mousquet est populaire parmi les civils pour sa facilité d'utilisation.",
+};
+
 const flintlockPistol: Weapon = {
     id: "flintlockPistol",
     name: "Pistolet à silex",
@@ -507,6 +525,22 @@ const longHammer: Weapon = {
         "Le marteau long est doté d'une tête de marteau à dents conçue pour endommager les genoux et les chevilles, contrebalancée par une pointe robuste et fixée à un manche renforcé de 1,50 mètre à 2 mètres de long.",
 };
 
+const meteorHammer: Weapon = {
+    id: "meteorHammer",
+    name: "Marteau météore",
+    damageDie: 8,
+    damageType: DamageType.Bludgeoning,
+    traits: ["allonge"],
+    additionalActions: [disarm, trip],
+    hands: 2,
+    price: 3 * GP,
+    proficiency: "martialWeapons",
+    group: "flail",
+    bulk: 2,
+    description:
+        "Cette arme est constituée d'une longue chaîne reliée à un lourd poids à chaque extrémité. Lorsque son utilisateur fait tourner les poids par la chaîne, ils prennent de plus en plus d'élan et peuvent porter des coups mortels avec une allonge incroyable.",
+};
+
 const orcKnuckleDagger: Weapon = {
     id: "orcKnuckleDagger",
     name: "Dague coup-de-poing orque",
@@ -655,6 +689,7 @@ export const weapons = {
     fightingStick,
     filchersFork,
     flingflenser,
+    flintlockMusket,
     flintlockPistol,
     fryingPan,
     glaive,
@@ -665,6 +700,7 @@ export const weapons = {
     horseChopper,
     kukri,
     longHammer,
+    meteorHammer,
     orcKnuckleDagger,
     orcNecksplitter,
     pick,

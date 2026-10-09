@@ -23,11 +23,7 @@ function toData(character: Character) {
 
     if (character.class) data.class = character.class.id;
 
-    if (character.firstClassChoice)
-        data.firstClassChoice = character.firstClassChoice;
-
-    if (character.secondClassChoice)
-        data.secondClassChoice = character.secondClassChoice;
+    if (character.choices) data.choices = character.choices;
 
     if (character.skills) data.skills = character.skills.map((s) => s.id);
 

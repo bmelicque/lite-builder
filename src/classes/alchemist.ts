@@ -111,12 +111,14 @@ export const alchemist: Class = {
     forbiddenFlaws: [Attribute.Intelligence],
     hp: 8,
     skills: 7,
-    firstChoice: {
-        title: "Champ de recherche",
-        description:
-            "Vos études de la nature alchimique de l'univers vous a mené à vous concentrer sur un champ de recherche spécifique. Ce choix vous donne davantage de formules et d'autres avantages lorsque vous gagnez des niveaux.",
-        options: [bomber, chirurgeon, mutagenist, toxicologist],
-    },
+    choices: [
+        {
+            title: "Champ de recherche",
+            description:
+                "Vos études de la nature alchimique de l'univers vous a mené à vous concentrer sur un champ de recherche spécifique. Ce choix vous donne davantage de formules et d'autres avantages lorsque vous gagnez des niveaux.",
+            options: [bomber, chirurgeon, mutagenist, toxicologist],
+        },
+    ],
     grants: [
         trained("perception"),
         expert("fortitude"),

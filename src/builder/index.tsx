@@ -29,13 +29,13 @@ export default function Builder({ step }: Props) {
                 dispatch({ kind: "remove", key: "class" });
                 break;
             case Step.ClassSecondChoice:
-                dispatch({ kind: "remove", key: "firstClassChoice" });
+                dispatch({ kind: "removeChoice", index: 1 });
                 break;
             case Step.Skills:
-                if (unwrap(character.class).secondChoice) {
-                    dispatch({ kind: "remove", key: "secondClassChoice" });
+                if (unwrap(character.class).choices.length === 2) {
+                    dispatch({ kind: "removeChoice", index: 2 });
                 } else {
-                    dispatch({ kind: "remove", key: "firstClassChoice" });
+                    dispatch({ kind: "removeChoice", index: 1 });
                 }
                 break;
         }
@@ -51,11 +51,9 @@ export default function Builder({ step }: Props) {
             {step === Step.Ancestry && <AncestryBuilder />}
             {step === Step.Heritage && <HeritageBuilder />}
             {step === Step.Class && <ClassBuilder />}
-            {step === Step.ClassFirstChoice && (
-                <ClassChoiceBuilder prop="firstChoice" />
-            )}
+            {step === Step.ClassFirstChoice && <ClassChoiceBuilder index={1} />}
             {step === Step.ClassSecondChoice && (
-                <ClassChoiceBuilder prop="secondChoice" />
+                <ClassChoiceBuilder index={2} />
             )}
             {step === Step.Skills && <SkillBuilder />}
         </section>

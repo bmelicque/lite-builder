@@ -6,14 +6,14 @@ import RichText from "../RichText";
 import { unwrap } from "../utils";
 import Grid from "./Grid.tsx";
 
-type Props = { prop: "firstChoice" | "secondChoice" };
-export default function ClassChoiceBuilder({ prop }: Props) {
+type Props = { index: number };
+export default function ClassChoiceBuilder({ index }: Props) {
     const [character, dispatch] = useCharacter();
     const isValid = isValidOption.bind(null, character);
-    const choice = unwrap(character.class![prop]);
+    const choice = unwrap(character.class!.choices[index]);
     const options = choice.options.filter(isValid);
-    const dispatchKind =
-        prop === "firstChoice" ? "selectFirstChoice" : "selectSecondChoice";
+    const selectOption = (o: ClassChoiceOption) =>
+        dispatch({ kind: "selectChoice", index, option: o });
     return (
         <section>
             <h1 className="text-center">{choice.title}</h1>
@@ -22,9 +22,7 @@ export default function ClassChoiceBuilder({ prop }: Props) {
                 {options.map((o) => (
                     <ChoiceOptionCard
                         option={o}
-                        onSelect={() =>
-                            dispatch({ kind: dispatchKind, option: o })
-                        }
+                        onSelect={() => selectOption(o)}
                     />
                 ))}
             </Grid>
@@ -50,7 +48,7 @@ function matchesRequirement(
         case "ancestryFlaw":
             return requirement.isNot !== character.ancestry!.attributes.flaw;
         case "firstOption":
-            return character.firstClassChoice! === requirement.value;
+            return character.choices?.[0] === requirement.value;
     }
 }
 
