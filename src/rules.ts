@@ -93,6 +93,13 @@ const weaponActions: GeneralRule = {
 export const rules: Record<string, Rule> = {
     aboutissement: finisher,
     bardicLore: bardicLoreRule,
+    belchSmoke: {
+        kind: "action",
+        name: "Rejet de fumée",
+        category: "action",
+        actions: "one",
+        text: "Vous expirez ce qui reste de fumée, mettant un terme au sort et créant un nuage de fumée dans une sphère de 1,5 mètres, jusqu'à 6 mètres de distance.",
+    },
     bonMot: { ...bonMot, kind: "action" },
     callOnAncientBlood: { ...callOnAncientBlood, kind: "action" },
     courageousAnthem: { ...courageousAnthem, kind: "action" },
@@ -107,6 +114,15 @@ export const rules: Record<string, Rule> = {
     highJump: { ...highJump, kind: "action" },
     jinx: { ...jinx, kind: "action" },
     intimidatingGlare: passiveToGeneral(featToPassive(intimidatingGlare)),
+    lifeBlock: {
+        kind: "action",
+        name: "Blocage vital",
+        category: "reaction",
+        actions: "reaction",
+        text:
+            "**Déclencheur** La cible du sort devrait subir des dégâts.\n" +
+            "Réduisez les dégâts déclencheurs de 10, mais vous perdez 5 Points de vie. Même si cela réduit les dégâts à 0, la cible subit toujours tout effet qui devrait être appliqué avec les dégâts, comme le poison sur la Frappe de crochets d'une vipère.",
+    },
     lingeringComposition,
     longJump: { ...longJump, kind: "action" },
     martialPerformance: passiveToGeneral(martialPerformance),

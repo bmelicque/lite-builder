@@ -90,6 +90,40 @@ export const command: Spell = {
         "**Échec critique** À son prochain tour, la cible doit utiliser toutes ses actions pour obéir à votre ordre.",
 };
 
+export const dizzyingColors: Spell = {
+    id: "dizzyingColors",
+    combat: true,
+    name: "Couleurs vertigineuses",
+    traits: [
+        "concentration",
+        "illusion",
+        "mise hors de combat",
+        "manipulation",
+        "visuel",
+    ],
+    traditions: [Tradition.Arcana, Tradition.Occult],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Zone** un cône de 4,5 m ; **Durée** variable ; **Défense** Volonté.\n" +
+        "Vous libérez une multitude de couleurs tourbillonnantes qui submergent les créatures selon leur jet de Volonté.\n" +
+        "**Réussite critique** La créature n'est pas affectée.\n" +
+        "**Réussite** La créature est [éblouie](dazzled) pendant 1 round.\n" +
+        "**Échec** La créature est [étourdie 1](stunned), [aveuglée](blinded) pendant 1 round et [éblouie] pendant 1 minute.\n" +
+        "**Échec critique** La créature est étourdie 1 pendant 1 round et aveuglée pendant 1 minute.",
+};
+
+export const domeOfTranquility1: Spell = {
+    id: "domeOfTranquility1",
+    name: "Dôme de quiétude",
+    traits: ["air", "concentration", "manipulation"],
+    traditions: [Tradition.Arcana, Tradition.Occult, Tradition.Primal],
+    category: "spell1",
+    text:
+        "**Incantation** 1 minute ; **Portée** 9 mètres ; **Zone** une sphère de 9 mètres ; **Durée** 1 heure.\n" +
+        "L'air autour de vous s'immobilise et étouffe les bruits du monde extérieur. Si vous percevez distinctement tout ce qui se trouve à l'intérieur de ce dôme isolé, vous n'entendez rien de ce qui se passe au-dehors. L'inverse est également vrai : personne à l'extérieur du dôme ne peut entendre ce qui s'y déroule. Ce dôme ne bloque pas la ligne de vue. Si un objet ou une créature d'encombrement supérieur à 1 le traverse, le dôme se dissipe automatiquement. Vous pouvez [Révoquer](dismiss) ce sort.",
+};
+
 export const fear: Spell = {
     id: "fear",
     name: "Effroi",
@@ -106,8 +140,28 @@ export const fear: Spell = {
         "**Échec critique** La cible est effrayée 3 et [en fuite](fleeing) pendant 1 round.",
 };
 
+export const fishingSpot: Spell = {
+    id: "fishingSpot",
+    name: "Coin pêche",
+    traits: ["concentration", "manipulation"],
+    traditions: AllTraditions,
+    category: "spell1",
+    text:
+        "**Incantation** 10 minutes.\n" +
+        "Vous faites apparaître une canne à pêche ainsi qu'une étendue d'eau extraplanaire grouillant de poissons. Après 10 minutes de pêche, vous attrapez un poisson magique ; lancez 1d8 pour déterminer quel poisson vous avez pêché et quels effets vous obtiendrez en le consommant une fois cuit. Le poisson doit être cuit et consommé dans l'heure suivant sa capture, et l'effet indiqué dure 1 heure après sa consommation. Chaque poisson ne peut nourrir qu'une seule créature.\n" +
+        "**Truite mélodieuse** : bonus de statut de +2 aux tests de Représentation.\n" +
+        "**Bar primordial** : bonus de statut de +2 aux tests de Survie.\n" +
+        "**Poisson-goule** : bonus de statut de +2 aux tests d'Intimidation.\n" +
+        "**Barbeau bouillonnant** : bonus de statut de +2 aux tests de Tromperie et de Diplomatie.\n" +
+        "**Vandoise fringante** : bonus de statut de +2 aux tests d'Acrobaties.\n" +
+        "**Vigocarpe** : bonus de statut de +2 aux tests d'Athlétisme pour Escalader et Nager.\n" +
+        "**Perche agressive** : bonus de statut de +2 aux tests d'Athlétisme pour Désarmer, Agripper, Repositionner, Bousculer et faire un Croc-en-jambes.\n" +
+        "**Saumon érudit** : bonus de statut de +2 aux tests pour Se remémorer des connaissances",
+};
+
 export const forceBarrage: Spell = {
     id: "forceBarrage1",
+    combat: true,
     name: "Salve de force",
     traits: ["concentration", "force", "manipulation"],
     traditions: [Tradition.Arcana, Tradition.Occult],
@@ -134,6 +188,18 @@ export const grimTendrils: Spell = {
         "**Échec critique** La créature subit le double des dégâts de vide et des dégâts de saignement.",
 };
 
+export const illusoryDisguise1: Spell = {
+    id: "illusoryDisguise1",
+    name: "Déguisement illusoire",
+    traits: ["concentration", "illusion", "manipulation", "visuel"],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** 9 mètres ; **Cible** 1 créature consentante ; **Durée** 1 heure.\n" +
+        "Vous créez une illusion qui permet à la cible de prendre l'apparence d'une créature dont la forme du corps est identique et dont la taille et le poids sont à peu près équivalents aux vôtres. Le déguisement est généralement assez bon pour dissimuler son identité mais pas assez pour se faire passer pour une personne en particulier. Le sort change son apparence et sa voix, mais pas ses manières. Vous pouvez changer l'apparence de ses vêtements et des objets portés, comme faire en sorte que son armure ressemble à une robe. Les objets tenus en main ne sont pas affectés et tout objet porté qui n'est plus sur la créature reprend sa véritable apparence.\n" +
+        "Déguisement illusoire vous permet de considérer que vous portez un déguisement lorsque vous utilisez l'action [Se faire passer pour](impersonate). La cible ignore les pénalités de circonstances appliquées en se déguisant en une créature dissemblable, confère un bonus de statut de +4 au DD pour empêcher autrui de percer votre déguisement, et permet à la cible d'ajouter son niveau à de tels tests de Duperie même si elle est inexpérimentée. Vous pouvez [Révoquer](dismiss) ce sort.",
+};
+
 export const illusoryObject: Spell = {
     id: "illusoryObject1",
     name: "Objet illusoire",
@@ -145,6 +211,18 @@ export const illusoryObject: Spell = {
         "**Portée** 150 mètres ; **Zone** sphère de 6 m ; **Durée** 10 minutes.\n" +
         "Vous créez une image visuelle illusoire d'un objet immobile. La totalité de l'image doit tenir dans la zone du sort. L'objet semble s'animer naturellement mais il ne produit aucun son et ne génère aucune odeur. Par exemple, l'eau semblera se déverser d'une cascade illusoire mais elle le fera en silence.\n" +
         "Toute créature qui touche l'image ou effectue l'action [Chercher](seek) pour l'examiner peut tenter de percer l'illusion.",
+};
+
+export const objectReading1: Spell = {
+    id: "objectReading1",
+    name: "Lecture d'objet",
+    traits: ["concentration", "manipulation"],
+    traditions: [Tradition.Occult],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** contact ; **Cible** 1 objet.\n" +
+        "Vous placez une main sur un objet pour apprendre des informations sur un évènement émotionnel qui s'est produit impliquant l'objet au cours de la semaine passée, déterminé par le MJ. Si vous lancez Lecture d'objet sur le même objet à plusieurs reprises, vous pouvez soit vous concentrer sur un unique évènement pour obtenir des informations supplémentaires à propos de cet évènement, soit obtenir d'autres informations sur un autre évènement émotionnel qui s'est produit durant le laps de temps applicable.",
 };
 
 export const phantasmalMinion: Spell = {
@@ -169,6 +247,40 @@ export const protection: Spell = {
     text:
         "**Portée** contact ; **Cibles** 1 créature consentante ; **Durée** 1 minute.\n" +
         "Vous protégez une créature des blessures. La cible obtient un bonus de statut de +1 à la Classe d'armure et aux jets de sauvegarde.",
+};
+
+export const schadenfreude: Spell = {
+    id: "schadenfreude",
+    combat: true,
+    name: "Joie malsaine",
+    traits: ["concentration", "émotion", "mental"],
+    traditions: [Tradition.Arcana, Tradition.Divine, Tradition.Occult],
+    category: "spell1",
+    actions: "reaction",
+    text:
+        "**Déclencheur** Vous obtenez un échec critique contre l'effet d'un ennemi.\n" +
+        "**Portée** 9 mètres ; **Cible** l'ennemi déclencheur ; **Défense** Volonté.\n" +
+        "Le sentiment de plaisir malsain éprouvé par votre ennemi lorsque vous échouez de manière catastrophique le distrait. Il doit tenter un jet de Volonté.\n" +
+        "**Réussite critique** La créature n'est pas affectée.\n" +
+        "**Réussite** La créature est distraite par son amusement et subit une pénalité de statut de -1 à sa Perception et sa Volonté pendant 1 round.\n" +
+        "**Échec** La créature est dominée par son amusement et est [stupéfiée 1](stupefied) pendant 1 tour.\n" +
+        "**Échec critique** La créature est perdue dans son amusement et est [stupéfiée 2](stupefied) pendant 1 tour et [étourdie 1](stunned).",
+};
+
+export const seashellOfStolenSound: Spell = {
+    id: "seashellOfStolenSound",
+    name: "Coquillage du son volé",
+    traits: ["concentration", "manipulation", "sonore"],
+    traditions: [Tradition.Arcana, Tradition.Occult, Tradition.Primal],
+    category: "spell1",
+    actions: "reaction",
+    text:
+        "**Déclencheur** Une créature à portée commence à émettre un son.\n" +
+        "**Portée** 9 mètres ; **Durée** jusqu'à vos prochains préparatifs quotidiens.\n" +
+        "Vous enregistrez un son dans un coquillage pour l'utiliser à votre guise : les derniers mots d'un être cher, le rugissement puissant d'un dragon, une conversation compromettante entre deux diplomates influents, ou même quelque chose de plus étrange et secret. Pour lancer ce sort, vous devez présenter un coquillage intact. Lorsque vous lancez le sort, de la magie tourbillonne autour de la créature déclencheuse ; elle copie les sons émis par celle-ci, ainsi que les bruits ambiants, pendant la minute qui suit, et les stocke dans le coquillage.\n" +
+        "Vous ou une autre créature pouvez ensuite diffuser le son contenu dans le coquillage pendant la durée du sort en interagissant avec celui-ci ; toutefois, une fois le son diffusé, le coquillage vole en éclats et le sort prend fin.\n" +
+        "Lors de vos prochains préparatifs quotidiens, vous pourrez choisir de consommer un emplacement de sort pour prolonger d'une journée supplémentaire la durée de vie d'un tel coquillage.\n" +
+        "Bien que le sort reproduise fidèlement les sons entourant la cible, il ne restitue aucun effet auditif ou sonore particulier associé à ces sons.",
 };
 
 export const sleep: Spell = {

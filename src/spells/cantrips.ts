@@ -1,8 +1,28 @@
 import { Rarity } from "../items/utils";
 import { AllTraditions, Tradition, type Spell } from "./types";
 
+export const bullHorn: Spell = {
+    id: "bullHorn",
+    name: "Porte-voix",
+    traits: [
+        "audible",
+        "concentration",
+        "illusion",
+        "manipulation",
+        "tour de magie",
+    ],
+    traditions: [Tradition.Arcana, Tradition.Divine, Tradition.Occult],
+    category: "cantrip",
+    actions: "two",
+    text:
+        "**Durée** 10 minutes.\n" +
+        "Vous amplifiez votre voix suffisamment fort pour pouvoir être entendu facilement à une grande distance. Pendant toute la durée du sort, votre voix peut être entendue clairement dans un rayon de 150 mètres, même si d'autres bruits ambiants bloquent le son. Cela n'augmente pas la portée ou la zone des autres effets audibles ou linguistiques.\n" +
+        "Votre voix forte vous permet de [Contraindre](coerce) les autres plus facilement et l'acoustique vous aide à [Vous produire](perform) dans une grande salle. Vous obtenez un bonus de statut de +1 à ces tests. Vous pouvez [Révoquer](dismiss) le sort.",
+};
+
 export const courageousAnthem: Spell = {
     id: "courageousAnthem",
+    combat: true,
     name: "Hymne du courage",
     traits: ["composition", "tour de magie", "concentration", "émotion"],
     rarity: Rarity.Uncommon,
@@ -15,6 +35,7 @@ export const courageousAnthem: Spell = {
 
 export const daze: Spell = {
     id: "daze",
+    combat: true,
     name: "Hébétement",
     traits: [
         "concentration",
@@ -45,6 +66,19 @@ export const detectMagic: Spell = {
         "Vous ne détectez la magie d'illusion que si cet effet de magie possède un rang inférieur au rang de votre sort de Détection de la magie. Quoi qu'il en soit, les objets qui possèdent une aura d'illusion mais qui n'ont pas une apparence trompeuse (telle qu'une Potion d'invisibilité) se détectent comme à l'ordinaire.",
 };
 
+export const eatFire: Spell = {
+    id: "eatFire",
+    name: "Mange-feu",
+    traits: ["feu", "manipulation", "tour de magie"],
+    traditions: [Tradition.Arcana, Tradition.Occult, Tradition.Primal],
+    category: "cantrip",
+    actions: "reaction",
+    text:
+        "**Déclencheur** Vous allez subir des dégâts de feu.\n" +
+        "**Durée** jusqu'à la fin de votre prochain tour.\n" +
+        "Vous consommez et ingérez le feu, le rendant moins nocif pour vous. Vous obtenez une résistance 5 contre les dégâts de feu jusqu'à la fin du tour actuel. Pendant la durée restante du sort, vous pouvez utiliser l'action [Rejet de fumée](belchSmoke).",
+};
+
 export const figment: Spell = {
     id: "figment",
     name: "Fantasme",
@@ -65,6 +99,7 @@ export const figment: Spell = {
 
 export const forbiddingWard: Spell = {
     id: "forbiddingWard",
+    combat: true,
     name: "Sceau d'interdiction",
     traits: ["concentration", "manipulation", "tour de magie"],
     traditions: [Tradition.Divine, Tradition.Occult],
@@ -74,6 +109,19 @@ export const forbiddingWard: Spell = {
         "**Portée** 9 mètres ; **Cibles** 1 allié et 1 ennemi ; **Durée** Maintenu jusqu'à 1 minute.\n" +
         "Vous protégez un allié contre les attaques et les sorts hostiles de la cible ennemie.\n" +
         "La cible alliée obtient un bonus de statut de +1 à la CA et aux jets de sauvegarde contre les attaques, les sorts et autres effets de la cible ennemie.",
+};
+
+export const glamorize: Spell = {
+    id: "glamorize",
+    name: "Embellisement",
+    traits: ["concentration", "manipulation", "tour de magie"],
+    traditions: AllTraditions,
+    category: "cantrip",
+    actions: "two",
+    text:
+        "**Durée** 1 heure.\n" +
+        "À l'aide de gestes magiques simples, vous modifiez un détail mineur de votre apparence ou vous créez un petit effet environnemental limité à votre personne (en ajustant l'éclairage ambiant pour favoriser votre meilleur profil, en provoquant un bref coup de vent pour faire bouger vos cheveux de manière spectaculaire, etc...). Tant que le sort est actif, vous pouvez le [Maintenir](sustain) pour effectuer d'autres ajustements.\n" +
+        "À la discrétion du MJ, de telles modifications peuvent accorder un bonus de statut de +1 à certaines tâches, telles que [Se faire passer pour quelqu'un](impersonate) ou [Se Produire](perform).",
 };
 
 export const guidance: Spell = {
@@ -91,6 +139,7 @@ export const guidance: Spell = {
 
 export const hauntingHymn: Spell = {
     id: "hauntingHymn",
+    combat: true,
     name: "Hymne obsédant",
     traits: [
         "audible",
@@ -105,6 +154,16 @@ export const hauntingHymn: Spell = {
     text:
         "**Zone** cône de 4.5 m ; **Défense** Vigueur basique.\n" +
         "Vous faites résonner un hymne assourdissant que seules les créatures de la zone peuvent entendre. L'hymne inflige {{ceil(level/4)}}d8 dégâts sonores, avec un jet de Vigueur basique. Si une cible obtient un échec critique, elle est également Sourde pendant 1 minute.",
+};
+
+export const knowTheWay: Spell = {
+    id: "knowTheWay",
+    name: "Sens de l'orientation",
+    traits: ["concentration", "détection", "manipulation", "tour de magie"],
+    traditions: [Tradition.Divine, Tradition.Occult, Tradition.Primal],
+    category: "cantrip",
+    actions: "two",
+    text: "Dans l'œil de votre esprit, vous vous réorientez comme par magie. Vous savez immédiatement quelle est la direction du nord (si elle existe à l'endroit où vous vous trouvez) et vous pouvez choisir un endroit où vous vous êtes trouvé au cours des dernières 24 heures pour savoir dans quelle direction il se trouve.",
 };
 
 export const light: Spell = {
@@ -175,8 +234,22 @@ export const prestidigitation: Spell = {
         "**Nettoie** Colorise, nettoie ou salit un objet d'Encombrement léger ou moins. Vous pouvez affecter un objet d'Encombrement 1 après 10 rounds de concentration et un objet encore plus grand avec 1 minute par Encombrement.",
 };
 
+export const protectCompanion: Spell = {
+    id: "protectCompanion",
+    combat: true,
+    name: "Protection de compagnon",
+    traits: ["concentration", "tour de magie"],
+    traditions: AllTraditions,
+    category: "cantrip",
+    actions: "one",
+    text:
+        "**Portée** 9 mètres ; **Cibles** un sbire sous votre contrôle ; **Durée** 1 tour.\n" +
+        "Vous étendez votre aura, tel un bouclier magique qui protège votre sbire. La cible obtient un bonus de circonstances de +1 à sa CA jusqu'au début de votre prochain tour. Vous obtenez la réaction [Blocage vital](lifeBlock). Après avoir utilisé la réaction, le sort s'achève et vous ne pouvez plus le lancer de nouveau pendant 10 minutes.",
+};
+
 export const shield: Spell = {
     id: "shield",
+    combat: true,
     name: "Bouclier",
     traits: ["concentration", "force", "tour de magie"],
     traditions: [Tradition.Arcana, Tradition.Divine, Tradition.Occult],
@@ -186,6 +259,37 @@ export const shield: Spell = {
         "**Durée** jusqu'au début de votre prochain tour.\n" +
         "Vous levez un bouclier de force magique. Ceci compte comme si vous utilisiez [Lever un bouclier](raiseAShield), vous octroyant un bonus de circonstances de +1 à la CA jusqu'au début de votre prochain tour, mais cela ne nécessite aucune main pour l'utiliser.\n" +
         "Tant que le sort est actif, vous pouvez utiliser la réaction [Blocage au bouclier](shieldBlock) avec votre bouclier magique. Le bouclier possède une Solidité de 5. Vous pouvez utiliser la réaction du sort pour réduire les dégâts de tout sort ou effet magique, même s'il n'inflige pas des dégâts physiques. Après avoir effectué Blocage au bouclier, le sort se termine et vous ne pouvez plus le lancer de nouveau pendant 10 minutes.",
+};
+
+export const summonInstrument: Spell = {
+    id: "summonInstrument",
+    name: "Appel d'instrument",
+    traits: ["concentration", "manipulation", "tour de magie"],
+    traditions: [Tradition.Arcana, Tradition.Divine, Tradition.Occult],
+    category: "cantrip",
+    actions: "three",
+    text:
+        "**Durée** 1 heure.\n" +
+        "Vous matérialisez un instrument de musique portatif dans votre main. L'instrument est banal pour son type, mais vous seul pouvez en jouer. L'instrument disparaît lorsque le sort se termine. Tout instrument appelé auparavant disparaît lorsque vous lancez ce sort.",
+};
+
+export const tame: Spell = {
+    id: "tame",
+    name: "Domptage",
+    traits: [
+        "audible",
+        "concentration",
+        "manipulation",
+        "mental",
+        "tour de magie",
+    ],
+    traditions: [Tradition.Occult, Tradition.Primal],
+    category: "cantrip",
+    actions: "two",
+    text:
+        "**Portée** 3 mètres ; **Cible** 1 animal domestique non-hostile ; **Durée** 1 minute ; **Défense** Volonté.\n" +
+        "Tout en faisant des sons et des gestes réconfortants, vous vous approchez de la cible de manière amicale en combinant prudence et confiance. Vous améliorez d'un cran l'attitude de la cible à votre égard (d'inamicale à neutre, de neutre à amicale, d'amicale à serviable) pendant la durée du sort, à moins qu'elle ne réussisse un jet de Volonté. Par la suite, la cible est temporairement immunisée pendant 1 jour.\n" +
+        "Ce sort ne fonctionne que sur les animaux domestiqués ; par exemple, vous pouvez l'utiliser sur des chiens de garde ou des chiens errants, mais pas sur des chiens sauvages ou des loups. En cas de doute, la décision revient au MJ.",
 };
 
 export const telekineticHand: Spell = {
@@ -202,6 +306,7 @@ export const telekineticHand: Spell = {
 
 export const telekineticProjectile: Spell = {
     id: "telekineticProjectile",
+    combat: true,
     name: "Projectile télékinétique",
     traits: ["concentration", "manipulation", "tour de magie"],
     attack: true,
@@ -224,4 +329,17 @@ export const voidWarp: Spell = {
     text:
         "**Portée** 9 mètres ; **Cibles** 1 créature vivante ; **Défense** Vigueur basique\n" +
         "Vous invoquez l'énergie du vide pour endommager la force vitale. La cible subit {{1 + ceil(level/2)}}d4 dégâts de vide avec un jet de Vigueur basique. La cible est aussi [affaiblie 1](enfeebled) jusqu'au début de votre prochain tour en cas d'échec critique.",
+};
+
+export const washYourLuck: Spell = {
+    id: "washYourLuck",
+    name: "Laver sa chance",
+    traits: ["chance", "concentration", "manipulation", "tour de magie"],
+    traditions: [Tradition.Divine, Tradition.Occult],
+    category: "cantrip",
+    actions: "two",
+    text:
+        "**Durée** 1 minute.\n" +
+        "Certains praticiens affirment que ce sort lave littéralement votre chance de toute influence, tandis que d'autres prétendent qu'il nettoie simplement votre esprit de ses obsessions. Vous ajustez vos vêtements, changez la posture de votre chaise, tripotez un symbole religieux ou faites quelque autre action inoffensive et personnellement significative pour éloigner la malchance.\n" +
+        "Une fois pendant la durée du sort, avant de lancer un test, vous pouvez annuler un effet de malchance sur ce jet. Ce sort prend alors fin et vous y devenez immunisé pendant 10 minutes.",
 };

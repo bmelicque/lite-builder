@@ -6,17 +6,41 @@ import {
     type GrantedAction,
     type GrantedPassive,
 } from "../modifiers";
-import { courageousAnthem } from "../spells/cantrips";
+import {
+    bullHorn,
+    courageousAnthem,
+    daze,
+    detectMagic,
+    eatFire,
+    figment,
+    forbiddingWard,
+    glamorize,
+    knowTheWay,
+    light,
+    musicalAccompaniment,
+    prestidigitation,
+    protectCompanion,
+    shield,
+    summonInstrument,
+    tame,
+    telekineticHand,
+    telekineticProjectile,
+    washYourLuck,
+} from "../spells/cantrips";
 import { counterPerformance } from "../spells/focus";
 import {
-    occultBlaster,
-    occultIllusionist,
-    occultSupport,
-    spellKitToClassChoice,
-} from "../spells/kits";
-import {
+    command,
+    dizzyingColors,
+    domeOfTranquility1,
     fear,
+    fishingSpot,
+    illusoryDisguise1,
+    illusoryObject,
+    objectReading1,
     phantasmalMinion,
+    schadenfreude,
+    seashellOfStolenSound,
+    sleep,
     soothe,
     summonAnimal,
     sureStrike,
@@ -55,7 +79,7 @@ export const martialPerformance = {
     name: "Représentation martiale",
     text:
         "Votre muse vous a appris à manier une plus grande variété d'armes que la plupart des bardes, ce qui vous permet d'intégrer sans effort vos représentations aux outils de combat.\n" +
-        "Lorsque [Hymne de courage](courageousAnthem) est actif et que vous blessez un ennemi avec une Frappe, la durée du sort est augmentée de 1 round. Vous pouvez étendre une incantation particulière qu'une seule fois de la sorte.\n" +
+        "Lorsque [Hymne de courage](courageousAnthem) est actif et que vous blessez un ennemi avec une Frappe, la durée du sort est augmentée de 1 round. Vous ne pouvez étendre une incantation donnée qu'une seule fois de la sorte.\n" +
         "Si vous obtenez les tours de magie de composition Hymne de ralliement ou Chanson de force , vous pouvez appliquer cet avantage à ces tours de magie également.",
 } as const satisfies GrantedPassive;
 export const versatilePerformance = {
@@ -98,9 +122,9 @@ export const bard: Class = {
         trained("spellAttackModifier"),
         trained("spellDC"),
         { kind: "slots", forCategory: "spell1", quantity: 2 },
-        { kind: "knownItems", forCategory: "spell1", count: 3 },
+
+        spellToModifier(telekineticProjectile),
         { kind: "action", ...counterPerformance },
-        // TODO: counter performance
         { ...courageousAnthem, kind: "action" },
         { kind: "attributeArray", array: [0, 1, 2, 1, 0, 3] },
     ],
@@ -111,31 +135,45 @@ export const bard: Class = {
                 "Choisissez une muse. Cette muse vous conduit à faire de grandes choses et pourrait être quelqu'un que vous connaissez, une créature surnaturelle, un lieu, une divinité, une philosophie ou un mystère fascinant. En fonction du type d'inspiration que vous recevez, votre muse vous accorde un don de barde et ajoute un sort à votre répertoire.",
             options: [
                 {
-                    name: "Combattant",
-                    description:
-                        "Le champ de bataille est votre scène, le fracas de l'acier, votre musique. Votre muse a vu d'innombrables combats, qu'elle se révèle dans le combat ou qu'elle se résigne à sa nécessité. Un soldat ou un général peut vous inspirer, tout comme un champ de bataille ou une arme dont l'histoire est particulièrement riche. Si votre muse est une créature, il peut s'agir d'un soldat d'un autre monde. L'art inspiré par une muse combattante est triomphant et strident, décrivant souvent des batailles épiques.\n" +
-                        "En tant que barde avec une muse combattante, vous vous entraînez pour la bataille en plus de la représentation et vous préparez vos alliés aux dangers du combat. Vous pourriez même entrer dans le vif du sujet avec eux.\n" +
-                        "**Don de muse** [Représentation martiale](martialPerformance)\n" +
-                        "**Sort de muse** [Effroi](fear)",
-                    grants: [martialPerformance, spellToModifier(fear)],
-                },
-                {
                     name: "Énigmatique",
                     description:
                         "Votre muse est un mystère qui vous pousse à percer les secrets bien cachés de la vie et du multivers. Ces muses peuvent être des personnes que vous n'arrivez pas à cerner, des textes profondément chargés de symbolisme ou des paradoxes émotionnels qui soulignent le travail de toute une vie. L'art inspiré par une muse énigmatique peut être cryptique, inquiétant ou chargé de spéculations et de conspirations. En tant que barde ayant la muse énigmatique, vous soutenez vos alliés en leur apportant des connaissances, de l'inspiration et un soutien occulte.\n" +
                         "**Don de muse** [Connaissance bardique](bardicLore)\n" +
                         "**Sort de muse** [Coup assuré](sureStrike)",
-                    grants: [bardicLore, spellToModifier(sureStrike)],
+                    grants: [
+                        bardicLore,
+
+                        spellToModifier(daze),
+                        spellToModifier(detectMagic),
+                        spellToModifier(figment),
+                        spellToModifier(washYourLuck),
+
+                        spellToModifier(sureStrike),
+                        spellToModifier(illusoryObject),
+                        spellToModifier(objectReading1),
+                    ],
                 },
                 {
-                    name: "Virtuose",
+                    name: "Guerrière",
                     description:
-                        "Votre muse vous inspire constamment à atteindre des hauteurs supérieures de prouesse artistique. Pour de nombreux bardes, un enseignant ou un rival remplit ce rôle, bien que certains voient plus loin et tentent de surpasser les plus grands compositeurs du passé ou à tracer un chemin entièrement nouveau. L'art d'un barde inspiré par une muse virtuose est précis et inventif, une réussite en terme de formalisme.\n" +
-                        "En tant que barde avec une muse virtuose, vous êtes une source d'inspiration pour vos alliés et vous êtes confiant dans vos capacités musicales comme oratoires.\n" +
-                        "**Don de muse** [Composition persistante](lingeringComposition)\n" +
-                        "**Sort de muse** [Apaisement](soothe)",
-                    grants: [lingeringComposition, spellToModifier(soothe)],
+                        "Le champ de bataille est votre scène, le fracas de l'acier, votre musique. Votre muse a vu d'innombrables combats, qu'elle se révèle dans le combat ou qu'elle se résigne à sa nécessité. Un soldat ou un général peut vous inspirer, tout comme un champ de bataille ou une arme dont l'histoire est particulièrement riche. Si votre muse est une créature, il peut s'agir d'un soldat d'un autre monde. L'art inspiré par une muse combattante est triomphant et strident, décrivant souvent des batailles épiques.\n" +
+                        "En tant que barde avec une muse guerrière, vous vous entraînez pour la bataille en plus de la représentation et vous préparez vos alliés aux dangers du combat. Vous pourriez même entrer dans le vif du sujet avec eux.\n" +
+                        "**Don de muse** [Représentation martiale](martialPerformance)\n" +
+                        "**Sort de muse** [Effroi](fear)",
+                    grants: [
+                        martialPerformance,
+
+                        spellToModifier(bullHorn),
+                        spellToModifier(eatFire),
+                        spellToModifier(forbiddingWard),
+                        spellToModifier(shield),
+
+                        spellToModifier(fear),
+                        spellToModifier(command),
+                        spellToModifier(sleep),
+                    ],
                 },
+
                 {
                     name: "Touche-à-tout",
                     description:
@@ -145,7 +183,35 @@ export const bard: Class = {
                         "**Sort de muse** [Sbire fantasmagorique](phantasmalMinion)",
                     grants: [
                         versatilePerformance,
+
+                        spellToModifier(glamorize),
+                        spellToModifier(musicalAccompaniment),
+                        spellToModifier(prestidigitation),
+                        spellToModifier(summonInstrument),
+
                         spellToModifier(phantasmalMinion),
+                        spellToModifier(dizzyingColors),
+                        spellToModifier(illusoryDisguise1),
+                    ],
+                },
+                {
+                    name: "Virtuose",
+                    description:
+                        "Votre muse vous inspire à atteindre un niveau de prouesse artistique toujours supérieur. Pour de nombreux bardes, un enseignant ou un rival remplit ce rôle, bien que certains voient plus loin et tentent de surpasser les plus grands compositeurs du passé ou à tracer un chemin entièrement nouveau. L'art d'un barde inspiré par une muse virtuose est précis et inventif, une réussite en terme de formalisme.\n" +
+                        "En tant que barde avec une muse virtuose, vous êtes une source d'inspiration pour vos alliés et vous êtes confiant dans vos capacités musicales comme oratoires.\n" +
+                        "**Don de muse** [Composition persistante](lingeringComposition)\n" +
+                        "**Sort de muse** [Apaisement](soothe)",
+                    grants: [
+                        lingeringComposition,
+
+                        spellToModifier(light),
+                        spellToModifier(musicalAccompaniment),
+                        spellToModifier(summonInstrument),
+                        spellToModifier(telekineticHand),
+
+                        spellToModifier(soothe),
+                        spellToModifier(domeOfTranquility1),
+                        spellToModifier(schadenfreude),
                     ],
                 },
                 {
@@ -156,19 +222,17 @@ export const bard: Class = {
                         "**Sort de muse** [Convocation d'animal](summonAnimal)",
                     grants: [
                         zoophonicCommunication,
+
+                        spellToModifier(knowTheWay),
+                        spellToModifier(light),
+                        spellToModifier(protectCompanion),
+                        spellToModifier(tame),
+
                         spellToModifier(summonAnimal),
+                        spellToModifier(fishingSpot),
+                        spellToModifier(seashellOfStolenSound),
                     ],
                 },
-            ],
-        },
-        {
-            title: "Kit de sorts",
-            description:
-                "Choisissez un kit thématique qui reflète votre façon d'aborder la magie. Il remplit d'avance vos tours de magie et vos sorts de rang 1, dans la limite de ce que votre classe vous permet de connaître. Vous pourrez modifier cette sélection par la suite, selon les règles de votre classe.",
-            options: [
-                spellKitToClassChoice(occultBlaster, "bard"),
-                spellKitToClassChoice(occultIllusionist, "bard"),
-                spellKitToClassChoice(occultSupport, "bard"),
             ],
         },
     ],
