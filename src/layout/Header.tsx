@@ -8,12 +8,15 @@ import { useParams } from "../useParams";
 
 export default function Header() {
     return (
-        <header className="p-4 flex justify-between">
-            <Popover button={<MenuIcon />}>
-                <CharacterSelector />
-            </Popover>
-            <div className="font-bold">LITE-BUILDER</div>
-            <CombatToggle />
+        <header>
+            <div className="fixed w-full bg-white shadow-md p-4 flex justify-between">
+                <Popover button={<MenuIcon />}>
+                    <CharacterSelector />
+                </Popover>
+                <div className="font-bold">LITE-BUILDER</div>
+                <CombatToggle />
+            </div>
+            <div className="h-16"></div>
         </header>
     );
 }
