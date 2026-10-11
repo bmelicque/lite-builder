@@ -28,6 +28,7 @@ import RichText from "../RichText.tsx";
 import { formatModifiers, weaponToActions } from "../character/weapons.ts";
 import Speeds from "./Speeds.tsx";
 import { useParams } from "../useParams.tsx";
+import Attributes from "./Attributes.tsx";
 
 export default function Sheet() {
     const [character] = useCharacter();
@@ -47,6 +48,7 @@ export default function Sheet() {
                 <h2>Points de Vie</h2>
                 <HitPoints />
             </section>
+            <Attributes />
             <section className="grid grid-cols-3 place-items-stretch gap-4">
                 <Perception character={character} />
                 <section>
