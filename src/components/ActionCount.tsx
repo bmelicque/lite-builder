@@ -37,21 +37,56 @@ export default function (props: Props) {
 }
 
 export function FreeAction() {
-    return <img src="./actions/free-action.svg" height={16} width={16} />;
+    return (
+        <img
+            src="./actions/free-action.svg"
+            className="inline"
+            height={16}
+            width={16}
+        />
+    );
 }
 
 export function OneAction() {
-    return <img src="./actions/1-action.svg" height={16} width={16} />;
+    return (
+        <img
+            src="./actions/1-action.svg"
+            className="inline"
+            height={16}
+            width={16}
+        />
+    );
 }
 
 export function TwoActions() {
-    return <img src="./actions/2-actions.svg" height={16} width={24} />;
+    return (
+        <img
+            src="./actions/2-actions.svg"
+            className="inline"
+            height={16}
+            width={24}
+        />
+    );
 }
 
 export function ThreeActions() {
-    return <img src="./actions/3-actions.svg" height={16} width={30.5} />;
+    return (
+        <img
+            src="./actions/3-actions.svg"
+            className="inline"
+            height={16}
+            width={30.5}
+        />
+    );
 }
 
 export function Reaction() {
-    return <img src="./actions/reaction.svg" height={16} width={16} />;
+    return (
+        <img
+            src="./actions/reaction.svg"
+            className="inline"
+            height={16}
+            width={16}
+        />
+    );
 }

@@ -5,6 +5,7 @@ import {
     seaweedLeshy,
     vineLeshy,
 } from "../heritages/leshy";
+import { trained } from "../modifiers";
 import { Attribute } from "../rules/attributes";
 import { nature, stealth } from "../rules/skills";
 import { Size, type Ancestry } from "./types";
@@ -27,5 +28,9 @@ export const leshy: Ancestry = {
     },
     heritages: [leafLeshy, lotusLeshy, rootLeshy, seaweedLeshy, vineLeshy],
     familiarity: [],
-    grants: [{ kind: "sense", name: "Vision en basse lumière" }],
+    grants: [
+        { kind: "sense", name: "Vision en basse lumière" },
+        trained("nature"),
+        trained("stealth"),
+    ],
 };

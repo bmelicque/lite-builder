@@ -5,6 +5,7 @@ import {
     rainfallOrc,
 } from "../heritages/orc";
 import { weapons } from "../items/weapons";
+import { trained } from "../modifiers";
 import { athletics, survival } from "../rules/skills";
 import { Size, type Ancestry } from "./types";
 
@@ -30,5 +31,9 @@ export const orc: Ancestry = {
         weapons.orcKnuckleDagger,
         weapons.orcNecksplitter,
     ],
-    grants: [{ kind: "sense", name: "Vision dans le noir" }],
+    grants: [
+        { kind: "sense", name: "Vision dans le noir" },
+        trained("athletics"),
+        trained("survival"),
+    ],
 };

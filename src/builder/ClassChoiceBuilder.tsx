@@ -10,7 +10,7 @@ type Props = { index: number };
 export default function ClassChoiceBuilder({ index }: Props) {
     const [character, dispatch] = useCharacter();
     const isValid = isValidOption.bind(null, character);
-    const choice = unwrap(character.class!.choices[index]);
+    const choice = unwrap(character.class!.choices[index - 1]);
     const options = choice.options.filter(isValid);
     const selectOption = (o: ClassChoiceOption) =>
         dispatch({ kind: "selectChoice", index, option: o });

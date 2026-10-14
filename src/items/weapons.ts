@@ -9,6 +9,10 @@ export const DamageType = {
     Slashing: "tranchant$",
 
     Precision: "de précision",
+
+    Fire: "de feu",
+
+    Void: "de vide",
 };
 export type DamageType = Enum<typeof DamageType>;
 export function printDamageType(
@@ -657,6 +661,23 @@ const spraysling: Weapon = {
         "Une fronde à aspersion est similaire à une fronde ordinaire mais avec une coupelle plus large équipée d'une fine lame fixée sur les bords de la coupe. Lorsqu'elle est utilisée pour effectuer une attaque avec un paquet de granulés à aspersion spécialement préparés, le rasoir tranche le paquet et l'arme lance une volée de granulés cinglants.",
 };
 
+const throwingKnife: Weapon = {
+    id: "throwingKnife",
+    name: "Couteaux de lancer",
+    damageDie: 4,
+    damageType: [DamageType.Piercing],
+    agile: true,
+    finesse: true,
+    thrown: 4,
+    hands: 1,
+    price: 1.5 * GP,
+    proficiency: "simpleWeapons",
+    group: "knife",
+    bulk: "L",
+    description:
+        "Ce couteau léger bénéficie d'un équilibre optimal permettant un lancer précis à plus grande distance qu'une dague ordinaire. Bien que cela se fasse au détriment d'un tranchant marqué, la différence en vaut la peine pour les spécialistes du lancer.",
+};
+
 const warhammer: Weapon = {
     id: "warhammer",
     name: "Marteau de guerre",
@@ -708,6 +729,7 @@ export const weapons = {
     shortswort,
     sling,
     spraysling,
+    throwingKnife,
     warhammer,
 } as const;
 

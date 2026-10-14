@@ -78,7 +78,7 @@ function characterReducerHelper(
             return { ...character, class: action.class };
         case "selectChoice":
             const choices = [...character.choices];
-            choices[action.index] = action.option.name;
+            choices[action.index - 1] = action.option.name;
             return { ...character, choices };
         case "selectSkills": {
             character = { ...character, skills: action.skills };

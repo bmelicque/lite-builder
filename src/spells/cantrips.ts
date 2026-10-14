@@ -79,6 +79,19 @@ export const eatFire: Spell = {
         "Vous consommez et ingérez le feu, le rendant moins nocif pour vous. Vous obtenez une résistance 5 contre les dégâts de feu jusqu'à la fin du tour actuel. Pendant la durée restante du sort, vous pouvez utiliser l'action [Rejet de fumée](belchSmoke).",
 };
 
+export const electricArc: Spell = {
+    id: "electricArc",
+    combat: true,
+    name: "Arc électrique",
+    traits: ["concentration", "électricité", "manipulation", "tour de magie"],
+    traditions: [Tradition.Arcana, Tradition.Primal],
+    category: "cantrip",
+    actions: "two",
+    text:
+        "**Portée** 9 mètres ; **Cibles** 1 ou 2 créatures ; **Défense** Réflexes (basique).\n" +
+        "Un arc électrique jaillit d'une cible vers une autre. Chaque cible subit {{1+ceil(level/2}}d4 dégâts d'électricité avec un jet de Réflexes basique.",
+};
+
 export const figment: Spell = {
     id: "figment",
     name: "Fantasme",
@@ -154,6 +167,22 @@ export const hauntingHymn: Spell = {
     text:
         "**Zone** cône de 4.5 m ; **Défense** Vigueur basique.\n" +
         "Vous faites résonner un hymne assourdissant que seules les créatures de la zone peuvent entendre. L'hymne inflige {{ceil(level/4)}}d8 dégâts sonores, avec un jet de Vigueur basique. Si une cible obtient un échec critique, elle est également Sourde pendant 1 minute.",
+};
+
+export const ignition: Spell = {
+    id: "ignition",
+    combat: true,
+    name: "Embrasement",
+    traits: ["concentration", "feu", "manipulation", "tour de magie"],
+    traditions: [Tradition.Arcana, Tradition.Primal],
+    attack: true,
+    category: "cantrip",
+    actions: "two",
+    text:
+        "**Portée** 9 mètres ; **Cible** 1 créature ; **Défense** CA.\n" +
+        "Vous claquez des doigts et pointez une cible du doigt ; celle-ci commence à fumer. Effectuez un jet d'attaque de sort contre la CA de la cible. En cas de réussite, vous infligez {{1+ceil(level/2)}}d4 dégâts de feu. Si la cible se trouve au contact, vous pouvez choisir d'effectuer une attaque de sort au corps à corps, auquel cas tous les dés de dégâts du sort deviennent des d6." +
+        "**Réussite critique** La cible subit le double des dégâts et 1d4 dégâts de feu persistants.\n" +
+        "**Réussite** La cible subit les dégâts normaux.\n",
 };
 
 export const knowTheWay: Spell = {
@@ -247,6 +276,35 @@ export const protectCompanion: Spell = {
         "Vous étendez votre aura, tel un bouclier magique qui protège votre sbire. La cible obtient un bonus de circonstances de +1 à sa CA jusqu'au début de votre prochain tour. Vous obtenez la réaction [Blocage vital](lifeBlock). Après avoir utilisé la réaction, le sort s'achève et vous ne pouvez plus le lancer de nouveau pendant 10 minutes.",
 };
 
+export const readAura: Spell = {
+    id: "readAura",
+    name: "Lire l'aura",
+    traits: ["cantrip", "concentration", "détection", "manipulation"],
+    traditions: [
+        Tradition.Arcana,
+        Tradition.Divine,
+        Tradition.Occult,
+        Tradition.Primal,
+    ],
+    category: "cantrip",
+    text:
+        "**Incantation** 1 minute ; **Portée** 9 mètres ; **Cible** 1 objet.\n" +
+        "Vous vous concentrez sur l'objet ciblé et ouvrez votre esprit afin de percevoir les auras magiques. À la fin de l'incantation, vous savez si cet objet est magique. Vous-même, ainsi que toute personne à qui vous décrivez l'aura, bénéficiez d'un bonus de circonstance de +2 pour [Identifier la magie](identifyMagic) de cet objet. Si l'objet est illusoire, vous ne le détectez que si le rang de l'effet est inférieur à celui de ce sort.",
+};
+
+export const rousingSplash: Spell = {
+    id: "rousingSplash",
+    name: "Éclaboussure revigorante",
+    traits: ["concentration", "eau", "manipulation", "tour de magie"],
+    traditions: [Tradition.Divine, Tradition.Primal],
+    category: "cantrip",
+    actions: "two",
+    text:
+        "**Portée** 18 mètres ; **Cible** 1 créature.\n" +
+        "Vous faites tomber une éclaboussure d'eau froide sur la tête d'un allié, lui redonnant un peu de vigueur. La cible gagne {{ceil(level/2)}}d4 points de vie temporaires qui durent 1 minute. Elle devient ensuite temporairement immunisée aux points de vie temporaires conférés par ce sort pendant 10 minutes.\n" +
+        "La cible peut également tenter immédiatement un test nu pour se remettre d'une source unique de dégâts persistants d'acide ou de feu, en bénéficiant de la réduction du DD accordée par une aide appropriée.",
+};
+
 export const shield: Spell = {
     id: "shield",
     combat: true,
@@ -259,6 +317,25 @@ export const shield: Spell = {
         "**Durée** jusqu'au début de votre prochain tour.\n" +
         "Vous levez un bouclier de force magique. Ceci compte comme si vous utilisiez [Lever un bouclier](raiseAShield), vous octroyant un bonus de circonstances de +1 à la CA jusqu'au début de votre prochain tour, mais cela ne nécessite aucune main pour l'utiliser.\n" +
         "Tant que le sort est actif, vous pouvez utiliser la réaction [Blocage au bouclier](shieldBlock) avec votre bouclier magique. Le bouclier possède une Solidité de 5. Vous pouvez utiliser la réaction du sort pour réduire les dégâts de tout sort ou effet magique, même s'il n'inflige pas des dégâts physiques. Après avoir effectué Blocage au bouclier, le sort se termine et vous ne pouvez plus le lancer de nouveau pendant 10 minutes.",
+};
+
+export const stabilize: Spell = {
+    id: "stabilize",
+    combat: true,
+    name: "Stabilisation",
+    traits: [
+        "concentration",
+        "guérison",
+        "manipulation",
+        "tour de magie",
+        "vitalité",
+    ],
+    traditions: [Tradition.Divine, Tradition.Primal],
+    category: "cantrip",
+    actions: "two",
+    text:
+        "**Portée** 9 mètres ; **Cible** 1 créature [agonisante](dying).\n" +
+        "L'énergie vitale repousse la mort. La cible perd l'état [agonisant](dying), mais reste inconsciente avec 0 point de vie.",
 };
 
 export const summonInstrument: Spell = {
@@ -318,8 +395,35 @@ export const telekineticProjectile: Spell = {
         "Vous lancez à la cible un objet non tenu qui se trouve à portée et qui a un Encombrement de 1 ou inférieur. Faites un jet d'attaque de sort contre la cible. Si vous touchez, vous infligez {{1 + ceil(level/2)}}d6 dégâts contondants, perforants ou tranchants - appropriés à l'objet que vous lancez. Doublez dégâts en cas de critique. Aucun des traits spécifiques ou propriété magique que possède l'objet lancé n'affecte l'attaque ou les dégâts.",
 };
 
+export const timeSense: Spell = {
+    id: "timeSense",
+    name: "Sens du temps",
+    traits: ["concentration", "tour de magie"],
+    traditions: [Tradition.Arcana, Tradition.Occult],
+    category: "cantrip",
+    actions: "one",
+    text:
+        "Lorsque vous lancez ce sort, vous acquérez un sens parfait du temps. Vous pouvez connaître l'heure exacte, à la seconde près. Si vous êtes formé en Nature, vous pouvez connaître précisément le temps restant avant le lever du soleil et le nombre de jours avant le prochain solstice. Si vous êtes formé en Connaissance de l'astronomie, vous pouvez déterminer avec précision le début et la fin de toute conjonction astronomique prévisible que vous connaissez, et ainsi de suite.\n" +
+        "Vous pouvez obtenir un bonus de statut de +1 à un jet ou un test effectué pendant le même tour que le lancement de ce sort, à condition que ce jet nécessite une synchronisation extrêmement précise. Si vous choisissez d'obtenir ce bonus, vous ne pouvez plus en bénéficier pendant 1 heure.",
+};
+
+export const vitalityLash: Spell = {
+    id: "vitalityLash",
+    combat: true,
+    name: "Fouet de vitalité",
+    traits: ["concentration", "manipulation", "tour de magie", "vitalité"],
+    traditions: [Tradition.Divine, Tradition.Primal],
+    category: "cantrip",
+    actions: "two",
+    attack: true,
+    text:
+        "**Portée** 9 mètres ; **Cible** 1 créature bénéficiant de [guérison du vide](voidHealing) ; **Défense** Vigueur (basique).\n" +
+        "Vous détruisez l'essence corrompue de la cible grâce à l'énergie de la Forge de la Création. Vous infligez 2d6 dégâts de vitalité. Si la créature obtient un échec critique au jet de sauvegarde, elle est également [affaiblie 1](enfeebled) jusqu'au début de votre prochain tour.",
+};
+
 export const voidWarp: Spell = {
     id: "voidWarp",
+    combat: true,
     name: "Distortion du vide",
     traits: ["concentration", "manipulation", "tour de magie", "vide"],
     traditions: [Tradition.Arcana, Tradition.Divine, Tradition.Occult],

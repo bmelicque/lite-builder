@@ -10,6 +10,7 @@ import {
     treedwellerGoblin,
     unbreakableGoblin,
 } from "../heritages/goblin";
+import { trained } from "../modifiers";
 
 export const goblin: Ancestry = {
     id: "goblin",
@@ -44,5 +45,9 @@ export const goblin: Ancestry = {
         weapons.horseChopper,
         // TODO: spoon gun
     ],
-    grants: [{ kind: "sense", name: "Vision dans le noir" }],
+    grants: [
+        { kind: "sense", name: "Vision dans le noir" },
+        trained("nature"),
+        trained("stealth"),
+    ],
 };

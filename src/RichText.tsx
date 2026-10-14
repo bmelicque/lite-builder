@@ -1,3 +1,4 @@
+import { OneAction, ThreeActions, TwoActions } from "./components/ActionCount";
 import ActionView from "./components/ActionView";
 import Popover from "./components/Popover";
 import { rules, type Rule } from "./rules";
@@ -35,7 +36,8 @@ function RichLine({ line, stack }: LineProps) {
         .split(/({{.*?}})/g)
         .flatMap((text) => text.split(/(\*\*.*?\*\*)/g))
         .flatMap((text) => text.split(/(_.*?_)/g))
-        .flatMap((text) => text.split(/(\[.*?\]\(.*?\))/g));
+        .flatMap((text) => text.split(/(\[.*?\]\(.*?\))/g))
+        .flatMap((text) => text.split(/(@\w+)/g));
     const content = tokens.map((token, i) => (
         <RichToken key={token + i} token={token} stack={stack} />
     ));
@@ -68,6 +70,9 @@ function RichToken({ token, stack }: TokenProps) {
     if (token.startsWith("_") && token.endsWith("_")) {
         return <span className="italic">{token.slice(1, -1)}</span>;
     }
+    if (token.startsWith("@")) {
+        return at(token);
+    }
     let match;
     if ((match = token.match(/\[(.*?)\]\((.*?)\)/))) {
         return (
@@ -75,6 +80,21 @@ function RichToken({ token, stack }: TokenProps) {
         );
     }
     return token;
+}
+
+function at(token: string) {
+    switch (token) {
+        case "@checkbox":
+            return <input type="checkbox" className="cursor-pointer" />;
+        case "@oneAction":
+            return <OneAction />;
+        case "@twoActions":
+            return <TwoActions />;
+        case "@threeActions":
+            return <ThreeActions />;
+        default:
+            return token;
+    }
 }
 
 function Evaluate({ expr }: { expr: string }) {

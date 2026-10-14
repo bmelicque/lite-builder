@@ -1,6 +1,7 @@
 import { combatClimber } from "../feats/skill";
 import { featToPassive } from "../feats/types";
 import { DamageType } from "../items/weapons";
+import { halfLevelMin1 } from "../modifiers";
 import { type Heritage } from "./types";
 
 export const charhideGoblin: Heritage = {
@@ -8,11 +9,7 @@ export const charhideGoblin: Heritage = {
     name: "Gobelin peaud'charbon",
     text: "Vos ancêtres ont toujours eu une connexion avec le feu et une peau plus épaisse que la norme, qui vous permet de mieux résister aux flammes. Vous vous remettez également plus vite des brûlures causées par le feu.",
     grants: [
-        {
-            kind: "resistance",
-            to: "aux dégâts de feu",
-            value: (c) => Math.max(1, Math.floor(c.level / 2)),
-        },
+        ...halfLevelMin1(DamageType.Fire),
         {
             kind: "passive",
             name: "Gobelin peaud'charbon",

@@ -6,7 +6,7 @@ import {
     getAttributes,
 } from "../character/character";
 import { computeArmorAC, getArmor } from "../items/armors";
-import { isResistance } from "../modifiers";
+import { isResistance, type Resistance } from "../modifiers";
 
 type Props = { character: Character };
 export default function Defenses({ character }: Props) {
@@ -54,10 +54,22 @@ function getResistances(character: Character): Record<string, number> {
     return iterModifiers(character)
         .filter(isResistance)
         .reduce<Record<string, number>>((res, cur) => {
-            res[cur.to] ??= 0;
-            res[cur.to] = Math.max(res[cur.to], cur.value(character));
+            res[cur.to] = Math.max(
+                res[cur.to] ?? 0,
+                computeResistanceValue(cur, character),
+            );
             return res;
         }, {});
+}
+function computeResistanceValue(res: Resistance, character: Character): number {
+    switch (res.value) {
+        case "halfLevel":
+            return Math.floor(character.level / 2);
+        case "hlPlus2":
+            return 2 + Math.floor(character.level / 2);
+        default:
+            return res.value;
+    }
 }
 type DefenseProps = {
     name: string;

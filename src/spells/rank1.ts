@@ -1,5 +1,31 @@
 import { AllTraditions, Tradition, type Spell } from "./types";
 
+export const airBubble: Spell = {
+    id: "airBubble",
+    name: "Bulle d'air",
+    traits: ["air", "concentration"],
+    traditions: [Tradition.Arcana, Tradition.Divine, Tradition.Primal],
+    category: "spell1",
+    actions: "reaction",
+    text:
+        "**Déclencheur** Une créature à 18 mètres entre dans un environnement où elle ne peut pas respirer.\n" +
+        "**Cible** la créature déclenchant le sort ; **Durée** 1 minute.\n" +
+        "Une bulle d'air pur apparaît autour de la tête de la cible, lui permettant de respirer normalement. L'effet prend fin dès que la cible retourne dans un environnement où elle peut respirer normalement.",
+};
+
+export const alarm1: Spell = {
+    id: "alarm1",
+    name: "Alarme",
+    traits: ["concentration", "manipulation"],
+    traditions: AllTraditions,
+    category: "spell1",
+    dc: true,
+    text:
+        "**Incantation** 10 minutes ; **Portée** contact ; **Zone** une émanation de 6 mètres ; **Durée** 8 heures.\n" +
+        "Vous protégez une zone afin d'être averti lorsque des créatures y pénètrent sans votre autorisation. Lorsque vous lancez Alarme, choisissez un mot de passe. Chaque fois qu'une créature corporelle de taille Petite ou supérieure entre dans la zone du sort sans prononcer le mot de passe, l'alarme vous envoie soit une alerte mentale, soit une alarme sonore ayant le son et le volume d'une clochette.\n" +
+        "Dans les deux cas, l'alarme vous réveille automatiquement. Avec l'alarme sonore, chaque créature présente dans la zone peut tenter un test de Perception DD 15 pour se réveiller. Une créature qui connaît l'existence de l'alarme doit réussir un test de Discrétion contre le DD du sort pour ne pas le déclencher en entrant dans la zone.",
+};
+
 export const bane: Spell = {
     id: "bane",
     name: "Imprécation",
@@ -45,6 +71,56 @@ export const bless: Spell = {
         "Les bienfaits de l'au-delà aident vos compagnons à frapper juste. Vous et vos alliés obtenez un bonus de statut de +1 aux jets d'attaque tant que vous êtes dans l'émanation. Une fois par round, lors des rounds suivants, vous pouvez [Maintenir](sustain) le sort pour augmenter le rayon de l'émanation de 3 mètres.",
 };
 
+export const blessingOfVigor1: Spell = {
+    id: "blessingOfVigor1",
+    combat: true,
+    name: "Bénédiction de vigueur",
+    traits: ["concentration", "guérison", "mental", "vitalité"],
+    traditions: [Tradition.Divine],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** 9 mètres ; **Cible** vous ou 1 allié ; **Durée** 3 tours.\n" +
+        "Vous priez pour obtenir une bénédiction mineure afin de protéger votre cible. La cible bénéficie d'une [guérison rapide](fastHealing) de 3.",
+};
+
+export const boneShield1: Spell = {
+    id: "boneShield1",
+    combat: true,
+    name: "Bouclier d'os",
+    traits: ["concentration"],
+    traditions: [Tradition.Arcana, Tradition.Divine, Tradition.Occult],
+    category: "spell1",
+    actions: "one",
+    text:
+        "**Conditions** Vous avez une main libre ; **Durée** jusqu'à 1 minute (maintenu).\n" +
+        "Vous créez dans une main libre un bouclier jetable en os brut et rugueux, que vous pouvez facilement recréer encore et encore. Lorsque vous lancez ce sort, ou la première fois à chaque round où vous le [Maintenez](sustain) lors des rounds suivants, vous pouvez [Lever ce bouclier](raiseAShield), ce qui vous confère un bonus de circonstance de +2 à la CA. Tant que ce sort est actif, vous obtenez la réaction [Blocage au bouclier](shieldBlock), utilisable uniquement avec le bouclier d'os. Celui-ci possède une Solidité de 3 et 1 PV (sans seuil de rupture). Il bénéficie également d'un bonus de circonstance de +2 à sa Solidité contre les attaques infligeant des dégâts perforants ou tranchants. Si le bouclier est détruit, il est recréé, déjà levé dans une main libre, lorsque vous maintenez le sort.",
+};
+
+export const breadcrumbs1: Spell = {
+    id: "breadcrumbs1",
+    name: "Miettes de pain",
+    traits: ["concentration", "manipulation"],
+    traditions: AllTraditions,
+    category: "spell1",
+    text:
+        "**Incantation** 1 minute ; **Portée** contact ; **Cible** 1 créature consentante ; **Durée** 1 heure.\n" +
+        "Vous protégez votre cible contre le risque de s'égarer en territoire hostile en suivant les endroits où elle est déjà passée, afin de l'aider à déterminer où elle doit encore aller. La cible laisse derrière elle une traînée scintillante qui persiste pendant toute la durée du sort. Cette traînée n'indique ni la direction ni l'ordre de son parcours : elle montre simplement les endroits où la cible s'est déplacée pendant la durée du sort.",
+};
+
+export const breatheFire1: Spell = {
+    id: "breatheFire1",
+    combat: true,
+    name: "Souffle embrasé",
+    traits: ["concentration", "feu", "manipulation"],
+    traditions: [Tradition.Arcana, Tradition.Primal],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Zone** un cône de 4,5 mètres ; **Défense** Réflexes (basique).\n" +
+        "Un jet de flammes jaillit de votre bouche. Vous infligez 2d6 dégâts de feu aux créatures situées dans la zone, avec un jet de Réflexes basique.",
+};
+
 export const charm: Spell = {
     id: "charm1",
     name: "Charme",
@@ -69,6 +145,18 @@ export const charm: Spell = {
         "**Échec critique** La cible devient serviable à votre égard et ne peut pas utiliser d'action hostile contre vous.",
 };
 
+export const cinderScribe1: Spell = {
+    id: "cinderScribe1",
+    name: "Scribe de braise",
+    traits: ["uncommon", "feu", "manipulation"],
+    traditions: AllTraditions,
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** contact ; **Cible** 1 objet résistant aux flammes ; **Durée** 24 heures.\n" +
+        "Vous invoquez une plume de flamme magique et écrivez un message sur un objet. Celui-ci devient presque invisible à l'œil nu dès que vous avez fini de l'écrire. Si l'objet portant l'inscription est plongé dans un feu intense, le message apparaît pendant 1 minute avant de s'effacer. Le message peut être révélé de cette manière autant de fois que nécessaire. Même si l'objet est détruit, des fragments du message subsistent sur ses différentes parties.",
+};
+
 export const command: Spell = {
     id: "command1",
     name: "Injonction",
@@ -88,6 +176,32 @@ export const command: Spell = {
         "**Réussite** La créature n'est pas affectée.\n" +
         "**Échec** Pour sa première action à son prochain tour, la créature est obligée d'utiliser une action pour faire ce que vous lui avez ordonné.\n" +
         "**Échec critique** À son prochain tour, la cible doit utiliser toutes ses actions pour obéir à votre ordre.",
+};
+
+export const createWater: Spell = {
+    id: "createWater",
+    name: "Créer de l'eau",
+    traits: ["concentration", "manipulation", "eau"],
+    traditions: [Tradition.Arcana, Tradition.Divine, Tradition.Primal],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** 0 mètre.\n" +
+        "Vous joignez vos mains en coupe et de l'eau commence à en jaillir. Vous créez 8 litres d'eau. Si personne ne la boit, elle s'évapore au bout d'un jour.",
+};
+
+export const dejaVu: Spell = {
+    id: "dejaVu",
+    combat: true,
+    name: "Déjà vu",
+    traits: ["concentration", "mise hors combat", "manipulation", "mental"],
+    traditions: [Tradition.Arcana, Tradition.Occult],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** 30 mètres ; **Cible** 1 créature ; **Défense** Volonté ; **Durée** 2 tours.\n" +
+        "Vous bouclez un processus de pensée dans l'esprit de la cible, la forçant à répéter les actions d'un instant. La cible doit tenter un jet de sauvegarde de Volonté. En cas d'échec, quelles que soient les actions qu'elle effectue lors de son prochain tour, elle doit les répéter lors du tour suivant, dans le même ordre et aussi fidèlement que possible. Par exemple, si elle effectue une attaque, elle doit attaquer la même créature si possible ; si elle se déplace, elle doit parcourir la même distance dans la même direction si possible.\n" +
+        "Si la cible ne peut pas répéter une action, par exemple parce qu'elle a déjà épuisé un sort qu'elle avait lancé ou parce que la créature qu'elle devait cibler est morte, elle peut choisir librement cette action, mais devient [stupéfiée 1](stupefied) jusqu'à la fin de son tour.",
 };
 
 export const dizzyingColors: Spell = {
@@ -172,6 +286,24 @@ export const forceBarrage: Spell = {
         "Vous projetez un éclat de magie solidifiée vers une créature que vous pouvez voir. Il atteint automatiquement sa cible en lui infligeant 1d4+1 dégâts de force. Pour chaque action supplémentaire que vous utilisez pour Lancer le sort, vous augmentez de 1 le nombre d'éclats que vous projetez, jusqu'à un maximum de 3 éclats pour 3 actions. Vous désignez la cible de chaque éclat. Si vous tirez plus d'un éclat sur une même cible, combinez les dégâts.",
 };
 
+export const forcedMercy1: Spell = {
+    id: "forcedMercy1",
+    combat: true,
+    name: "Clémence forcée",
+    traits: ["concentration", "émotion", "manipulation", "mental"],
+    traditions: [Tradition.Divine, Tradition.Occult],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** 9 mètres ; **Cible** 1 créature ; **Défense** Volonté ; **Durée** variable.\n" +
+        "Vous adoucissez les coups de la cible, l'obligeant à éviter les zones vitales et à ne causer aucune blessure durable. Tous les dégâts physiques infligés par la cible aux créatures vivantes deviennent [non létaux](nonLethal), et tous les dégâts de saignement qu'elle inflige sont réduits à 0. Cet effet n'entraîne pas le malus de circonstance habituel de –2 aux attaques non létales effectuées avec une arme ou une attaque létale.\n" +
+        "Une cible non consentante doit tenter un jet de Volonté. Une cible consentante peut choisir d'obtenir un échec critique à son jet de sauvegarde.\n" +
+        "**Succès critique** La créature n'est pas affectée.\n" +
+        "**Succès** La créature est affectée pendant 1 round.\n" +
+        "**Échec** La créature est affectée pendant 1d4 rounds.\n" +
+        "**Échec critique** La créature est affectée pendant 1 minute.",
+};
+
 export const grimTendrils: Spell = {
     id: "grimTendrils1",
     name: "Volutes sinistres",
@@ -186,6 +318,20 @@ export const grimTendrils: Spell = {
         "**Réussite** La créature ne subit que la moitié des dégâts de vide et aucun dégât de saignement.\n" +
         "**Échec** La créature subit la totalité des dégâts.\n" +
         "**Échec critique** La créature subit le double des dégâts de vide et des dégâts de saignement.",
+};
+
+export const infuseVitality1: Spell = {
+    id: "infuseVitality1",
+    combat: true,
+    name: "Infusion de vitalité",
+    traits: ["concentration", "manipulation", "vitalité"],
+    traditions: [Tradition.Divine],
+    category: "spell1",
+    actions: "one-three",
+    text:
+        "**Portée** 9 mètres ; **Cibles** 1 à 3 créatures consentantes ; **Durée** 1 minute.\n" +
+        "Vous imprégnez les attaques d'énergie vitale. Le nombre de cibles est égal au nombre d'actions dépensées pour lancer ce sort. Les Frappes de chaque cible infligent 1d4 dégâts de vitalité supplémentaires. Ces dégâts n'affectent généralement que les morts-vivants.\n" +
+        "Si vous possédez le trait [sacré](holy), vous pouvez ajouter ce trait à ce sort ainsi qu'aux Frappes affectées par celui-ci.",
 };
 
 export const illusoryDisguise1: Spell = {
@@ -211,6 +357,44 @@ export const illusoryObject: Spell = {
         "**Portée** 150 mètres ; **Zone** sphère de 6 m ; **Durée** 10 minutes.\n" +
         "Vous créez une image visuelle illusoire d'un objet immobile. La totalité de l'image doit tenir dans la zone du sort. L'objet semble s'animer naturellement mais il ne produit aucun son et ne génère aucune odeur. Par exemple, l'eau semblera se déverser d'une cascade illusoire mais elle le fera en silence.\n" +
         "Toute créature qui touche l'image ou effectue l'action [Chercher](seek) pour l'examiner peut tenter de percer l'illusion.",
+};
+
+export const heal1: Spell = {
+    id: "heal1",
+    name: "Guérison",
+    traits: ["guérison", "manipulation", "vitalité"],
+    traditions: [Tradition.Divine, Tradition.Primal],
+    category: "spell1",
+    actions: "one-three",
+    text:
+        "**Portée** variable ; **Cible** 1 créature vivante consentante ou 1 mort-vivant.\n" +
+        "Vous canalisez de l'énergie vitale pour soigner les vivants ou blesser les morts-vivants. Si la cible est une créature vivante consentante, vous lui rendez 1d8 points de vie. Si la cible est un mort-vivant, vous lui infligez ce même montant de dégâts de vitalité avec un jet de Vigueur basique. Le nombre d'actions que vous dépensez pour lancer ce sort détermine ses cibles, sa portée, sa zone d'effet et d'autres paramètres.\n" +
+        "@oneAction Le sort a une portée de contact.\n" +
+        "@twoActions (concentration) Le sort a une portée de 9 mètres. Si vous soignez une créature vivante, augmentez de 8 le nombre de points de vie récupérés.\n" +
+        "@threeActions (concentration) Vous dispersez de l'énergie vitale sous forme d'une émanation de 9 mètres de rayon. Cela cible toutes les créatures vivantes et les morts-vivants présents dans la zone.",
+};
+
+export const mending1: Spell = {
+    id: "mending1",
+    name: "Réparation",
+    traits: ["concentration", "manipulation"],
+    traditions: AllTraditions,
+    category: "spell1",
+    text:
+        "**Incantation** 10 minutes ; **Portée** contact ; **Cible** 1 objet non magique léger.\n" +
+        "Vous réparez l'objet ciblé. Vous lui restaurez 5 points de vie, ce qui peut éventuellement supprimer l'état brisé. Vous ne pouvez ni remplacer les pièces manquantes ni réparer un objet entièrement détruit.",
+};
+
+export const mindlink: Spell = {
+    id: "mindlink",
+    name: "Lien mental",
+    traits: ["concentration", "manipulation", "mental"],
+    traditions: [Tradition.Arcana, Tradition.Occult],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** contact ; **Cible** 1 créature consentante.\n" +
+        "Vous reliez votre esprit à celui de la cible et lui transmettez mentalement, en un instant, une quantité d'informations qui aurait autrement nécessité 10 minutes de communication.",
 };
 
 export const objectReading1: Spell = {
@@ -283,6 +467,18 @@ export const seashellOfStolenSound: Spell = {
         "Bien que le sort reproduise fidèlement les sons entourant la cible, il ne restitue aucun effet auditif ou sonore particulier associé à ces sons.",
 };
 
+export const skySight: Spell = {
+    id: "skySight",
+    name: "Vision céleste",
+    traits: ["concentration", "manipulation"],
+    traditions: [Tradition.Divine, Tradition.Occult, Tradition.Primal],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Durée** 1 heure.\n" +
+        "Vous levez les yeux vers le ciel et le voyez clairement, quelles que soient les conditions environnementales. Vous pouvez voir à travers les phénomènes météorologiques et les obstacles physiques tels que la canopée d'une forêt, les matériaux de construction et les parois d'une grotte. Cela vous permet notamment de repérer des créatures volantes ou de vous orienter grâce aux étoiles, même lorsque vous ne pourriez normalement pas les voir.",
+};
+
 export const sleep: Spell = {
     id: "sleep1",
     name: "Sommeil",
@@ -329,6 +525,7 @@ export const summonAnimal: Spell = {
 
 export const sureStrike: Spell = {
     id: "sureStrike",
+    combat: true,
     name: "Coup assuré",
     traits: ["concentration", "fortune"],
     traditions: [Tradition.Arcana, Tradition.Occult],
@@ -337,4 +534,29 @@ export const sureStrike: Spell = {
     text:
         "**Durée** jusqu'à la fin de votre tour.\n" +
         "Un aperçu de l'avenir vous assure que votre prochain coup frappera juste. La prochaine fois que vous effectuez un jet d'attaque avant la fin de votre tour, lancez l'attaque deux fois et utilisez le meilleur résultat. L'attaque ignore les pénalités de circonstances au jet d'attaque et vous n'avez pas besoin d'effectuer le test nu si la cible est [masquée](concealed) ou [cachée](hidden). Vous êtes temporairement immunisé à Coup assuré pendant 10 minutes.",
+};
+
+export const synchronize1: Spell = {
+    id: "synchronize1",
+    name: "Synchronisation",
+    traits: ["concentration", "manipulation"],
+    traditions: AllTraditions,
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** contact ; **Cibles** jusqu'à 5 créatures consentantes ; **Durée** jusqu'à 24 heures.\n" +
+        "Vous apposez sans danger sur vos cibles un sigle magique qui vous est propre, de quelques cm², dont vous choisissez la forme. Lorsque vous lancez le sort, vous en définissez la durée en choisissant un instant auquel le sigle clignotera faiblement trois fois. Le sort prend fin à cet instant. Bien que la durée des sorts ne soit normalement pas exacte, les effets de Synchronisation sont précis à la seconde près. Le décompte est basé sur le lieu où le sort a été lancé ; pénétrer dans un plan ou une zone où le temps s'écoule différemment peut donc modifier son déroulement de manière parfois imprévisible.",
+};
+
+export const thunderstrike1: Spell = {
+    id: "thunderstrike1",
+    combat: true,
+    name: "Frappe de foudre",
+    traits: ["concentration", "électricité", "manipulation", "sonique"],
+    traditions: [Tradition.Arcana, Tradition.Primal],
+    category: "spell1",
+    actions: "two",
+    text:
+        "**Portée** 36 mètres ; **Cible** 1 créature ; **Défense** Réflexes (basique).\n" +
+        "Vous invoquez un filament de foudre qui éclate dans un coup de tonnerre, infligeant à la cible 1d12 dégâts d'électricité et 1d4 dégâts sonores, avec un jet de Réflexes basique. Une cible constituée de métal ou portant une armure métallique subit un malus de circonstance de –1 à son jet de sauvegarde. Si le sort lui inflige des dégâts, elle est également [maladroite 1](clumsy) pendant 1 round.",
 };

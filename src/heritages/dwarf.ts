@@ -1,4 +1,6 @@
 import type { Action } from "../actions";
+import { DamageType } from "../items/weapons";
+import { halfLevelMin1 } from "../modifiers";
 import type { Heritage } from "./types";
 
 export const callOnAncientBlood: Action = {
@@ -39,11 +41,7 @@ export const forgeDwarf: Heritage = {
             name: "Nain des Forges",
             text: "Vous considérez tous les effets environnementaux liés à la chaleur comme un rang moins extrême.",
         },
-        {
-            kind: "resistance",
-            to: "aux dégâts de feu",
-            value: (c) => Math.max(1, Math.floor(c.level / 2)),
-        },
+        ...halfLevelMin1(DamageType.Fire),
     ],
 };
 

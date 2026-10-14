@@ -87,6 +87,7 @@ export default function Sheet() {
                     title={c.name}
                     category={c.id}
                     intro={c.introText}
+                    outro={c.outroText}
                 />
             ))}
             <Actions actions={actions} title="Réactions" category="reaction" />
@@ -131,6 +132,8 @@ function appliesToAction(selector: ActionSelector, action: Action): boolean {
     switch (selector.kind) {
         case "id":
             return action.id === selector.id;
+        case "category":
+            return action.category === selector.category;
         case "trait":
             return action.traits?.includes(selector.value) ?? false;
     }
@@ -298,6 +301,7 @@ function Actions(props: ActionsProps) {
                 {actions.map((a) => (
                     <ActionView action={a} />
                 ))}
+                <RichText>{props.outro ?? ""}</RichText>
             </div>
         </section>
     );

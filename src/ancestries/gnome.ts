@@ -3,6 +3,7 @@ import { weapons } from "../items/weapons";
 import { crafting, performance } from "../rules/skills";
 import { Size, type Ancestry } from "./types";
 import { chameleonGnome, sensateGnome, umbralGnome } from "../heritages/gnome";
+import { trained } from "../modifiers";
 
 export const gnome: Ancestry = {
     id: "gnome",
@@ -27,5 +28,9 @@ export const gnome: Ancestry = {
         weapons.gnomeHookedHammer,
         weapons.kukri,
     ],
-    grants: [{ kind: "sense", name: "Vision en basse lumière" }],
+    grants: [
+        { kind: "sense", name: "Vision en basse lumière" },
+        trained("crafting"),
+        trained("performance"),
+    ],
 };

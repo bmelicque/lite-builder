@@ -1,6 +1,6 @@
 import type { Action, Passive } from "./actions";
 import type { Damage } from "./character/weapons";
-import type { DamageType, Weapon } from "./items/weapons";
+import { DamageType, type Weapon } from "./items/weapons";
 import { ProficiencyRank, type Proficiency } from "./proficiencies";
 import type { Recommendation, RecommendationRule } from "./recommendations";
 import type { Skill } from "./rules/skills";
@@ -17,6 +17,7 @@ export function isActionBuilder(m: Modifier): m is ActionBuilder {
 
 export type ActionSelector =
     | { kind: "id"; id: string }
+    | { kind: "category"; category: string }
     | { kind: "trait"; value: string };
 type Modification =
     | { kind: "push"; value: any }
@@ -126,11 +127,30 @@ export function isRecommendation(m: Modifier): m is RecommendationModifier {
 
 export type Resistance = {
     kind: "resistance";
-    to: string;
-    value: (c: any) => number;
+    to: DamageType;
+    value: number | "halfLevel" | "hlPlus2";
 };
 export function isResistance(m: Modifier): m is Resistance {
     return m.kind === "resistance";
+}
+export function resistance(
+    to: DamageType,
+    value: Resistance["value"],
+): Resistance {
+    return { kind: "resistance", to, value };
+}
+export function halfLevelMin1(to: DamageType): Resistance[] {
+    return [
+        { kind: "resistance", to, value: 1 },
+        { kind: "resistance", to, value: "halfLevel" },
+    ];
+}
+export function hl1PhysicalRes(): Resistance[] {
+    return [
+        ...halfLevelMin1(DamageType.Bludgeoning),
+        ...halfLevelMin1(DamageType.Piercing),
+        ...halfLevelMin1(DamageType.Slashing),
+    ];
 }
 
 export type Sense = {

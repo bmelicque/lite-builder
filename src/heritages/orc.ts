@@ -1,6 +1,7 @@
 import { dieHard } from "../feats/general";
 import { intimidatingGlare } from "../feats/skill";
-import { trained } from "../modifiers";
+import { DamageType } from "../items/weapons";
+import { halfLevelMin1, trained } from "../modifiers";
 import { type Heritage } from "./types";
 
 export const battleReadyOrc: Heritage = {
@@ -22,11 +23,7 @@ export const graveOrc: Heritage = {
     name: "Orc sépulcral",
     text: "Vous avez été exposé à de puissantes énergies nécromantiques qui auraient dû vous tuer — mais vous avez survécu. Votre peau est froide, moite et grise. Vous obtenez une résistance contre les dégâts de vide égale à la moitié de votre niveau (minimum 1). Vous obtenez aussi un bonus de circonstances de +1 aux jets de sauvegarde contre les effets ayant le trait [mort](death) ou [vide](void).",
     grants: [
-        {
-            kind: "resistance",
-            to: "aux dégâts de vide",
-            value: (c) => Math.max(1, Math.floor(c.level / 2)),
-        },
+        ...halfLevelMin1(DamageType.Void),
         {
             kind: "passive",
             name: "Orc sépulcral",
