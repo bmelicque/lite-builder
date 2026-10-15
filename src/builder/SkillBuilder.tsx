@@ -9,12 +9,15 @@ import {
     type Character,
 } from "../character/character";
 import Grid from "./Grid.tsx";
+import { Attribute } from "../rules/attributes.ts";
 
 export default function SkillBuilder() {
     const [character, dispatch] = useCharacter();
     const [selected, setSelected] = useState<Skill[]>([]);
     const { skills: preselected, extra } = handlePreselected(character);
-    const remaining = character.class!.skills + extra - (selected.length ?? 0);
+    const intelligence = getAttributes(character)[Attribute.Intelligence];
+    const totalCount = character.class!.skills + intelligence + extra;
+    const remaining = totalCount - (selected.length ?? 0);
     const toggleSkill = (skill: Skill) => {
         if (selected.includes(skill)) {
             setSelected((s) => s.filter((s) => s !== skill));

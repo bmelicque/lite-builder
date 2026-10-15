@@ -350,6 +350,10 @@ const time: ClassChoiceOption = {
         spellToModifier(heal1),
         spellToModifier(mending1),
 
+        { kind: "attributeArray", array: [0, 2, 1, 0, 1, 3] },
+        { kind: "weapon", ...weapons.throwingKnife },
+        { kind: "weapon", ...weapons.flintlockPistol },
+
         {
             ...oracularCurse,
             outroText:

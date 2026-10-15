@@ -145,6 +145,8 @@ function computeAttributes(character: Character): Attributes {
     tryBoost(attributes, boosts, 1);
     tryBoost(attributes, boosts, 1);
 
+    for (const boost of boosts) if (boost !== "Libre") attributes[boost]++;
+
     if (ancestryAttributes.flaw) attributes[ancestryAttributes.flaw]--;
 
     return attributes;
