@@ -53,6 +53,22 @@ export const fascinatingPerformance = {
         "Si vous êtes expert en Représentation, vous pouvez fasciner jusqu'à quatre observateurs. Si vous êtes maître, vous pouvez fasciner jusqu'à dix observateurs et si vous êtes légendaire, vous pouvez fasciner n'importe quel nombre d'observateurs en même temps.",
 } as const;
 
+export const forensicAcumen = {
+    kind: "passive",
+    id: "forensicAcumen",
+    name: "Perspicacité médco-légale",
+    proficiency: "medicine",
+    rank: ProficiencyRank.Trained,
+    text: "Vous maîtrisez les principes de la médecine légale, ce qui vous rend plus efficace pour examiner un corps afin d'en déterminer la cause du décès ou des blessures. Vous pouvez effectuer un examen médico-légal sur un corps en la moitié du temps normalement requis (avec un minimum de 5 minutes). Si vous réussissez votre test, vous pouvez tenter de [Vous rappeler des informations](recallKnowledge) afin d'approfondir une découverte, en bénéficiant d'un bonus de circonstance de +2. Ce test porte généralement sur la cause de la blessure ou du décès, ou sur le type de créature dont vous avez examiné le corps.",
+} as const;
+
+export const quickIdentification = {
+    kind: "passive",
+    id: "quickIdentification",
+    name: "Identification rapide",
+    text: "Vous pouvez [Identifier la magie](identifyMagic) rapidement. Lorsque vous y avez recours pour déterminer les propriétés d'un objet, d'un effet en cours ou d'un lieu, cela ne vous prend qu'une minute au lieu de 10.",
+} as const;
+
 export const quickJump: Passive = {
     id: "quickJump",
     name: "Saut rapide",

@@ -13,6 +13,12 @@ export default function (props: Props) {
             return <TwoActions />;
         case "three":
             return <ThreeActions />;
+        case "free-one":
+            return (
+                <span className="flex gap-1">
+                    <FreeAction /> ou <OneAction />
+                </span>
+            );
         case "one-two":
             return (
                 <span className="flex gap-1">

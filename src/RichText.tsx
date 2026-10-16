@@ -1,7 +1,10 @@
+import { getAttributes, type Character } from "./character/character";
 import { OneAction, ThreeActions, TwoActions } from "./components/ActionCount";
 import ActionView from "./components/ActionView";
 import Popover from "./components/Popover";
 import { rules, type Rule } from "./rules";
+import { Attribute } from "./rules/attributes";
+import { useCharacter } from "./useCharacter";
 import { omit } from "./utils";
 
 type Props = {
@@ -98,9 +101,10 @@ function at(token: string) {
 }
 
 function Evaluate({ expr }: { expr: string }) {
-    return <span>{evaluate(expr)}</span>;
+    const [char] = useCharacter();
+    return <span>{evaluate(expr, char)}</span>;
 }
-function evaluate(expr: string): number {
+function evaluate(expr: string, char: Character): number {
     // FIXME:
     const level = 1;
     expr = expr.replace(/steps\(([^()]*)\)/g, (sub) =>
@@ -112,34 +116,52 @@ function evaluate(expr: string): number {
             .toString(),
     );
     expr = expr.replace(/floor\(([^()]*)\)/g, (sub) =>
-        Math.floor(evaluate(sub.slice(6, -1))).toString(),
+        Math.floor(evaluate(sub.slice(6, -1), char)).toString(),
     );
     expr = expr.replace(/ceil\(([^()]*)\)/g, (sub) =>
-        Math.ceil(evaluate(sub.slice(5, -1))).toString(),
+        Math.ceil(evaluate(sub.slice(5, -1), char)).toString(),
     );
     expr = expr.replace(/max\(([^()]*)\)/g, (sub) =>
-        Math.max(...sub.slice(4, -1).split(",").map(evaluate)).toString(),
+        Math.max(
+            ...sub
+                .slice(4, -1)
+                .split(",")
+                .map((s) => evaluate(s, char)),
+        ).toString(),
     );
     if (expr.match(/[*/]/)) {
         const operators = expr.match(/([*/])/g);
         const operands = expr.split(/[*/]/);
-        return operands.slice(1).reduce((res, cur, i) => {
-            const c = evaluate(cur);
-            return operators?.[i - 1] === "/" ? res * c : res / c;
-        }, evaluate(operands[0]));
+        return operands.slice(1).reduce(
+            (res, cur, i) => {
+                const c = evaluate(cur, char);
+                return operators?.[i - 1] === "/" ? res * c : res / c;
+            },
+            evaluate(operands[0], char),
+        );
     }
     if (expr.match(/[+-]/)) {
         const operators = expr.match(/([+-])/g);
         const operands = expr.split(/[+-]/);
-        return operands.slice(1).reduce((res, cur, i) => {
-            const c = evaluate(cur);
-            return operators?.[i] === "+" ? res + c : res - c;
-        }, evaluate(operands[0]));
+        return operands.slice(1).reduce(
+            (res, cur, i) => {
+                const c = evaluate(cur, char);
+                return operators?.[i] === "+" ? res + c : res - c;
+            },
+            evaluate(operands[0], char),
+        );
     }
     expr = expr.trim();
-    // FIXME:
-    if (expr === "level") return level;
-    return parseInt(expr);
+    switch (expr) {
+        case "level":
+            return char.level;
+        case "int":
+            return getAttributes(char)[Attribute.Intelligence];
+        case "dex":
+            return getAttributes(char)[Attribute.Dexterity];
+        default:
+            return parseInt(expr);
+    }
 }
 
 type RichPopoverProps = {

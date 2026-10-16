@@ -11,6 +11,7 @@ export type ActionCount =
     | "one"
     | "two"
     | "three"
+    | "free-one"
     | "one-two"
     | "one-three";
 
