@@ -63,7 +63,6 @@ export default function Sheet() {
             </section>
             <Skills character={character} />
             <Actions actions={actions} title="Frappes" category="strike" />
-            <Actions actions={actions} title="Impulsions" category="impulse" />
             <Actions actions={actions} title="Alchimie" category="alchemy" />
             <Actions
                 actions={actions}
@@ -280,6 +279,8 @@ function Actions(props: ActionsProps) {
     );
     if (isSpellCategory(props.category))
         actions.forEach((a) => setSpellModifier(character, a));
+    if (props.category === "impulse")
+        actions.forEach((a) => setImpulseModifier(character, a));
     return (
         <section>
             <h2>{props.title}</h2>
@@ -331,6 +332,21 @@ function setSpellModifier(character: Character, action: Action) {
     if (action.dc) {
         const rank = getProficiency(character, "spellDC");
         const p = rank ? 2 * rank + 1 : rank;
+        action.modifiers = `DD ${10 + p + attribute}`;
+    }
+    return;
+}
+function setImpulseModifier(character: Character, action: Action) {
+    // The way characters are built, their spellcasting attribute should be
+    // their highest attribute
+    const attribute = getAttributes(character)[Attribute.Constitution];
+    const rank = getProficiency(character, "kineticistClassDC");
+    const p = rank ? 2 * rank + 1 : rank;
+    if (action.attack) {
+        action.modifiers = formatModifiers(p + attribute, -5);
+        return;
+    }
+    if (action.dc) {
         action.modifiers = `DD ${10 + p + attribute}`;
     }
     return;

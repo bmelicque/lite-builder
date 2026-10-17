@@ -105,15 +105,20 @@ function Evaluate({ expr }: { expr: string }) {
     return <span>{evaluate(expr, char)}</span>;
 }
 function evaluate(expr: string, char: Character): number {
-    // FIXME:
-    const level = 1;
+    console.log(expr);
     expr = expr.replace(/steps\(([^()]*)\)/g, (sub) =>
         sub
             .slice(6, -1)
             .split(",")
             .map((x) => parseInt(x))
-            .reduce((count, thresh) => (level >= thresh ? ++count : count), 1)
+            .reduce(
+                (count, thresh) => (char.level >= thresh ? ++count : count),
+                1,
+            )
             .toString(),
+    );
+    expr = expr.replace(/dist\(([^()]*)\)/g, (sub) =>
+        (1.5 * evaluate(sub.slice(5, -1), char)).toString(),
     );
     expr = expr.replace(/floor\(([^()]*)\)/g, (sub) =>
         Math.floor(evaluate(sub.slice(6, -1), char)).toString(),
@@ -129,17 +134,6 @@ function evaluate(expr: string, char: Character): number {
                 .map((s) => evaluate(s, char)),
         ).toString(),
     );
-    if (expr.match(/[*/]/)) {
-        const operators = expr.match(/([*/])/g);
-        const operands = expr.split(/[*/]/);
-        return operands.slice(1).reduce(
-            (res, cur, i) => {
-                const c = evaluate(cur, char);
-                return operators?.[i - 1] === "/" ? res * c : res / c;
-            },
-            evaluate(operands[0], char),
-        );
-    }
     if (expr.match(/[+-]/)) {
         const operators = expr.match(/([+-])/g);
         const operands = expr.split(/[+-]/);
@@ -147,6 +141,17 @@ function evaluate(expr: string, char: Character): number {
             (res, cur, i) => {
                 const c = evaluate(cur, char);
                 return operators?.[i] === "+" ? res + c : res - c;
+            },
+            evaluate(operands[0], char),
+        );
+    }
+    if (expr.match(/[*/]/)) {
+        const operators = expr.match(/([*/])/g);
+        const operands = expr.split(/[*/]/);
+        return operands.slice(1).reduce(
+            (res, cur, i) => {
+                const c = evaluate(cur, char);
+                return operators?.[i - 1] === "/" ? res * c : res / c;
             },
             evaluate(operands[0], char),
         );
@@ -160,7 +165,7 @@ function evaluate(expr: string, char: Character): number {
         case "dex":
             return getAttributes(char)[Attribute.Dexterity];
         default:
-            return parseInt(expr);
+            return parseFloat(expr);
     }
 }
 

@@ -10,8 +10,11 @@ export const DamageType = {
 
     Precision: "de précision",
 
+    Cold: "de froid",
+    Electricity: "d'électricité",
     Fire: "de feu",
 
+    Vitality: "de vitalité",
     Void: "de vide",
 };
 export type DamageType = Enum<typeof DamageType>;

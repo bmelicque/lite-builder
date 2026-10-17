@@ -19,9 +19,11 @@ export default function ({ action, stack }: Props) {
                 {action.modifiers && <span>{action.modifiers}</span>}
             </h3>
             <div className="flex flex-wrap gap-1">
-                {action.traits?.map((t) => (
-                    <Trait id={t} />
-                ))}
+                {action.traits
+                    ?.sort((a, b) => a.localeCompare(b))
+                    .map((t) => (
+                        <Trait id={t} />
+                    ))}
             </div>
             <RichText stack={stack}>{action.text}</RichText>
         </article>

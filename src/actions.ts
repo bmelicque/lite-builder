@@ -34,6 +34,7 @@ export type Action = {
     skill?: Skill;
     proficiency?: string;
     attack?: boolean;
+    dc?: true;
     modifiers?: string;
     range?: number;
     text: string;

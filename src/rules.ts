@@ -77,6 +77,18 @@ const prone: GeneralRule = {
         "Vous êtes étendu au sol. Vous êtes [pris au dépourvu](offGuard) et subissez une pénalité de circonstances de -2 à vos jets d'attaque. Les seules actions de mouvement que vous pouvez utiliser lorsque vous êtes à terre sont Ramper et Vous relever. Vous pouvez vous Mettre à l'abri lorsque vous êtes à terre pour bénéficier d'un [abri](cover) contre les attaques à distance, même si vous ne vous abritez pas derrière un objet.\n" +
         "Si vous devriez tomber à terre alors que vous [Escaladez](climb) ou [Volez](fly), vous [chutez](fall). Vous ne pouvez pas être à terre quand vous [Nagez](swim).",
 };
+const senses: GeneralRule = {
+    kind: "general",
+    name: "Sens",
+    description:
+        "La manière dont une créature peut utiliser la Perception dépend des sens dont elle dispose. Un sens peut être précis, imprécis ou vague. La vue, l'ouïe et l'odorat sont trois sens majeurs, mais chacun possède un degré d'acuité différent.\n" +
+        "## Sens précis\n" +
+        "La vue, dans des conditions normales, est un sens précis — un sens qui permet de percevoir le monde avec une grande finesse de détails. Pour cibler une créature sans subir de pénalités, il est indispensable d'utiliser un sens précis. En règle générale, un sens précis permet de détecter automatiquement une créature, sauf si celle-ci se cache ou est dissimulée par l'environnement ; dans ce cas, vous pouvez [Chercher](seek) pour mieux la localiser.\n" +
+        "## Sens imprécis\n" +
+        "L'ouïe, dans sa forme courante, est un sens imprécis : elle ne permet pas de percevoir la même finesse de détails qu'un sens précis. Un sens imprécis vous permet généralement de détecter automatiquement une créature, mais celle-ci rest [cachée](hidden) plutôt que [observée](observed). Il est même possible qu'elle demeure [indétectée](undetected) si elle utilise la compétence Discrétion ou si elle se trouve dans un environnement qui perturbe ce sens (par exemple, une pièce bruyante pour ce qui est de l'ouïe). Dans de tels cas, vous devez [Chercher](seek) pour détecter la créature et la faire passer à l'état [caché](hidden).\n" +
+        "## Sens vagues\n" +
+        "Un personnage dispose également de plusieurs sens vagues : ils vous alertent de la présence de quelque chose, sans pour autant vous permettre de localiser précisément l'objet ou la créature en question, ni d'en déterminer la nature exacte. Pour un personnage type, l'odorat est le plus utile de ces sens vagues. Au mieux, un sens vague permet de déceler la présence d'une créature qui n'avait pas été remarquée, la faisant passer à l'état [indétecté](undetected). Cela reste toutefois insuffisant pour que la créature soit considérée comme [cachée](hidden) ou [observée](observed).",
+};
 const void_: GeneralRule = {
     kind: "general",
     name: "Vide",
@@ -131,6 +143,7 @@ export const rules: Record<string, Rule> = {
     prone,
     raiseAShield: { ...raiseAShield, kind: "action" },
     reposition: { ...reposition, kind: "action" },
+    senses,
     shove: { ...shove, kind: "action" },
     soothe: { ...soothe, kind: "action" },
     summonAnimal: { ...summonAnimal, kind: "action" },
