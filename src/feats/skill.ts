@@ -42,6 +42,12 @@ export const dirtyTrick: Action = {
         "**Échec critique** Vous vous retrouvez À terre lorsque votre tentative se retourne contre vous.",
 };
 
+export const dubiousKnowledge: Passive = {
+    id: "dubiousKnowledge",
+    name: "Connaissances douteuses",
+    text: "Vous êtes une véritable mine d'informations, mais celles-ci ne proviennent pas toutes de sources fiables. Lorsque vous échouez (mais pas critiquement) à un test de [Rappel de connaissances](recallKnowledge), vous obtenez à la fois la bonne réponse et une réponse erronée, sans aucun moyen de distinguer l'une de l'autre. Il peut s'agir, par exemple, de savoir qu'un élément est important, sans pour autant pouvoir déterminer s'il est positif ou négatif.",
+};
+
 export const fascinatingPerformance = {
     kind: "passive",
     id: "fascinatingPerformance",

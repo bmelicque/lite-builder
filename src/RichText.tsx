@@ -160,10 +160,12 @@ function evaluate(expr: string, char: Character): number {
     switch (expr) {
         case "level":
             return char.level;
-        case "int":
-            return getAttributes(char)[Attribute.Intelligence];
         case "dex":
             return getAttributes(char)[Attribute.Dexterity];
+        case "int":
+            return getAttributes(char)[Attribute.Intelligence];
+        case "cha":
+            return getAttributes(char)[Attribute.Charisma];
         default:
             return parseFloat(expr);
     }
